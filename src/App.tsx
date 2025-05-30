@@ -9,7 +9,7 @@ function App() {
 
   return (
     <>
-      <Button>OK</Button>
+      <Button>OKd</Button>
     </>
   );
 }
