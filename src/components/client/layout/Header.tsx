@@ -1,6 +1,8 @@
 import ToggleTheme from "@/components/modules/ToggleTheme";
 import { Input } from "@/components/ui/input";
-import { MailIcon } from "lucide-react";
+import { PATH } from "@/constants/path";
+import { MailIcon, ShoppingCart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -15,7 +17,12 @@ const Header = () => {
             className="border-0 focus-visible:ring-0 shadow-none rounded-4xl !bg-primary"
           />
         </div>
-        <ToggleTheme />
+        <div className="flex gap-2 items-center">
+          <ToggleTheme />
+          <Link to={PATH.CART}>
+            <ShoppingCart />
+          </Link>
+        </div>
       </div>
     </div>
   );
