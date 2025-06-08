@@ -9,6 +9,7 @@ import AdminLayout from "./components/admin/layout/AdminLayout";
 import { ADMIN_PATH, PATH } from "./constants/path";
 import Product from "./pages/admin/Product";
 import Products from "./pages/client/Products";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
   return (
