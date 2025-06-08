@@ -12,6 +12,7 @@ import Category from "./pages/admin/Category";
 import Login from "./components/client/auth/Login";
 import Register from "./components/client/auth/Register";
 import AuthLayout from "./components/client/auth/AuthLayout";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
   return (
