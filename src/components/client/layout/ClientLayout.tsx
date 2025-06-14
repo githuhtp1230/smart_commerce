@@ -8,7 +8,7 @@ const ClientLayout = () => {
     <div className="flex flex-col items-center">
       <Header />
       <Navbar />
-      <div className="py-6 max-w-screen-xl mx-auto w-full">
+      <div className="py-6 max-w-screen-xl mx-auto w-full px-4">
         <Outlet />
       </div>
     </div>

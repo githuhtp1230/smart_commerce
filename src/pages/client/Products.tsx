@@ -1,4 +1,4 @@
-import GeneralProducts from "@/components/client/product/GeneralProducts";
+import GeneralProducts from "@/components/client/product/ProductSummaries";
 import React from "react";
 
 const Products = () => {

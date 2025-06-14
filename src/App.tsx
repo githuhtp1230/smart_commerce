@@ -9,6 +9,8 @@ import Product from "./pages/admin/Product";
 import Products from "./pages/client/Products";
 import ProductDetail from "./pages/client/ProductDetail";
 import Category from "./pages/admin/Category";
+import Login from "./components/client/auth/Login";
+import Register from "./components/client/auth/Register";
 
 function App() {
   return (
@@ -24,6 +26,9 @@ function App() {
               element={<ProductDetail />}
             />
           </Route>
+
+          <Route path={PATH.LOGIN} element={<Login />} />
+          <Route path={PATH.REGISTER} element={<Register />} />
 
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Product />} />
