@@ -4,6 +4,7 @@ export const PATH = {
   PRODUCTS: "/products",
   LOGIN: "/login",
   REGISTER: "/register",
+  PROFILE: "/profile",
 };
 
 export const ADMIN_PATH = {
