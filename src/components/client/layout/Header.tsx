@@ -1,7 +1,7 @@
 import ToggleTheme from "@/components/modules/ToggleTheme";
 import { Input } from "@/components/ui/input";
 import { PATH } from "@/constants/path";
-import { MailIcon, ShoppingCart } from "lucide-react";
+import { MailIcon, ShoppingCart, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -25,6 +25,7 @@ const Header = () => {
           <Link to={PATH.LOGIN} className="text-base">
             Login
           </Link>
+          <User />
         </div>
       </div>
     </div>
