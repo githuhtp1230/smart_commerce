@@ -30,7 +30,7 @@ const MenuCategories = () => {
           className="flex items-center gap-2 !px-0 hover:bg-transparent"
         >
           <Menu />
-          <p>Category</p>
+          <p className="text-base">Category</p>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="p-0 w-168">
@@ -38,12 +38,16 @@ const MenuCategories = () => {
           {data?.map((category) => (
             <DropdownMenuGroup
               key={category.id}
-              className="text-neutral-primary text-sm font-medium"
+              className="text-neutral-primary font-medium"
             >
               {category.name}
               <div className="mt-2">
                 {category.children?.map((categoryChild) => (
-                  <DropdownMenuItem key={categoryChild.id} asChild>
+                  <DropdownMenuItem
+                    key={categoryChild.id}
+                    asChild
+                    className="cursor-pointer"
+                  >
                     <Link
                       to={`${PATH.PRODUCTS}?categoryId=${categoryChild.id}`}
                     >

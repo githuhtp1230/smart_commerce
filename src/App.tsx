@@ -11,6 +11,7 @@ import ProductDetail from "./pages/client/ProductDetail";
 import Category from "./pages/admin/Category";
 import Login from "./components/client/auth/Login";
 import Register from "./components/client/auth/Register";
+import AuthLayout from "./components/client/auth/AuthLayout";
 
 function App() {
   return (
@@ -27,8 +28,10 @@ function App() {
             />
           </Route>
 
-          <Route path={PATH.LOGIN} element={<Login />} />
-          <Route path={PATH.REGISTER} element={<Register />} />
+          <Route element={<AuthLayout />}>
+            <Route path={PATH.LOGIN} element={<Login />} />
+            <Route path={PATH.REGISTER} element={<Register />} />
+          </Route>
 
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Product />} />

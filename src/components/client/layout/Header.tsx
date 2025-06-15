@@ -17,12 +17,14 @@ const Header = () => {
             className="border-0 focus-visible:ring-0 shadow-none rounded-4xl !bg-primary"
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-3 items-center">
           <ToggleTheme />
           <Link to={PATH.CART}>
             <ShoppingCart />
           </Link>
-          <Link to={PATH.LOGIN}>Login</Link>
+          <Link to={PATH.LOGIN} className="text-base">
+            Login
+          </Link>
         </div>
       </div>
     </div>

@@ -17,10 +17,10 @@ const ProductSummaryItem = ({ product }: Props) => {
         className="h-65 border border-border-primary rounded-lg"
       />
       <div className="py-2">
-        <h1 className="text-sm">{product.name}</h1>
+        <h1 className="text-base">{product.name}</h1>
         <div className="flex items-center gap-2 text-muted-foreground mt-2">
           <RatingFilter />
-          <p className="text-xs">( {product.reviewCount} people rated )</p>
+          <p className="text-sm">( {product.reviewCount} people rated )</p>
         </div>
         <div className="flex justify-between items-center mt-5">
           <div className="flex items-center gap-2">

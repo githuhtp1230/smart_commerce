@@ -10,10 +10,10 @@ const Navbar = () => {
       <div className="flex justify-between max-w-screen-xl w-full">
         <MenuCategories />
         <ul className="flex items-center gap-2">
-          <NavLink className="text-sm" to={PATH.HOME_PAGE}>
+          <NavLink className="text-base" to={PATH.HOME_PAGE}>
             Home
           </NavLink>
-          <NavLink className="text-sm" to={PATH.PRODUCTS}>
+          <NavLink className="text-base" to={PATH.PRODUCTS}>
             Products
           </NavLink>
         </ul>
