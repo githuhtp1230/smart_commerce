@@ -40,8 +40,12 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
   --txt-secondary: oklch(0.339 0.0328 270.26);
   --txt-tertiary: oklch(0.4976 0.04 268.84);
+  --txt-system-danger: oklch(0.712 0.165 22.59);
   --neutral-primary: oklch(0.18 0 0);
   --neutral-secondary: oklch(0.3171 0 0);
+  --system-danger-hard: oklch(0.51 0.1899 27.66);
+  --icon-tertiery: oklch(0.7316 0 0);
+  --elements-quarternary: oklch(0.8213 0 0);
 }
 
 .dark {
@@ -80,8 +84,12 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
   --txt-secondary: oklch(0.7017 0.0328 273.45);
   --txt-tertiary: oklch(0.7268 0.0328 271.56);
+  --txt-system-danger: oklch(0.712 0.165 22.59);
   --neutral-primary: oklch(1 0 0);
   --neutral-secondary: oklch(0.8699 0 0);
+  --system-danger-hard: oklch(0.51 0.1899 27.66);
+  --icon-tertiery: oklch(0.7316 0 0);
+  --elements-quarternary: oklch(0.8031 0.0222 4.76);
 }
 
 @theme inline {
@@ -124,8 +132,12 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-txt-secondary: var(--txt-secondary);
   --color-txt-tertiary: var(--txt-tertiary);
+  --color-txt-system-danger: var(--txt-system-danger);
   --color-neutral-primary: var(--neutral-primary);
   --color-neutral-secondary: var(--neutral-secondary);
+  --color-system-danger-hard: var(--system-danger-hard);
+  --color-icon-tertiery: var(--icon-tertiery);
+  --color-elements-quarternary: var(--elements-quarternary);
 }
 
 @layer base {

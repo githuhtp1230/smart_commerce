@@ -1,13 +1,23 @@
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import AuthTabs from "./AuthTabs";
-import SocialLoginButtons from "@/components/modules/SocialLoginButtons";
+import SocialLoginButtons from "@/components/common/SocialLoginButtons";
 import { Facebook, Google } from "@/assets/icons";
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PATH } from "@/constants/path";
+import { useAuthStore } from "@/store/auth-store";
 
 const AuthLayout = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(PATH.HOME_PAGE);
+    }
+  }, [isAuthenticated, navigate]);
+
   return (
     <div className="bg-[url('/images/background_auth.jpg')] bg-cover bg-center h-screen flex items-center justify-center">
       <div className="max-w-screen-xl flex items-center justify-between w-full h-full p-10 gap-3">
@@ -45,17 +55,12 @@ const AuthLayout = () => {
             </span>
             <div className="flex-grow border-t border-border-primary"></div>
           </div>
-          <div className="mt-3">
-            <SocialLoginButtons
-              prefixIcon={Google}
-              text="Continue with Google"
-            />
-            <SocialLoginButtons
-              prefixIcon={Facebook}
-              text="Continue with Facebook"
-              className="mt-3"
-            />
-          </div>
+          <SocialLoginButtons prefixIcon={Google} text="Continue with Google" />
+          <SocialLoginButtons
+            prefixIcon={Facebook}
+            text="Continue with Facebook"
+            className="mt-3"
+          />
         </div>
       </div>
     </div>

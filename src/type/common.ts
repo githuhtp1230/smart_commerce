@@ -6,3 +6,8 @@ export interface PaginationResponse<T> {
   data: T[];
   last: boolean;
 }
+
+export interface ErrorRequest {
+  code: number;
+  message: string;
+}

@@ -1,4 +1,4 @@
-import { RatingFilter } from "@/components/modules/RatingFilter";
+import { RatingFilter } from "@/components/common/RatingFilter";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { IProductSummary } from "@/type/products";
