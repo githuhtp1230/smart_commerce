@@ -7,13 +7,17 @@ import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PATH } from "@/constants/path";
 import { useAuthStore } from "@/store/auth-store";
+import { useLocation } from "react-router-dom";
 
 const AuthLayout = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    const isAuthPage =
+      location.pathname === PATH.LOGIN || location.pathname === PATH.REGISTER;
+    if (isAuthenticated && isAuthPage) {
       navigate(PATH.HOME_PAGE);
     }
   }, [isAuthenticated, navigate]);

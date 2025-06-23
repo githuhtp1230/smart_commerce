@@ -14,7 +14,7 @@ const Header = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   return (
-    <div className="flex justify-center w-full items-center py-3 px-">
+    <div className="flex justify-center w-full items-center py-3 px-10">
       <div className="max-w-screen-xl flex justify-between w-full items-center">
         <div>Logo</div>
         <div className="flex items-center rounded-4xl border border-border-primary focus-within:ring-1 focus-within:ring-ring pl-4 w-150 bg-primary">

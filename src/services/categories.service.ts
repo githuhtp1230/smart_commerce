@@ -6,6 +6,6 @@ export const fetchCategories = async (): Promise<ICategory[]> => {
     const res = await httpRequest.get("categories");
     return res.data.data;
   } catch (error) {
-    throw new Error("Error fetching products");
+    throw error;
   }
 };

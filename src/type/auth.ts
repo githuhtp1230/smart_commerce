@@ -1,3 +1,5 @@
+import type { RoleType } from "@/type/common";
+
 export interface IAuth {
   user: IUser;
   accessToken: string;
@@ -13,4 +15,5 @@ export interface IUser {
   email: string;
   name: string;
   avatar: string;
+  role: RoleType;
 }

@@ -11,3 +11,5 @@ export interface ErrorRequest {
   code: number;
   message: string;
 }
+
+export type RoleType = "ADMIN";

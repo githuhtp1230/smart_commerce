@@ -1,13 +1,16 @@
 import { useAuthStore } from "@/store/auth-store";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import React from "react";
-import { NoneAvatar } from "@/assets/images";
+import { cn } from "@/lib/utils";
 
-const AvatarStore = () => {
+interface Props {
+  className?: string;
+}
+
+const AvatarStore = ({ className }: Props) => {
   const avatar = useAuthStore((s) => s.me?.avatar);
 
   return (
-    <Avatar>
+    <Avatar className={className}>
       <AvatarImage
         src={avatar}
         className="object-cover object-center border border-border-primary rounded-full"

@@ -6,18 +6,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { PATH } from "@/constants/path";
+import { ADMIN_PATH, PATH } from "@/constants/path";
 import { useAuthStore } from "@/store/auth-store";
-import { LogOutIcon, User } from "lucide-react";
+import { LogOutIcon, User, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
 import AvatarStore from "./AvatarStore";
+import RequireRole from "../require-role";
 
 export default function AvatarDropdown() {
   const { me, logout } = useAuthStore((state) => state);
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className="flex items-center">
         <AvatarStore />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mt-2 w-72" align="end" alignOffset={-10}>
@@ -38,6 +39,17 @@ export default function AvatarDropdown() {
             <span className="text-sm text-txt-secondary">Profile</span>
           </Link>
         </DropdownMenuItem>
+        <RequireRole roles={["ADMIN"]}>
+          <DropdownMenuItem asChild>
+            <Link
+              to={ADMIN_PATH.PRODUCT}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <Wrench className="w-4 h-4" />{" "}
+              <span className="text-sm text-txt-secondary">Manager</span>
+            </Link>
+          </DropdownMenuItem>
+        </RequireRole>
         <DropdownMenuSeparator />
         <div className="p-2">
           <DropdownMenuItem asChild>

@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 import {
   AudioWaveform,
   BookOpen,
@@ -7,24 +7,29 @@ import {
   Frame,
   GalleryVerticalEnd,
   Map,
+  MonitorSmartphone,
   PieChart,
   Settings2,
   SquareTerminal,
-} from "lucide-react"
-
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+} from "lucide-react";
+import { useEffect } from "react";
+import { NavMain } from "@/components/nav-main";
+import { NavProjects } from "@/components/nav-projects";
+import { NavUser } from "@/components/nav-user";
+import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+  useSidebar,
+} from "@/components/ui/sidebar";
+import { ADMIN_PATH } from "@/constants/path";
+import SwitchCustomizationDemo from "./customized/switch/switch-07";
+import { useTheme } from "@/components/theme-provider";
+import { cn } from "@/lib/utils";
 
-// This is sample data.
 const data = {
   user: {
     name: "shadcn",
@@ -50,33 +55,29 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Manage Products",
       url: "#",
-      icon: SquareTerminal,
+      icon: MonitorSmartphone,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Products",
+          url: ADMIN_PATH.PRODUCT,
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          title: "Add products",
+          url: ADMIN_PATH.ADD_PRODUCT,
         },
       ],
     },
     {
-      title: "Models",
+      title: "Manage Categories",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "Categories",
+          url: ADMIN_PATH.CATEGORY,
         },
         {
           title: "Explorer",
@@ -134,6 +135,12 @@ const data = {
         },
       ],
     },
+    {
+      title: "Settings",
+      url: "#",
+      icon: Settings2,
+      type: "sidebar-tab",
+    },
   ],
   projects: [
     {
@@ -152,22 +159,48 @@ const data = {
       icon: Map,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { setTheme, theme } = useTheme();
+  const { open } = useSidebar();
+
+  const handleCheckedChange = (checked: boolean) => {
+    if (checked) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar
+      className="[&_[data-sidebar='sidebar']]:bg-primary side"
+      collapsible="icon"
+      {...props}
+    >
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        {/* <TeamSwitcher teams={data.teams} /> */}
+        <NavUser user={data.user} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <div
+          className={cn(
+            "flex justify-between items-center bg-background",
+            open ? "" : "hidden"
+          )}
+        >
+          <p>Theme mode</p>
+          <SwitchCustomizationDemo
+            onCheckedChange={handleCheckedChange}
+            checked={theme === "dark"}
+          />
+        </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

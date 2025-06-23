@@ -12,6 +12,6 @@ export const fetchProductSummaries = async (
     const data = res.data.data as PaginationProductSummaries;
     return data;
   } catch (error) {
-    throw new Error("Error fetching products");
+    throw error;
   }
 };

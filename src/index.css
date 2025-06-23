@@ -6,6 +6,7 @@
 :root {
   --radius: 0.625rem;
   --background: oklch(0.9755 0.0045 258.32);
+  --background-surface: oklch(0.9288 0.0126 255.51);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
@@ -50,6 +51,7 @@
 
 .dark {
   --background: oklch(0.18 0.0188 274.65);
+  --bg-background-surface: oklch(0.9842 0.0034 247.86);
   --foreground: oklch(0.984 0.003 247.858);
   --card: oklch(0.208 0.042 265.755);
   --card-foreground: oklch(0.984 0.003 247.858);
@@ -93,6 +95,7 @@
 }
 
 @theme inline {
+  --color-background-surface: var(--background-surface);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -144,6 +147,7 @@
   * {
     @apply border-border outline-ring/50;
     font-size: 16px;
+    font-family: "Roboto", sans-serif;
   }
   body {
     @apply bg-background text-foreground;

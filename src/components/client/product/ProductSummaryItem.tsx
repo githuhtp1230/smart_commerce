@@ -40,8 +40,8 @@ const ProductSummaryItem = ({ product }: Props) => {
             )}
           </div>
           <Button className="bg-blue-400 hover:bg-blue-400">
-            <ShoppingCart />
-            <span className="text-sm">Add to cart</span>
+            <ShoppingCart className="text-white" />
+            <span className="text-sm text-white">Add to cart</span>
           </Button>
         </div>
       </div>

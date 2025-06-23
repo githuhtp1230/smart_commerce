@@ -5,10 +5,12 @@ export const PATH = {
   LOGIN: "/login",
   REGISTER: "/register",
   PROFILE: "/profile",
+  NOT_FOUND: "/404",
 };
 
 export const ADMIN_PATH = {
-  PRODUCT: "product",
-  CUSTOMER: "customer",
-  CATEGORY: "category",
+  PRODUCT: "admin/product",
+  ADD_PRODUCT: "admin/add-product",
+  CUSTOMER: "admin/customer",
+  CATEGORY: "admin/category",
 };
