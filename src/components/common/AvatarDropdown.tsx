@@ -21,7 +21,11 @@ export default function AvatarDropdown() {
       <DropdownMenuTrigger className="flex items-center">
         <AvatarStore />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mt-2 w-72" align="end" alignOffset={-10}>
+      <DropdownMenuContent
+        className="mt-2 w-72 bg-primary"
+        align="end"
+        alignOffset={-10}
+      >
         <DropdownMenuItem disabled={true} className="py-3 !opacity-100">
           <AvatarStore />
           <div className="ml-1 flex flex-col">

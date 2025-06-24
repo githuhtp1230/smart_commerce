@@ -9,8 +9,8 @@ import Register from "./components/client/auth/Register";
 import ClientLayout from "./components/client/layout/ClientLayout";
 import Profile from "./components/client/profile/Profile";
 import { ADMIN_PATH, PATH } from "./constants/path";
-import Category from "./pages/admin/Category";
-import Product from "./pages/admin/Product";
+import ManageCategoryPage from "./pages/admin/ManageCategoryPage";
+import ManageProductPage from "./pages/admin/ManageProductPage";
 import Cart from "./pages/client/Cart";
 import HomePage from "./pages/client/HomePage";
 import ProductDetail from "./pages/client/ProductDetail";
@@ -18,7 +18,7 @@ import Products from "./pages/client/Products";
 import { AuthRoute } from "./routes/auth-route";
 import { fetchMe } from "./services/me.service";
 import { useAuthStore } from "./store/auth-store";
-import AddProduct from "./pages/admin/AddProduct";
+import AddProductPage from "./pages/admin/AddProductPage";
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
@@ -64,10 +64,19 @@ function App() {
 
           <Route element={<AuthRoute allowedRoles={["ADMIN"]} />}>
             <Route element={<AdminLayout />}>
-              <Route path="/admin" element={<Product />} />
-              <Route path={ADMIN_PATH.PRODUCT} element={<Product />} />
-              <Route path={ADMIN_PATH.CATEGORY} element={<Category />} />
-              <Route path={ADMIN_PATH.ADD_PRODUCT} element={<AddProduct />} />
+              <Route path="/admin" element={<ManageProductPage />} />
+              <Route
+                path={ADMIN_PATH.PRODUCT}
+                element={<ManageProductPage />}
+              />
+              <Route
+                path={ADMIN_PATH.CATEGORY}
+                element={<ManageCategoryPage />}
+              />
+              <Route
+                path={ADMIN_PATH.ADD_PRODUCT}
+                element={<AddProductPage />}
+              />
             </Route>
           </Route>
         </Routes>

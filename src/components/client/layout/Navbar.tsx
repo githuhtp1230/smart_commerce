@@ -6,7 +6,7 @@ import MenuCategories from "./MenuCategories";
 
 const Navbar = () => {
   return (
-    <div className="w-full bg-primary py-1 flex justify-center px-10">
+    <div className="w-full bg-background-secondary py-1 flex justify-center px-10">
       <div className="flex justify-between max-w-screen-xl w-full">
         <MenuCategories />
         <ul className="flex items-center gap-2">

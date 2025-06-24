@@ -1,9 +1,21 @@
 import { Star } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 
-export function RatingFilter() {
+interface Props {
+  averageRating?: number;
+}
+
+export function RatingFilter({ averageRating }: Props) {
   const [rating, setRating] = useState<number | null>(null);
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (averageRating) {
+      setRating(Math.floor(averageRating));
+    }
+  }, [averageRating]);
+
   return (
     <div className="flex space-x-1">
       {[1, 2, 3, 4, 5].map((ratingValue) => (

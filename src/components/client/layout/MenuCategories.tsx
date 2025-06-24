@@ -33,7 +33,11 @@ const MenuCategories = () => {
           <p className="text-base">Category</p>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-0 w-168">
+      <DropdownMenuContent
+        className="p-0 w-168 bg-primary"
+        side="bottom"
+        align="start"
+      >
         <div className="w-full grid grid-cols-3 p-5">
           {data?.map((category) => (
             <DropdownMenuGroup

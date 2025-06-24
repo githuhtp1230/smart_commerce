@@ -13,7 +13,7 @@ const ProductSummaries = () => {
 
   const queryParams = queryFilter(searchParams, "categoryId");
 
-  const { data } = useQuery({
+  const { data, isSuccess } = useQuery({
     queryKey: ["productSummaries", queryParams.toString()],
     queryFn: () => fetchProductSummaries(queryParams),
   });
@@ -22,7 +22,7 @@ const ProductSummaries = () => {
     if (data) {
       setProductSummaries(data.data);
     }
-  }, [data]);
+  }, [data, isSuccess]);
 
   return (
     <div className="grid grid-cols-3 gap-x-4 gap-y-4">
