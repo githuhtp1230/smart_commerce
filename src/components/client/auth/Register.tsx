@@ -1,6 +1,6 @@
 import {
   FormControl,
-  FormDescription,
+ 
   FormField,
   FormItem,
   FormLabel,
@@ -8,25 +8,37 @@ import {
   Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import AuthTabs from "./AuthTabs";
+ 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 
-const formSchema = z.object({
-  username: z.string().optional(),
-  email: z.string().optional(),
-  password: z.string().optional(),
-});
+const formSchema = z
+  .object({
+    username: z.string().min(3, "Vui lòng nhập username"),
+    email: z.string().min(3, "Vui lòng nhập email"),
+    password: z.string().min(3, "Vui lòng nhập mật khẩu"),
+    confirmPassword: z.string().min(3, "Vui lòng nhập xác nhận mật khẩu"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Mật khẩu xác nhận không khớp",
+  });
+
 const Register = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
-
+const onSubmit = async(values: z.infer<typeof formSchema>) => {
+  const { email, password, username} = values;
+  if (email && password && username) {
+      //
+    }
+};
   return (
     <Form {...form}>
-      <form className="w-full space-y-3">
+      <form className="w-full space-y-3"  onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="username"
@@ -71,7 +83,7 @@ const Register = () => {
           render={({ field }) => (
             <FormItem className="gap-1">
               <FormLabel className="text-txt-tertiary font-medium text-base">
-                Username
+                Password
               </FormLabel>
               <FormControl>
                 <Input
@@ -84,9 +96,31 @@ const Register = () => {
             </FormItem>
           )}
         />
-        <Button className="w-full bg-blue-400 hover:bg-blue-400 h-12 mt-3 text-base">
-          Register
-        </Button>
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem className="gap-1">
+              <FormLabel className="text-txt-tertiary font-medium text-base">
+                Confirm Password
+              </FormLabel>
+              <FormControl>
+                <Input
+                  className="focus:!ring-0 h-10"
+                  placeholder="Enter password here"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button
+            className="w-full bg-blue-400 hover:bg-blue-400 h-12 mt-3 text-white"
+           
+          >
+            Register
+          </Button>
       </form>
     </Form>
   );
