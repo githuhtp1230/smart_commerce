@@ -13,6 +13,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 const formSchema = z
   .object({
@@ -36,6 +38,8 @@ const onSubmit = async(values: z.infer<typeof formSchema>) => {
       //
     }
 };
+const [showPassword, setShowPassword] = useState<boolean>(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   return (
     <Form {...form}>
       <form className="w-full space-y-3"  onSubmit={form.handleSubmit(onSubmit)}>
@@ -86,11 +90,25 @@ const onSubmit = async(values: z.infer<typeof formSchema>) => {
                 Password
               </FormLabel>
               <FormControl>
+                <div className="relative"> 
                 <Input
+                type={showPassword ?  "text" : "password"}
                   className="focus:!ring-0 h-10"
                   placeholder="Enter password here"
                   {...field}
                 />
+                <button
+                        type="button"
+                        onClick={() => setShowPassword((showPassword) => !showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-txt-tertiary text-base"
+                      >
+                        {showPassword ? (
+                          <Eye/>
+                        ) : (
+                          <EyeOff/>
+                        )}
+                      </button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -105,11 +123,25 @@ const onSubmit = async(values: z.infer<typeof formSchema>) => {
                 Confirm Password
               </FormLabel>
               <FormControl>
+                <div className="relative">
                 <Input
+                type={showConfirmPassword ? "text" : "password"}
                   className="focus:!ring-0 h-10"
                   placeholder="Enter password here"
                   {...field}
                 />
+                <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword((showPassword2) => !showPassword2)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-txt-tertiary text-base"
+                      >
+                        {showConfirmPassword ? (
+                          <Eye/>
+                        ) : (
+                          <EyeOff/>
+                        )}
+                      </button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
