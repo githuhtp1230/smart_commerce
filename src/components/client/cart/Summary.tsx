@@ -29,9 +29,6 @@ const Summary: React.FC<SummaryProps> = ({
     <Card className="shadow-md bg-primary">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-2xl font-bold ">Summary</CardTitle>
-        <Button variant="link" className="text-blue-500 p-0 h-auto">
-          Edit cart
-        </Button>
       </CardHeader>
       <CardContent className="space-y-6">
         <Select defaultValue="cash">
@@ -54,13 +51,13 @@ const Summary: React.FC<SummaryProps> = ({
             <span className="text-muted-foreground">Discount:</span>
             <span className="font-medium text-red-500">-${discount}</span>
           </div>
-          <div className="flex justify-between border-t pt-3 border-gray-200">
+          <div className="flex justify-between border-t pt-3">
             <span className="text-muted-foreground">Subtotal:</span>
             <span className="font-medium">${subtotal - discount + tax}</span>
           </div>
         </div>
 
-        <div className="pt-4 border-t border-gray-200">
+        <div className="pt-4 border-t">
           <div className="flex justify-between">
             <span className="text-xl font-bold">Total:</span>
             <span className="text-xl font-bold">${total.toFixed(2)}</span>
