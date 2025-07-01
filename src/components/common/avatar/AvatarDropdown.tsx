@@ -11,7 +11,7 @@ import { useAuthStore } from "@/store/auth-store";
 import { LogOutIcon, User, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
 import AvatarStore from "./AvatarStore";
-import RequireRole from "../require-role";
+import RequireRole from "../../require-role";
 
 export default function AvatarDropdown() {
   const { me, logout } = useAuthStore((state) => state);

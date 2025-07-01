@@ -58,7 +58,7 @@ function App() {
               path={`${PATH.PRODUCTS}/:productId`}
               element={<ProductDetail />}
             />
-            <Route element={<AuthRoute allowedRoles={["ADMIN"]} />}>
+            <Route element={<AuthRoute />}>
               <Route path={PATH.PROFILE} element={<Profile />} />
             </Route>
           </Route>

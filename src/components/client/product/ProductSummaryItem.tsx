@@ -13,6 +13,10 @@ interface Props {
 }
 
 const ProductSummaryItem = ({ product }: Props) => {
+  const salePrice = product.promotion
+    ? product.price * (product.promotion?.discountValuePercent / 100)
+    : undefined;
+
   return (
     <Link to={`${PATH.PRODUCTS}/${product.id}`} className="group">
       <Card className="bg-primary shadow-xs p-0">
@@ -27,20 +31,14 @@ const ProductSummaryItem = ({ product }: Props) => {
           </div>
           <div className="flex justify-between items-center mt-2">
             <div className="flex items-center gap-2">
-              <p
-                className={cn(
-                  !product.discountedPrice
-                    ? "font-semibold text-3xl"
-                    : "line-through font-light text-txt-secondary"
-                )}
-              >
-                ${product.price}
-              </p>
-              {product.discountedPrice && (
-                <p className="font-semibold text-3xl">
-                  ${product.discountedPrice}
+              {salePrice && (
+                <p className="line-through font-light text-txt-secondary">
+                  ${product.price}
                 </p>
               )}
+              <h1 className="font-semibold text-3xl">
+                ${salePrice ?? product.price}
+              </h1>
             </div>
             <Button className="bg-blue-400 hover:bg-blue-400">
               <ShoppingCart className="text-white" />
