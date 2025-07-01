@@ -44,6 +44,8 @@
   --txt-tertiary: oklch(0.4976 0.04 268.84);
   --txt-system-danger: oklch(0.712 0.165 22.59);
   --txt-brand: oklch(0.6187 0.2067 259.23);
+  --txt-blue: oklch(0.6005 0.2165 263.58);
+  --txt-primary-blue: oklch(0.6005 0.2165 263.58);
   --neutral-primary: oklch(0.18 0 0);
   --neutral-secondary: oklch(0.3171 0 0);
   --system-danger-hard: oklch(0.51 0.1899 27.66);
@@ -92,6 +94,8 @@
   --txt-tertiary: oklch(0.7268 0.0328 271.56);
   --txt-system-danger: oklch(0.712 0.165 22.59);
   --txt-brand: oklch(0.8071 0.100651 250.4462);
+  --txt-blue: oklch(0.6005 0.2165 263.58);
+  --txt-primary-blue: oklch(0.6005 0.2165 263.58);
   --neutral-primary: oklch(1 0 0);
   --neutral-secondary: oklch(0.8699 0 0);
   --system-danger-hard: oklch(0.51 0.1899 27.66);
@@ -144,6 +148,8 @@
   --color-txt-tertiary: var(--txt-tertiary);
   --color-txt-system-danger: var(--txt-system-danger);
   --color-txt-brand: var(--txt-brand);
+  --color-txt-blue: var(--txt-blue);
+  --color-txt-primary-blue: var(--txt-primary-blue);
   --color-neutral-primary: var(--neutral-primary);
   --color-neutral-secondary: var(--neutral-secondary);
   --color-system-danger-hard: var(--system-danger-hard);

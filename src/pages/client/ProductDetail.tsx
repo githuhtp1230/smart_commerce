@@ -102,10 +102,23 @@ const ProductDetail: React.FC = () => {
       <section className="py-8 bg-muted">
         <div className="container mx-auto px-4">
           <Tabs defaultValue="description" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-8">
-              <TabsTrigger value="description">Description</TabsTrigger>
-              <TabsTrigger value="specifications">Specifications</TabsTrigger>
-              <TabsTrigger value="reviews">
+            <TabsList className="flex justify-start gap-2">
+              <TabsTrigger
+                value="description"
+                className="border-b-2 border-b-transparent rounded-none hover:text-blue-600 hover:border-b-blue-600 data-[state=active]:border-b-blue-600 dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 "
+              >
+                Description
+              </TabsTrigger>
+              <TabsTrigger
+                value="specifications"
+                className="border-b-2 border-b-transparent rounded-none hover:text-blue-600 hover:border-b-blue-600 data-[state=active]:border-b-blue-600 dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500"
+              >
+                Specifications
+              </TabsTrigger>
+              <TabsTrigger
+                value="reviews"
+                className="border-b-2 border-b-transparent rounded-none hover:text-blue-600 hover:border-b-blue-600 data-[state=active]:border-b-blue-600 dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500"
+              >
                 Ratings & reviews (1,283)
               </TabsTrigger>
             </TabsList>
