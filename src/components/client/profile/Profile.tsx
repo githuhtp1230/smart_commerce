@@ -1,4 +1,3 @@
-// The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,9 +7,11 @@ import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { KeyRound, Pencil } from 'lucide-react';
+import { KeyRound, Linkedin, Pencil, Twitter } from 'lucide-react';
+import { Facebook } from '@/assets/icons';
 const Profile: React.FC = () => {
 const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
 const [contactInfo, setContactInfo] = useState({
   address: "Vancouver, British Columbia\nCanada",
   email: "shatinon@jeemail.com",
@@ -27,19 +28,11 @@ return (
   <div className="min-h-screen ">
     {/* Header */}
     {/* Main Content */}
-    <main className="container mx-auto px-4 py-6">
-    {/* Breadcrumb */}
-      <div className="flex items-center text-sm mb-4">
-        <a href="#" className="text-blue-500 hover:underline cursor-pointer">Page 1 </a>
-        <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
-        <a href="#" className="text-blue-500 hover:underline cursor-pointer">Page 2</a>
-        <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
-        <span className="text-gray-600">Default</span>
-      </div>
+    <main className="container mx-auto py-6">
       {/* Profile Header */}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Profile</h1>
-        <div className="flex space-x-3">
+        <h1 className="text-2xl font-bold text-secondary-foreground">Profile</h1>
+        <div className="flex space-x-3 text-secondary-foreground">
           <Button variant="outline" className="flex items-center space-x-2 whitespace-nowrap cursor-pointer !rounded-button">
           <KeyRound />
           <span>Reset password</span>
@@ -49,50 +42,50 @@ return (
       {/* Profile Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Profile Info */}
-        <Card className="col-span-2 p-6">
+        <Card className="col-span-2 p-6 bg-primary">
         <div className="flex items-start gap-6">
-          <Avatar className="h-32 w-32">
+          <Avatar className="h-40 w-40">
           <AvatarImage src="https://readdy.ai/api/search-image?query=professional%20portrait%20of%20a%20smiling%20Asian%20man%20in%20his%2030s%20wearing%20a%20light%20blue%20button-up%20shirt%20against%20a%20neutral%20dark%20green%20background%2C%20business%20headshot%20with%20soft%20lighting%2C%20high%20quality%20professional%20photo&width=300&height=300&seq=1&orientation=squarish" alt="Ansolo Lazinatov" />
           <AvatarFallback className="text-2xl">AL</AvatarFallback>
           </Avatar>
-          <div className="flex-1 space-y-4">
+          <div className="flex-1 space-y-4 mt-10">
             <div>
-              <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Ansolo Lazinatov</h2>
+              <h2 className="text-2xl font-semibold text-secondary-foreground">Ansolo Lazinatov</h2>
               <p className="text-gray-500 dark:text-shadow-white">Joined 3 months ago</p>
-            </div>
-            <div className="flex space-x-3">
+            </div>    
+            <div className="flex space-x-3 ">
               <a href="#" className="text-gray-400 hover:text-blue-600 cursor-pointer">
-                <i className="fab fa-linkedin"></i>
+                <Linkedin />
               </a>
               <a href="#" className="text-gray-400 hover:text-blue-600 cursor-pointer">
-                <i className="fab fa-facebook"></i>
+                <Facebook />
               </a>
               <a href="#" className="text-gray-400 hover:text-blue-600 cursor-pointer">
-                <i className="fab fa-twitter"></i>
+                <Twitter />
               </a>
             </div>
-            <Separator className="my-6" />
-          <div className="grid grid-cols-3 gap-4 ">
-            <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1 dark:text-white">Total Spent</h3>
-              <p className="text-xl font-semibold text-gray-800 dark:text-white">18,800,000 VNĐ</p>
             </div>
-            <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1 dark:text-white">Last Order</h3>
-              <p className="text-xl font-semibold text-gray-800 dark:text-white">1 week ago</p>
             </div>
-            <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1 dark:text-white">Total Orders</h3>
-              <p className="text-xl font-semibold text-gray-800 dark:text-white">97</p>
-            </div>
-          </div>
+             <Separator className="w-full border-t border-dashed border-gray-300 my-6 mb-0" />
+            <div className="grid grid-cols-3 gap-12 mt-0 ">
+              <div className='space-y-2'>
+                <h6 className="text-sm font-medium text-muted-foreground">Total Spent</h6>
+                <h4 className="text-xl font-semibold text-secondary-foreground">18,800,000 VNĐ</h4>
+              </div>
+              <div className='space-y-2'>
+                <h6 className="text-sm font-medium text-muted-foreground">Last Order</h6>
+                <p className="text-xl font-semibold text-secondary-foreground ">1 week ago</p>
+              </div>
+              <div className='space-y-2 ml-30'>
+                <h6 className="text-sm font-medium text-muted-foreground">Total Orders</h6>
+                <p className="text-xl font-semibold text-secondary-foreground">97</p>
           </div>
         </div>
         </Card>
       {/* Address Info */}
-        <Card className="p-6 bg-white dark:bg-gray-900 rounded-md shadow">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
+        <Card className="p-6 rounded-md shadow bg-primary">
+          <div className="flex items-center justify-between ">
+            <h2 className="text-lg font-semibold text-secondary-foreground">
               Contact Information
             </h2>
             <button
@@ -103,6 +96,7 @@ return (
               <Pencil className="w-4 h-4" />
             </button>
           </div>
+          <Separator className="my-4 border-t border-dashed border-gray-300 mt-0 mb-0" />
 
           {/* --- Dialog --- */}
           <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
@@ -174,37 +168,42 @@ return (
           </Dialog>
 
           {/* --- Contact Info Display --- */}
-          <div className="space-y-4 mt-6">
+          <div className="space-y-2 mt-0">
             <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1 dark:text-gray-300">Address</h3>
-              <p className="text-gray-800 dark:text-white whitespace-pre-line">
-                {contactInfo.address}
-              </p>
+              <div className="flex gap-20 mb-20">
+                <h3 className=" font-medium text-secondary-foreground">Address</h3>
+                <p className="text-gray-800 dark:text-white whitespace-pre-line">
+                  {contactInfo.address}
+                </p>
+              </div>
             </div>
 
-            <Separator className="my-4" />
-
+            <Separator className="my-4 border-t border-dashed border-gray-300" />
             <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1 dark:text-gray-300">Email</h3>
-              <a
-                href={`mailto:${contactInfo.email}`}
-                className="text-blue-600 hover:underline dark:text-blue-400"
-              >
-                {contactInfo.email}
-              </a>
+              <div className="flex items-center gap-40">
+                <h3 className=" font-medium text-secondary-foreground ">Email</h3>
+                <a
+                  href={`mailto:${contactInfo.email}`}
+                  className="text-blue-600 hover:underline dark:text-blue-400"
+                >
+                  {contactInfo.email}
+                </a>
+              </div>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1 dark:text-gray-300">Phone</h3>
-              <a
-                href={`tel:${contactInfo.phone}`}
-                className="text-blue-600 hover:underline dark:text-blue-400"
-              >
-                {contactInfo.phone}
-              </a>
+              <div className="flex items-center gap-55">
+                <h3 className="font-medium text-secondary-foreground">Phone</h3>
+                <a
+                  href={`tel:${contactInfo.phone}`}
+                  className="text-blue-600 hover:underline dark:text-blue-400"
+                >
+                  {contactInfo.phone}
+                </a>
+              </div>
             </div>
           </div>
-</Card>
+        </Card>
 
       </div>
   </main>
