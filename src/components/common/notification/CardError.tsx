@@ -1,11 +1,11 @@
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface FormErrorProps {
+interface Props {
   message?: string;
 }
 
-export default function FormError({ message }: FormErrorProps) {
+export default function CardError({ message }: Props) {
   return (
     <AnimatePresence>
       {message && (

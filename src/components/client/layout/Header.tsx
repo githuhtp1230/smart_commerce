@@ -1,5 +1,5 @@
-import AvatarDropdown from "@/components/common/AvatarDropdown";
-import AvatarStore from "@/components/common/AvatarStore";
+import AvatarDropdown from "@/components/common/avatar/AvatarDropdown";
+import AvatarStore from "@/components/common/avatar/AvatarStore";
 import ToggleTheme from "@/components/common/ToggleTheme";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";

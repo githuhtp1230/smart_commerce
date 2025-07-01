@@ -1,4 +1,4 @@
-import AvatarStore from "@/components/common/AvatarStore";
+import AvatarStore from "@/components/common/avatar/AvatarStore";
 import {
   Sidebar,
   SidebarContent,

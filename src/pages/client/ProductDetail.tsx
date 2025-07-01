@@ -31,6 +31,9 @@ import type { IProductDetail } from "@/type/products";
 import { RatingFilter } from "@/components/common/RatingFilter";
 import { AppBadge } from "@/components/common/AppBadge";
 import { formatUtcToVietnamDate } from "@/helper/format-utc-to-vietnam-date";
+import { getTimeRemaining } from "@/helper/get-time-remaining";
+import QuantityButton from "@/components/common/button/QuantityButton";
+import ProductDetailInformation from "@/components/client/product-detail/ProductDetailInformation";
 
 interface Color {
   name: string;
@@ -79,205 +82,20 @@ const ProductDetail: React.FC = () => {
     { name: "Orange", hex: "#ff9800" },
   ];
 
-  const productImages: ProductImage[] = [
-    {
-      url: "https://readdy.ai/api/search-image?query=A%20sleek%20and%20modern%2024-inch%20Apple%20iMac%20with%20Retina%204.5K%20display%20in%20blue%20color%2C%20positioned%20on%20a%20clean%20white%20desk%20with%20a%20minimalist%20setup%2C%20showing%20a%20vibrant%20blue%20screen%20with%20abstract%20wave%20patterns%2C%20professional%20studio%20lighting%2C%20high-resolution%20product%20photography&width=600&height=500&seq=1&orientation=landscape",
-      thumbnail:
-        "https://readdy.ai/api/search-image?query=A%20thumbnail%20image%20of%20a%20blue%20Apple%20iMac%20with%20Retina%20display%20showing%20the%20front%20view%20of%20the%20screen%20with%20abstract%20blue%20wave%20patterns%2C%20clean%20white%20background%2C%20professional%20product%20photography%2C%20minimalist%20style&width=80&height=80&seq=2&orientation=squarish",
-    },
-    {
-      url: "https://readdy.ai/api/search-image?query=Side%20view%20of%20a%2024-inch%20Apple%20iMac%20in%20blue%20color%20showing%20its%20slim%20profile%20design%2C%20positioned%20on%20a%20white%20desk%20with%20clean%20background%2C%20professional%20studio%20lighting%2C%20high-resolution%20product%20photography%20with%20soft%20shadows&width=600&height=500&seq=3&orientation=landscape",
-      thumbnail:
-        "https://readdy.ai/api/search-image?query=A%20thumbnail%20image%20showing%20the%20side%20profile%20view%20of%20a%20blue%20Apple%20iMac%2C%20highlighting%20its%20ultra-thin%20design%2C%20clean%20white%20background%2C%20professional%20product%20photography%2C%20minimalist%20style&width=80&height=80&seq=4&orientation=squarish",
-    },
-    {
-      url: "https://readdy.ai/api/search-image?query=Close-up%20view%20of%20the%20bottom%20portion%20of%20a%20blue%2024-inch%20Apple%20iMac%20showing%20the%20Apple%20logo%20and%20stand%2C%20positioned%20on%20a%20white%20desk%20with%20clean%20background%2C%20professional%20studio%20lighting%2C%20high-resolution%20product%20photography&width=600&height=500&seq=5&orientation=landscape",
-      thumbnail:
-        "https://readdy.ai/api/search-image?query=A%20thumbnail%20image%20showing%20a%20close-up%20of%20the%20Apple%20logo%20and%20stand%20on%20a%20blue%20iMac%2C%20clean%20white%20background%2C%20professional%20product%20photography%2C%20minimalist%20style&width=80&height=80&seq=6&orientation=squarish",
-    },
-  ];
-
-  const similarProducts: SimilarProduct[] = [
-    {
-      id: 1,
-      name: "Razer Kraken V3 Wired 7.1 Surround Sound Gaming Headset",
-      price: 59.99,
-      rating: 4.5,
-      reviews: 128,
-      image:
-        "https://readdy.ai/api/search-image?query=Professional%20product%20photography%20of%20a%20black%20gaming%20headset%20with%20RGB%20lighting%2C%20Razer%20Kraken%20model%2C%20on%20a%20clean%20white%20background%20with%20soft%20shadows%2C%20high%20resolution%20detailed%20image%20showing%20ear%20cups%20and%20headband&width=200&height=200&seq=7&orientation=squarish",
-    },
-    {
-      id: 2,
-      name: "2022 Apple 10.9-inch iPad Air (Wi-Fi, 64GB) - Purple",
-      price: 599,
-      rating: 4.8,
-      reviews: 3542,
-      image:
-        "https://readdy.ai/api/search-image?query=Professional%20product%20photography%20of%20a%20purple%20Apple%20iPad%20Air%20tablet%20showing%20the%20front%20display%20with%20colorful%20wallpaper%2C%20positioned%20at%20an%20angle%20on%20a%20clean%20white%20background%20with%20soft%20shadows%2C%20high%20resolution%20detailed%20image&width=200&height=200&seq=8&orientation=squarish",
-    },
-    {
-      id: 3,
-      name: "Logitech G923 Racing Wheel and Pedals for PlayStation/PC",
-      price: 299,
-      rating: 4.6,
-      reviews: 872,
-      image:
-        "https://readdy.ai/api/search-image?query=Professional%20product%20photography%20of%20a%20Logitech%20G923%20racing%20wheel%20and%20pedal%20set%20for%20gaming%2C%20black%20color%20with%20silver%20accents%2C%20on%20a%20clean%20white%20background%20with%20soft%20shadows%2C%20high%20resolution%20detailed%20image%20showing%20buttons%20and%20texture&width=200&height=200&seq=9&orientation=squarish",
-    },
-    {
-      id: 4,
-      name: "Garmin Venu Sq Smart Watch with GPS",
-      price: 199.99,
-      rating: 4.3,
-      reviews: 651,
-      image:
-        "https://readdy.ai/api/search-image?query=Professional%20product%20photography%20of%20a%20Garmin%20Venu%20Sq%20smartwatch%20with%20black%20band%20and%20color%20display%20showing%20fitness%20tracking%20interface%2C%20positioned%20at%20an%20angle%20on%20a%20clean%20white%20background%20with%20soft%20shadows%2C%20high%20resolution%20detailed%20image&width=200&height=200&seq=10&orientation=squarish",
-    },
-    {
-      id: 5,
-      name: "Apple AirPods Pro",
-      price: 249,
-      rating: 4.7,
-      reviews: 12453,
-      image:
-        "https://readdy.ai/api/search-image?query=Professional%20product%20photography%20of%20Apple%20AirPods%20Pro%20wireless%20earbuds%20with%20charging%20case%2C%20white%20color%2C%20positioned%20at%20an%20angle%20on%20a%20clean%20white%20background%20with%20soft%20shadows%2C%20high%20resolution%20detailed%20image%20showing%20the%20earbuds%20and%20case&width=200&height=200&seq=11&orientation=squarish",
-    },
-    {
-      id: 6,
-      name: "Apple Magic Mouse (Wireless, Rechargeable)",
-      price: 79,
-      rating: 4.4,
-      reviews: 3219,
-      image:
-        "https://readdy.ai/api/search-image?query=Professional%20product%20photography%20of%20an%20Apple%20Magic%20Mouse%20in%20white%20color%2C%20showing%20its%20sleek%20minimalist%20design%20with%20touch-sensitive%20surface%2C%20positioned%20at%20an%20angle%20on%20a%20clean%20white%20background%20with%20soft%20shadows%2C%20high%20resolution%20detailed%20image&width=200&height=200&seq=12&orientation=squarish",
-    },
-  ];
-
   const incrementQuantity = () => setQuantity(quantity + 1);
   const decrementQuantity = () => quantity > 1 && setQuantity(quantity - 1);
   const toggleWishlist = () => setIsWishlisted(!isWishlisted);
 
   return (
     <div>
-      <section className="py-8">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-            <div className="md:col-span-7">
-              <div className="flex">
-                <div className="w-20 mr-4 space-y-3">
-                  {productImages.map((image, index) => (
-                    <div
-                      key={index}
-                      className={`border rounded cursor-pointer overflow-hidden ${
-                        selectedImage === index
-                          ? "border-primary"
-                          : "border-border"
-                      }`}
-                      onClick={() => setSelectedImage(index)}
-                    >
-                      <img
-                        src={image.thumbnail}
-                        alt={`iMac thumbnail ${index + 1}`}
-                        className="w-full h-full object-cover object-top"
-                      />
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex-1 border border-border rounded overflow-hidden">
-                  <img
-                    src={productImages[selectedImage].url}
-                    alt="24-inch iMac with Retina 4.5K display"
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="md:col-span-5">
-              <div className="space-y-6">
-                <div>
-                  <h1 className="text-2xl font-bold text-foreground">
-                    {productDetail?.name}
-                  </h1>
-                  <RatingFilter averageRating={productDetail?.averageRating} />
-                  <div className="mt-2 flex items-center gap-2">
-                    <AppBadge badgeColor="green" content="In stock" />
-                    <span className="text-sm text-muted-foreground">
-                      {`Release on ${
-                        productDetail?.createdAt &&
-                        formatUtcToVietnamDate(productDetail?.createdAt)
-                      }`}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="border-t border-b border-border py-4">
-                  <div className="flex items-baseline">
-                    <span className="text-3xl font-bold text-foreground">
-                      62,910,000 đ
-                    </span>
-                    <span className="text-lg text-muted-foreground line-through ml-2">
-                      $69,900,000 đ
-                    </span>
-                    <Badge
-                      variant="secondary"
-                      className="ml-3 bg-orange-100 text-orange-800 text-xl"
-                    >
-                      10% off
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Free shipping by Jun 23, 2025 • Eligible for Return, Refund
-                    or Replacement within 30 days of receipt if you are not
-                    fully satisfied (within 14 days for Outlet).{" "}
-                  </p>
-                  <p className="text-sm text-orange-700 font-medium mt-2">
-                    Special offer ends in 23:00:45 hours
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-foreground">
-                    Quantity:
-                  </h3>
-                  <div className="flex items-center mt-2">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={decrementQuantity}
-                      className="rounded-r-none"
-                      disabled={quantity === 1}
-                    >
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <Input
-                      type="text"
-                      value={quantity}
-                      readOnly
-                      className="w-12 h-9 border-x-0 text-center text-sm"
-                    />
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={incrementQuantity}
-                      className="rounded-l-none"
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="flex space-x-4">
-                  <Button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white">
-                    <ShoppingCart className="h-4 w-4 mr-2" />
-                    Add to cart
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+      <section className="py-8 flex gap-10">
+        <div className="w-[40%]">
+          <img
+            className="w-full"
+            src="https://news.vocofm.com/wp-content/uploads/2023/11/faker-1024x760.jpg"
+          />
         </div>
+        <ProductDetailInformation productDetail={productDetail} />
       </section>
 
       {/* Product Details */}
@@ -615,7 +433,7 @@ const ProductDetail: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {similarProducts.map((product) => (
               <Card
                 key={product.id}
@@ -668,7 +486,7 @@ const ProductDetail: React.FC = () => {
                 </CardContent>
               </Card>
             ))}
-          </div>
+          </div> */}
         </div>
       </section>
 

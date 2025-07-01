@@ -18,7 +18,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { loginRequest } from "@/services/auth.service";
-import FormError from "./FormError";
+import CardError from "../../common/notification/CardError";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 import { useAuthStore } from "@/store/auth-store";
@@ -165,7 +165,7 @@ const Login = () => {
               Forgot password?
             </Button>
           </div>
-          {isShowError && <FormError message="Email or password is invalid" />}
+          {isShowError && <CardError message="Email or password is invalid" />}
           <Button
             className="w-full bg-blue-400 hover:bg-blue-400 h-12 mt-3 text-white"
             disabled={isPending}
