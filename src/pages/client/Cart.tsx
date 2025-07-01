@@ -37,17 +37,17 @@ const Cart = () => {
   const total = subtotal - discount + tax + shippingCost;
 
   return (
-    <div className="min-h-[1024px] w-full max-w-[1440px] mx-auto px-6 py-8 bg-[#F5F7FA]">
+    <div className="min-h-[1024px] w-full max-w-[1440px] mx-auto px-6 py-8 bg-background-secondary">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-blue-500 mb-4">
+      <div className="flex items-center gap-2 text-sm text-txt-violet-soft mb-4">
         <a href="#" className="hover:underline">Page 1</a>
-        <span className="text-gray-500">&gt;</span>
+        <span className="text-muted-foreground">&gt;</span>
         <a href="#" className="hover:underline">Page 2</a>
-        <span className="text-gray-500">&gt;</span>
-        <span className="text-gray-700">Default</span>
+        <span className="text-muted-foreground">&gt;</span>
+        <span className="text-muted-foreground">Default</span>
       </div>
 
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Cart</h1>
+      <h1 className="text-3xl font-bold text-foreground mb-8">Cart</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">

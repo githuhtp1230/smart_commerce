@@ -19,17 +19,17 @@ type ListProductProps = {
 const ListProduct: React.FC<ListProductProps> = ({ cartItems, onQuantityChange, onRemoveItem, subtotal }) => {
     return (
         <>
-            <Table className="w-full border">
+            <Table className="border-t border-b border-border py-4">
                 <TableHeader>
                     <TableRow>
                         <TableHead></TableHead>
-                        <TableHead className="w-[30%]">PRODUCTS</TableHead>
-                        <TableHead className="text-center">COLOR</TableHead>
-                        <TableHead className="text-center">SIZE</TableHead>
-                        <TableHead className="text-center">PRICE</TableHead>
-                        <TableHead className="text-center">QUANTITY</TableHead>
-                        <TableHead className="text-center">TOTAL</TableHead>
-                        <TableHead className="text-center"></TableHead>
+                        <TableHead className="w-[30%] text-foreground">PRODUCTS</TableHead>
+                        <TableHead className="text-center text-foreground">COLOR</TableHead>
+                        <TableHead className="text-center text-foreground">SIZE</TableHead>
+                        <TableHead className="text-center text-foreground">PRICE</TableHead>
+                        <TableHead className="text-center text-foreground">QUANTITY</TableHead>
+                        <TableHead className="text-center text-foreground">TOTAL</TableHead>
+                        <TableHead className="text-center text-foreground"></TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -45,8 +45,8 @@ const ListProduct: React.FC<ListProductProps> = ({ cartItems, onQuantityChange, 
             </Table>
 
             <div className="flex justify-between items-center mt-6 text-lg">
-                <span className="font-medium">Items subtotal:</span>
-                <span className="font-medium">${subtotal.toFixed(2)}</span>
+                <span className="font-medium text-foreground">Items subtotal:</span>
+                <span className="font-medium text-foreground">${subtotal.toFixed(2)}</span>
             </div>
         </>
     );
