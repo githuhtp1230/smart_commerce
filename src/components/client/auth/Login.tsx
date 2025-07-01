@@ -118,7 +118,7 @@ const Login = () => {
                   <FormControl>
                     <div className="relative">
                       <Input
-                        type={showPassword ?  "***" : "password"}
+                        type={showPassword ? "***" : "password"}
                         className="focus:!ring-0 h-10 selection:bg-blue-400 pr-10"
                         placeholder="Enter password here"
                         {...field}
@@ -129,14 +129,12 @@ const Login = () => {
                       />
                       <button
                         type="button"
-                        onClick={() => setShowPassword((showPassword) => !showPassword)}
+                        onClick={() =>
+                          setShowPassword((showPassword) => !showPassword)
+                        }
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-txt-tertiary text-base"
                       >
-                        {showPassword ? (
-                          <Eye/>
-                        ) : (
-                          <EyeOff/>
-                        )}
+                        {showPassword ? <Eye /> : <EyeOff />}
                       </button>
                     </div>
                   </FormControl>
