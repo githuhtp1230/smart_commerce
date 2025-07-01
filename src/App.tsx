@@ -19,6 +19,8 @@ import { AuthRoute } from "./routes/auth-route";
 import { fetchMe } from "./services/me.service";
 import { useAuthStore } from "./store/auth-store";
 import AddProductPage from "./pages/admin/AddProductPage";
+ 
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
