@@ -9,3 +9,20 @@ export const loginRequest = async (body: ILoginRequest): Promise<IAuth> => {
     throw error;
   }
 };
+
+export const registerRequest = async (body: {
+  username: string;
+  email: string;
+  password: string;
+}) => {
+  const res = await httpRequest.post("/auth/register", body);
+  return res.data;
+};
+
+export const verifyOtpRequest = async (body: {
+  email: string;
+  otp: string;
+}) => {
+  const res = await httpRequest.post("/auth/register-verify-otp", body);
+  return res.data;
+};

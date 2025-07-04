@@ -1,6 +1,5 @@
 import {
   FormControl,
- 
   FormField,
   FormItem,
   FormLabel,
@@ -8,13 +7,16 @@ import {
   Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
- 
+import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { registerRequest, verifyOtpRequest } from "@/services/auth.service";
+import OTPInputWithSeparator from "@/components/OTPInput";
+import { useLocation, useNavigate } from "react-router-dom";
+import { PATH } from "@/constants/path";
 
 const formSchema = z
   .object({
@@ -29,33 +31,62 @@ const formSchema = z
   });
 
 const Register = () => {
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
-const onSubmit = async(values: z.infer<typeof formSchema>) => {
-  const { email, password, username} = values;
-  if (email && password && username) {
-      //
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isShowOtp, setIsShowOtp] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [emailState, setEmailState] = useState("");
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await registerRequest({
+        username: values.username,
+        email: values.email,
+        password: values.password,
+      });
+
+      setEmailState(values.email);
+      setIsShowOtp(true);
+      alert("Mã OTP đã được gửi đến email của bạn.");
+    } catch (err) {
+      console.error(err);
+      alert("Đăng ký thất bại. Email có thể đã tồn tại.");
     }
-};
-const [showPassword, setShowPassword] = useState<boolean>(false);
-const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  };
+
+  const handleVerifyOtp = async () => {
+    try {
+      await verifyOtpRequest({
+        email: emailState,
+        otp,
+      });
+      alert("Đăng ký thành công!");
+      navigate(PATH.LOGIN);
+    } catch (err) {
+      console.error(err);
+      alert("Mã OTP không chính xác hoặc đã hết hạn.");
+    }
+  };
+
   return (
     <Form {...form}>
-      <form className="w-full space-y-3"  onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="w-full space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
             <FormItem className="gap-1">
-              <FormLabel className="text-txt-tertiary font-medium text-base">
-                Username
-              </FormLabel>
+              <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input
-                  className="focus:!ring-0 h-10"
-                  placeholder="Enter username here"
+                  placeholder="Nhập username"
                   {...field}
+                  className="h-10"
                 />
               </FormControl>
               <FormMessage />
@@ -67,15 +98,9 @@ const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
           name="email"
           render={({ field }) => (
             <FormItem className="gap-1">
-              <FormLabel className="text-txt-tertiary font-medium text-base">
-                Email
-              </FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  className="focus:!ring-0 h-10"
-                  placeholder="Enter email here"
-                  {...field}
-                />
+                <Input placeholder="Nhập email" {...field} className="h-10" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -86,28 +111,22 @@ const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
           name="password"
           render={({ field }) => (
             <FormItem className="gap-1">
-              <FormLabel className="text-txt-tertiary font-medium text-base">
-                Password
-              </FormLabel>
+              <FormLabel>Mật khẩu</FormLabel>
               <FormControl>
-                <div className="relative"> 
-                <Input
-                type={showPassword ?  "text" : "password"}
-                  className="focus:!ring-0 h-10"
-                  placeholder="Enter password here"
-                  {...field}
-                />
-                <button
-                        type="button"
-                        onClick={() => setShowPassword((showPassword) => !showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-txt-tertiary text-base"
-                      >
-                        {showPassword ? (
-                          <Eye/>
-                        ) : (
-                          <EyeOff/>
-                        )}
-                      </button>
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Nhập mật khẩu"
+                    {...field}
+                    className="h-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((p) => !p)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                  >
+                    {showPassword ? <Eye /> : <EyeOff />}
+                  </button>
                 </div>
               </FormControl>
               <FormMessage />
@@ -119,41 +138,52 @@ const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
           name="confirmPassword"
           render={({ field }) => (
             <FormItem className="gap-1">
-              <FormLabel className="text-txt-tertiary font-medium text-base">
-                Confirm Password
-              </FormLabel>
+              <FormLabel>Xác nhận mật khẩu</FormLabel>
               <FormControl>
                 <div className="relative">
-                <Input
-                type={showConfirmPassword ? "text" : "password"}
-                  className="focus:!ring-0 h-10"
-                  placeholder="Enter password here"
-                  {...field}
-                />
-                <button
-                        type="button"
-                        onClick={() => setShowConfirmPassword((showPassword2) => !showPassword2)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-txt-tertiary text-base"
-                      >
-                        {showConfirmPassword ? (
-                          <Eye/>
-                        ) : (
-                          <EyeOff/>
-                        )}
-                      </button>
+                  <Input
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Nhập lại mật khẩu"
+                    {...field}
+                    className="h-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword((p) => !p)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                  >
+                    {showConfirmPassword ? <Eye /> : <EyeOff />}
+                  </button>
                 </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button
-            className="w-full bg-blue-400 hover:bg-blue-400 h-12 mt-3 text-white"
-           
+
+        {!isShowOtp && (
+          <Button
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white h-12 mt-3"
+            type="submit"
           >
-            Register
+            Đăng ký
           </Button>
+        )}
       </form>
+
+      {isShowOtp && (
+        <div className="space-y-3 mt-5">
+          <FormLabel>Mã OTP đã được gửi đến email của bạn:</FormLabel>
+          <OTPInputWithSeparator value={otp.padEnd(6, "")} onChange={setOtp} />
+
+          <Button
+            className="w-full bg-green-500 hover:bg-green-600 text-white h-12"
+            onClick={handleVerifyOtp}
+          >
+            Xác nhận OTP
+          </Button>
+        </div>
+      )}
     </Form>
   );
 };
