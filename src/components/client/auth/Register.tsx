@@ -1,4 +1,3 @@
-///
 import {
   FormControl,
   FormField,
@@ -15,9 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { registerRequest, verifyOtpRequest } from "@/services/auth.service";
-import OTPInputWithSeparator from "@/components/OTPInput"; // đường dẫn tùy chỉnh theo project của bạn
-
-
+import OTPInputWithSeparator from "@/components/OTPInput";
 
 const formSchema = z
   .object({
@@ -38,7 +35,7 @@ const Register = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isOtpStep, setIsOtpStep] = useState(false);
+  const [isShowOtp, setIsShowOtp] = useState(false);
   const [otp, setOtp] = useState("");
   const [emailState, setEmailState] = useState("");
 
@@ -51,8 +48,8 @@ const Register = () => {
       });
 
       setEmailState(values.email);
-      setIsOtpStep(true);
-      alert("Mã OTP đã được gửi đến email");
+      setIsShowOtp(true);
+      alert("Mã OTP đã được gửi đến email của bạn.");
     } catch (err) {
       console.error(err);
       alert("Đăng ký thất bại. Email có thể đã tồn tại.");
@@ -65,8 +62,7 @@ const Register = () => {
         email: emailState,
         otp,
       });
-
-      alert("Xác nhận đăng ký thành công!");
+      alert("Đăng ký thành công!");
     } catch (err) {
       console.error(err);
       alert("Mã OTP không chính xác hoặc đã hết hạn.");
@@ -75,113 +71,108 @@ const Register = () => {
 
   return (
     <Form {...form}>
-      <form
-        className="w-full space-y-3"
-        onSubmit={
-          isOtpStep
-            ? (e) => {
-                e.preventDefault();
-                handleVerifyOtp();
-              }
-            : form.handleSubmit(onSubmit)
-        }
-      >
-        {!isOtpStep && (
-          <>
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem className="gap-1">
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Nhập username" {...field} className="h-10" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-)}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="gap-1">
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Nhập email" {...field} className="h-10" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem className="gap-1">
-                  <FormLabel>Mật khẩu</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Nhập mật khẩu"
-                        {...field}
-                        className="h-10"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword((p) => !p)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2"
-                      >
-                        {showPassword ? <Eye /> : <EyeOff />}
-                      </button>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem className="gap-1">
-                  <FormLabel>Xác nhận mật khẩu</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        type={showConfirmPassword ? "text" : "password"}
-                        placeholder="Nhập lại mật khẩu"
-                        {...field}
-                        className="h-10"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowConfirmPassword((p) => !p)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2"
-                      >
-                        {showConfirmPassword ? <Eye /> : <EyeOff />}
-                      </button>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </>
+      <form className="w-full space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem className="gap-1">
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="Nhập username" {...field} className="h-10" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="gap-1">
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Nhập email" {...field} className="h-10" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem className="gap-1">
+              <FormLabel>Mật khẩu</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Nhập mật khẩu"
+                    {...field}
+                    className="h-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((p) => !p)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                  >
+                    {showPassword ? <Eye /> : <EyeOff />}
+                  </button>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem className="gap-1">
+              <FormLabel>Xác nhận mật khẩu</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <Input
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Nhập lại mật khẩu"
+                    {...field}
+                    className="h-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword((p) => !p)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                  >
+                    {showConfirmPassword ? <Eye /> : <EyeOff />}
+                  </button>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {!isShowOtp && (
+          <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white h-12 mt-3" type="submit">
+            Đăng ký
+          </Button>
         )}
+      </form>
 
-        {isOtpStep && (
-  <div className="space-y-1">
-    <FormLabel>Mã OTP</FormLabel>
-    <OTPInputWithSeparator value={otp.padEnd(6, "")} onChange={setOtp} />
-  </div>
-)}
+      {isShowOtp && (
+        <div className="space-y-3 mt-5">
+          <FormLabel>Mã OTP đã được gửi đến email của bạn:</FormLabel>
+          <OTPInputWithSeparator value={otp.padEnd(6, "")} onChange={setOtp} />
 
-        <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white h-12 mt-3" type="submit">
-          {isOtpStep ? "Xác nhận đăng ký" : "Register"}
-        </Button>
-</form>
+          <Button
+            className="w-full bg-green-500 hover:bg-green-600 text-white h-12"
+            onClick={handleVerifyOtp}
+          >
+            Xác nhận OTP
+          </Button>
+        </div>
+      )}
     </Form>
   );
 };
