@@ -10,7 +10,6 @@ export const loginRequest = async (body: ILoginRequest): Promise<IAuth> => {
   }
 };
 
-
 export const registerRequest = async (body: {
   username: string;
   email: string;

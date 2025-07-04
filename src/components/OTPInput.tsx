@@ -1,11 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-
 interface OTPInputProps {
   value: string;
   onChange: (value: string) => void;
@@ -26,7 +25,7 @@ const OTPInputWithSeparator: React.FC<OTPInputProps> = ({
   return (
     <InputOTP maxLength={maxLength}>
       {[0, 2, 4].map((startIndex, groupIdx) => (
-        <React.Fragment key={groupIdx}>
+        <Fragment key={groupIdx}>
           <InputOTPGroup>
             <InputOTPSlot
               index={startIndex}
@@ -40,7 +39,7 @@ const OTPInputWithSeparator: React.FC<OTPInputProps> = ({
             />
           </InputOTPGroup>
           {groupIdx < 2 && <InputOTPSeparator />}
-        </React.Fragment>
+        </Fragment>
       ))}
     </InputOTP>
   );

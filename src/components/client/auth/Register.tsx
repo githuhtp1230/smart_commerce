@@ -15,6 +15,8 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { registerRequest, verifyOtpRequest } from "@/services/auth.service";
 import OTPInputWithSeparator from "@/components/OTPInput";
+import { useLocation, useNavigate } from "react-router-dom";
+import { PATH } from "@/constants/path";
 
 const formSchema = z
   .object({
@@ -29,6 +31,7 @@ const formSchema = z
   });
 
 const Register = () => {
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -63,6 +66,7 @@ const Register = () => {
         otp,
       });
       alert("Đăng ký thành công!");
+      navigate(PATH.LOGIN);
     } catch (err) {
       console.error(err);
       alert("Mã OTP không chính xác hoặc đã hết hạn.");
@@ -79,7 +83,11 @@ const Register = () => {
             <FormItem className="gap-1">
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="Nhập username" {...field} className="h-10" />
+                <Input
+                  placeholder="Nhập username"
+                  {...field}
+                  className="h-10"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -154,7 +162,10 @@ const Register = () => {
         />
 
         {!isShowOtp && (
-          <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white h-12 mt-3" type="submit">
+          <Button
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white h-12 mt-3"
+            type="submit"
+          >
             Đăng ký
           </Button>
         )}
