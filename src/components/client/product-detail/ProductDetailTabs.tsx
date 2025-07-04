@@ -54,7 +54,7 @@ const ProductDetailTabs = ({ productDetail }: Props) => {
             value="reviews"
             className="bg-background p-6 rounded-lg shadow-sm"
           >
-            {/* <ProductDetailReview productDetail={productDetail} /> */}
+            <ProductDetailReview />
             none
           </TabsContent>
         </Tabs>
