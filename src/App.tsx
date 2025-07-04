@@ -13,12 +13,12 @@ import ManageCategoryPage from "./pages/admin/ManageCategoryPage";
 import ManageProductPage from "./pages/admin/ManageProductPage";
 import Cart from "./pages/client/Cart";
 import HomePage from "./pages/client/HomePage";
-import ProductDetail from "./pages/client/ProductDetail";
 import Products from "./pages/client/Products";
 import { AuthRoute } from "./routes/auth-route";
 import { fetchMe } from "./services/me.service";
 import { useAuthStore } from "./store/auth-store";
 import AddProductPage from "./pages/admin/AddProductPage";
+import ProductDetailPage from "./pages/client/ProductDetailPage";
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
@@ -55,7 +55,7 @@ function App() {
             <Route path={PATH.PRODUCTS} element={<Products />} />
             <Route
               path={`${PATH.PRODUCTS}/:productId`}
-              element={<ProductDetail />}
+              element={<ProductDetailPage />}
             />
             <Route element={<AuthRoute />}>
               <Route path={PATH.PROFILE} element={<Profile />} />

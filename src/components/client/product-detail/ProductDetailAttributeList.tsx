@@ -1,6 +1,11 @@
+import type { IProductDetail } from "@/type/products";
 import React from "react";
 
-const ProductDetailAttributeList = () => {
+interface Props {
+  productDetail?: IProductDetail;
+}
+
+const ProductDetailAttributeList = ({ productDetail }: Props) => {
   return (
     <div className="overflow-x-auto  rounded-lg border-1">
       <table className="min-w-full table-auto ">
