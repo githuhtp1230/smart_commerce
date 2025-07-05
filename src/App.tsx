@@ -19,6 +19,7 @@ import { fetchMe } from "./services/me.service";
 import { useAuthStore } from "./store/auth-store";
 import AddProductPage from "./pages/admin/AddProductPage";
 import ProductDetailPage from "./pages/client/ProductDetailPage";
+import Footer from "./components/client/layout/Footer";
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
@@ -80,6 +81,7 @@ function App() {
             </Route>
           </Route>
         </Routes>
+        <Footer></Footer>
       </div>
     </>
   );

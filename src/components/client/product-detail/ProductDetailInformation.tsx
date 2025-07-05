@@ -53,7 +53,7 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
 
   useEffect(() => {
     setProductDetail(productDetail);
-  }, [productDetail]);
+  }, [productDetail, setProductDetail]);
 
   return (
     <div className="flex gap-4">
