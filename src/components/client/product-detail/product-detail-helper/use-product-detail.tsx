@@ -22,9 +22,29 @@ const useProductDetail = () => {
 
   const attributeGroups = Object.entries(attributeGroupsRecord);
 
-  const isCheckedAttrVal = (attrVal: IAttributeValue) => {
-    return selectedAttrValIds.has(attrVal.id);
-  };
+  const isSelectedAttrVal = selectedAttrValIds.size > 0;
+
+  const minPrice =
+    productDetail &&
+    Math.min(
+      ...productDetail?.variations.map(
+        (productVariation) => productVariation.price
+      )
+    );
+
+  const maxPrice =
+    productDetail &&
+    Math.max(
+      ...productDetail?.variations.map(
+        (productVariation) => productVariation.price
+      )
+    );
+
+  const isProductVariation =
+    productDetail && productDetail?.variations.length > 0;
+
+  const isCheckedAttrVal = (attrVal: IAttributeValue) =>
+    selectedAttrValIds.has(attrVal.id);
 
   const handleSelectAttrVal = (attrVal: IAttributeValue) => {
     setSelectedAttrValIds((prev) => {
@@ -53,8 +73,17 @@ const useProductDetail = () => {
   const salePrice =
     productDetail?.promotion &&
     selectedProductVariation &&
-    selectedProductVariation?.price *
-      (productDetail.promotion.discountValuePercent / 100);
+    (isProductVariation
+      ? selectedProductVariation?.price *
+        (productDetail.promotion.discountValuePercent / 100)
+      : productDetail.price);
+
+  const isOnSale = productDetail?.promotion;
+
+  const refreshSelectAttrVal = () => {
+    setSelectedAttrValIds(new Set());
+    setValidSelectAttrValIds(new Set());
+  };
 
   return {
     productDetail,
@@ -62,9 +91,16 @@ const useProductDetail = () => {
     selectedProductVariation,
     validSelectAttrValIds,
     salePrice,
+    minPrice,
+    maxPrice,
+    isProductVariation,
+    isOnSale,
+    selectedAttrValIds,
+    isSelectedAttrVal,
     setProductDetail,
     handleSelectAttrVal,
     isCheckedAttrVal,
+    refreshSelectAttrVal,
   };
 };
 
