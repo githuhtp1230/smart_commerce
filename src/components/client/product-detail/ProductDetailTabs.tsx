@@ -46,7 +46,7 @@ const ProductDetailTabs = ({ productDetail }: Props) => {
           value="specifications"
           className="bg-background rounded-lg shadow-sm mt-3"
         >
-          <ProductDetailAttributeList />
+          <ProductDetailAttributeList productDetail={productDetail} />
         </TabsContent>
 
         <TabsContent
