@@ -10,6 +10,7 @@
   --background-secondary: oklch(1 0 0);
   --background-lightgray: oklch(0.96 0.0063 255.48);
   --foreground: oklch(0.129 0.042 264.695);
+  --foreground-system-danger: oklch(0.9356 0.0309 17.72);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
@@ -26,7 +27,6 @@
   --border: oklch(0.929 0.013 255.508);
   --border-primary: oklch(0.8576 0.0188 269.06);
   --border-quarternary: oklch(0.2077 0.0398 265.75);
-  --border-gray: oklch(50.578% 0.21049 261.303);
   --background-gray: oklch(88.365% 0.03568 264.402);
   --input: oklch(0.929 0.013 255.508);
   --ring: oklch(0.704 0.04 256.788);
@@ -49,13 +49,14 @@
   --txt-brand: oklch(0.6187 0.2067 259.23);
   --txt-blue: oklch(0.6005 0.2165 263.58);
   --txt-primary-blue: oklch(48.814% 0.23413 263.223);
-  --txt-white: oklch(1 0 0);
   --txt-primary: oklch(0.2109 0.0246 269.98);
+  --txt-system-danger: oklch(0.506 0.1899 27.66);
   --neutral-primary: oklch(0.18 0 0);
   --neutral-secondary: oklch(0.3171 0 0);
   --system-danger-hard: oklch(0.51 0.1899 27.66);
   --icon-tertiery: oklch(0.7316 0 0);
-  --icon-brand-primary: oklch(0.5939 0.14069 241.9015);
+  --icon-brand-primary: oklch(47.402% 0.10942 240.834);
+  --icon-system-danger: oklch(0.6378 0.207 25.54);
   --elements-quarternary: oklch(0.8213 0 0);
   --brand-primary: oklch(0.59 0.14069 241.9015);
 }
@@ -67,12 +68,12 @@
   --background-gray: oklch(0.2024 0.0183 274.9);
   --background-lightgray: oklch(23.889% 0.0207 264.084);
   --foreground: oklch(0.984 0.003 247.858);
+  --foreground-system-danger: oklch(0.2602 0.0383 9.27);
   --card: oklch(0.208 0.042 265.755);
   --card-foreground: oklch(0.984 0.003 247.858);
   --popover: oklch(0.208 0.042 265.755);
   --popover-foreground: oklch(0.984 0.003 247.858);
   --primary: oklch(0.2109 0.0246 269.98);
-  --border-gray: oklch(91.772% 0.00642 255.736);
   --primary-foreground: oklch(0.208 0.042 265.755);
   --secondary: oklch(0.279 0.041 260.031);
   --secondary-foreground: oklch(0.984 0.003 247.858);
@@ -101,17 +102,17 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
   --txt-secondary: oklch(0.7017 0.0328 273.45);
   --txt-tertiary: oklch(0.7268 0.0328 271.56);
-  --txt-system-danger: oklch(0.712 0.165 22.59);
   --txt-brand: oklch(0.8071 0.100651 250.4462);
   --txt-blue: oklch(0.6005 0.2165 263.58);
   --txt-primary-blue: oklch(48.814% 0.23413 263.223);
-  --txt-white: oklch(35.799% 0.02509 260.116);
   --txt-primary: oklch(1 0 0);
+  --txt-system-danger: oklch(70.575% 0.17917 22.792);
   --neutral-primary: oklch(1 0 0);
   --neutral-secondary: oklch(0.8699 0 0);
   --system-danger-hard: oklch(0.51 0.1899 27.66);
   --icon-tertiery: oklch(0.7316 0 0);
-  --icon-brand-primary: oklch(0.5939 0.14069 241.9015);
+  --icon-brand-primary: oklch(70.004% 0.15577 239.501);
+  --icon-system-danger: oklch(0.6378 0.207 25.54);
   --elements-quarternary: oklch(0.8031 0.0222 4.76);
   --brand-primary: oklch(0.59 0.14069 241.9015);
 }
@@ -125,6 +126,7 @@
   --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-foreground-system-danger: var(--foreground-system-danger);
   --color-background-gray: var(--background-gray);
   --color-background-lightgray: var(--background-lightgray);
   --color-card: var(--card);
@@ -143,7 +145,6 @@
   --color-border: var(--border);
   --color-border-primary: var(--border-primary);
   --color-border-quarternary: var(--border-quarternary);
-  --color-border-gray: var(--border-gray);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-chart-1: var(--chart-1);
@@ -161,17 +162,17 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-txt-secondary: var(--txt-secondary);
   --color-txt-tertiary: var(--txt-tertiary);
-  --color-txt-system-danger: var(--txt-system-danger);
   --color-txt-brand: var(--txt-brand);
   --color-txt-blue: var(--txt-blue);
   --color-txt-primary-blue: var(--txt-primary-blue);
-  --color-txt-white: var(--txt-white);
   --color-txt-primary: var(--txt-primary);
+  --color-txt-system-danger: var(--txt-system-danger);
   --color-neutral-primary: var(--neutral-primary);
   --color-neutral-secondary: var(--neutral-secondary);
   --color-system-danger-hard: var(--system-danger-hard);
   --color-icon-tertiery: var(--icon-tertiery);
   --color-icon-brand-primary: var(--icon-brand-primary);
+  --color-icon-system-danger: var(--icon-system-danger);
   --color-elements-quarternary: var(--elements-quarternary);
   --color-brand-primary: var(--brand-primary);
 }

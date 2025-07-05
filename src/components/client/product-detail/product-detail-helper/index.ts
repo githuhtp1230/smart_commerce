@@ -56,17 +56,6 @@ export const getProductVariation = (
   });
 };
 
-// const isProductVariationContainsAttrVal = (
-//   productVariation: IProductVariation,
-//   attrVal: IAttributeValue,
-//   selectedAttrValIds: Set<number>
-// ): boolean => {
-//   for (const attrValIdx of productVariation.attributeValues) {
-//     if (attrVal.attribute.id === attrValIdx.attribute.id) {
-//     }
-//   }
-// };
-
 const getAttrValById = (
   attrVals: IAttributeValue[],
   id: number

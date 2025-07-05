@@ -24,7 +24,7 @@ const PurchaseButton = ({
         "flex justify-center items-center font-normal min-w-35 min-h-12 text-sm",
         variant === "default"
           ? "bg-orange-600 hover:bg-orange-600 text-white"
-          : "bg-orange-50 text-orange-600 border border-orange-600 dark:border-orange-600/85 hover:text-orange-600",
+          : "bg-orange-50 hover:bg-orange-50 text-orange-600 border border-orange-600 dark:border-orange-600/85 hover:text-orange-600",
         className
       )}
       {...rest}

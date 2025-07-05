@@ -12,54 +12,52 @@ interface Props {
 
 const ProductDetailTabs = ({ productDetail }: Props) => {
   return (
-    <section className="py-8 ">
-      <div className="container mx-auto px-4">
-        <Tabs defaultValue="description" className="w-full">
-          <TabsList className="flex justify-start gap-2 bg-transparent">
-            <TabsTrigger
-              value="description"
-              className="!bg-transparent text-lg pb-1 box-content border-t-0 border-x-0 border-b-2 border-b-transparent rounded-none hover:text-blue-500 hover:border-b-blue-500 data-[state=active]:text-blue-500 data-[state=active]:border-b-blue-500  dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 dark:data-[state=active]:border-b-blue-500 "
-            >
-              Description
-            </TabsTrigger>
-            <TabsTrigger
-              value="specifications"
-              className="!bg-transparent text-lg pb-1 box-content border-t-0 border-x-0 border-b-2 border-b-transparent rounded-none hover:text-blue-500 hover:border-b-blue-500  data-[state=active]:text-blue-500 data-[state=active]:border-b-blue-500  dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 dark:data-[state=active]:border-b-blue-500 "
-            >
-              Specifications
-            </TabsTrigger>
-            <TabsTrigger
-              value="reviews"
-              className="!bg-transparent text-lg pb-1 box-content border-t-0 border-x-0 border-b-2 border-b-transparent rounded-none hover:text-blue-500 hover:border-b-blue-500  data-[state=active]:text-blue-500 data-[state=active]:border-b-blue-500   dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 dark:data-[state=active]:border-b-blue-500 "
-            >
-              Ratings & reviews (1,283)
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent
+    <div className="container">
+      <Tabs defaultValue="description" className="w-full">
+        <TabsList className="flex justify-start gap-2 bg-transparent">
+          <TabsTrigger
             value="description"
-            className="bg-background p-6 rounded-lg shadow-sm"
+            className="!bg-transparent text-[17px] pb-1 box-content border-t-0 border-x-0 border-b-2 border-b-transparent rounded-none hover:text-blue-500 hover:border-b-blue-500 data-[state=active]:text-blue-500 data-[state=active]:border-b-blue-500  dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 dark:data-[state=active]:border-b-blue-500 "
           >
-            <ProductDetailDescription />
-          </TabsContent>
-
-          <TabsContent
+            Description
+          </TabsTrigger>
+          <TabsTrigger
             value="specifications"
-            className="bg-background rounded-lg shadow-sm mt-3"
+            className="!bg-transparent text-[17px] pb-1 box-content border-t-0 border-x-0 border-b-2 border-b-transparent rounded-none hover:text-blue-500 hover:border-b-blue-500  data-[state=active]:text-blue-500 data-[state=active]:border-b-blue-500  dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 dark:data-[state=active]:border-b-blue-500 "
           >
-            <ProductDetailAttributeList />
-          </TabsContent>
-
-          <TabsContent
+            Specifications
+          </TabsTrigger>
+          <TabsTrigger
             value="reviews"
-            className="bg-background p-6 rounded-lg shadow-sm"
+            className="!bg-transparent text-[17px] pb-1 box-content border-t-0 border-x-0 border-b-2 border-b-transparent rounded-none hover:text-blue-500 hover:border-b-blue-500  data-[state=active]:text-blue-500 data-[state=active]:border-b-blue-500   dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 dark:data-[state=active]:border-b-blue-500 "
           >
-            <ProductDetailReview />
-            none
-          </TabsContent>
-        </Tabs>
-      </div>
-    </section>
+            Ratings & reviews (1,283)
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent
+          value="description"
+          className="bg-background p-6 rounded-lg shadow-sm"
+        >
+          <ProductDetailDescription />
+        </TabsContent>
+
+        <TabsContent
+          value="specifications"
+          className="bg-background rounded-lg shadow-sm mt-3"
+        >
+          <ProductDetailAttributeList />
+        </TabsContent>
+
+        <TabsContent
+          value="reviews"
+          className="bg-background p-6 rounded-lg shadow-sm"
+        >
+          <ProductDetailReview />
+          none
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 };
 

@@ -1,72 +1,19 @@
-import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import {
-  Heart,
-  ShoppingCart,
-  Star,
-  ChevronLeft,
-  ChevronRight,
-  Minus,
-  Plus,
-  Search,
-  Truck,
-  Rocket,
-  Zap,
-  RotateCcw,
-  Package,
-  CreditCard,
-  ThumbsUp,
-  Instagram,
-  Youtube,
-  Reply,
-} from "lucide-react";
 import { Facebook } from "@/assets/icons";
-import { useQuery } from "@tanstack/react-query";
+import ProductDetailInformation from "@/components/client/product-detail/ProductDetailInformation";
+import ProductDetailTabs from "@/components/client/product-detail/ProductDetailTabs";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { fetchProductDetail } from "@/services/products.service";
 import type { IProductDetail } from "@/type/products";
-import { RatingFilter } from "@/components/common/RatingFilter";
-import { AppBadge } from "@/components/common/AppBadge";
-import { formatUtcToVietnamDate } from "@/helper/format-utc-to-vietnam-date";
-import { getTimeRemaining } from "@/helper/get-time-remaining";
-import QuantityButton from "@/components/common/button/QuantityButton";
-import ProductDetailInformation from "@/components/client/product-detail/ProductDetailInformation";
-import ProductDetailDescription from "@/components/client/product-detail/ProductDetailDescription";
-import ProductDetailAttributeList from "@/components/client/product-detail/ProductDetailAttributeList";
-import ProductDetailReview from "@/components/client/product-detail/ProductDetailReview";
-import ProductDetailTabs from "@/components/client/product-detail/ProductDetailTabs";
-
-interface Color {
-  name: string;
-  hex: string;
-}
-
-interface ProductImage {
-  url: string;
-  thumbnail: string;
-}
-
-interface SimilarProduct {
-  id: number;
-  name: string;
-  price: number;
-  rating: number;
-  reviews: number;
-  image: string;
-}
+import { useQuery } from "@tanstack/react-query";
+import { CreditCard, Instagram, Youtube } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const ProductDetailPage: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
   const numericProductId = Number(productId);
   const [productDetail, setProductDetail] = useState<IProductDetail>();
-  const [quantity, setQuantity] = useState<number>(1);
-  const [selectedColor, setSelectedColor] = useState<string>("Blue");
-  const [selectedImage, setSelectedImage] = useState<number>(0);
-  const [isWishlisted, setIsWishlisted] = useState<boolean>(false);
 
   const { data, isSuccess } = useQuery({
     queryKey: ["productSummaries", numericProductId],
@@ -79,114 +26,11 @@ const ProductDetailPage: React.FC = () => {
     }
   }, [data, isSuccess]);
 
-  const colors: Color[] = [
-    { name: "Blue", hex: "#0070c9" },
-    { name: "Pink", hex: "#ff80ab" },
-    { name: "Green", hex: "#4caf50" },
-    { name: "Silver", hex: "#e0e0e0" },
-    { name: "Orange", hex: "#ff9800" },
-  ];
-
-  const incrementQuantity = () => setQuantity(quantity + 1);
-  const decrementQuantity = () => quantity > 1 && setQuantity(quantity - 1);
-  const toggleWishlist = () => setIsWishlisted(!isWishlisted);
-
   return (
-    <div>
-      <section className="py-8 flex gap-10">
-        <div className="w-[40%]">
-          <img
-            className="w-full"
-            src="https://bhstore.vn/uploads/iphone-15-promax-bhstore_3_1731640873.png"
-          />
-        </div>
-        <ProductDetailInformation productDetail={productDetail} />
-      </section>
+    <div className="space-y-2">
+      <ProductDetailInformation productDetail={productDetail} />
 
-      {/* Product Details */}
       <ProductDetailTabs />
-
-      {/* Similar Products */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold text-foreground">
-              Similar Products
-            </h2>
-            <div className="flex space-x-2">
-              <Button
-                variant="outline"
-                size="icon"
-                className="rounded-full bg-muted hover:bg-muted/80"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="rounded-full bg-muted hover:bg-muted/80"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {similarProducts.map((product) => (
-              <Card
-                key={product.id}
-                className="overflow-hidden hover:shadow-md transition-shadow duration-300 cursor-pointer"
-              >
-                <div className="relative">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-48 object-cover object-top"
-                  />
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute top-2 right-2 bg-background rounded-full shadow-sm"
-                  >
-                    <Heart className="h-4 w-4 text-muted-foreground hover:text-red-500" />
-                  </Button>
-                  {product.id === 3 && (
-                    <Badge className="absolute top-2 left-2 bg-green-500 text-white">
-                      New
-                    </Badge>
-                  )}
-                </div>
-                <CardContent className="p-4">
-                  <h3 className="font-medium text-foreground text-sm line-clamp-2 h-10">
-                    {product.name}
-                  </h3>
-                  <div className="flex items-center mt-2">
-                    <div className="flex text-yellow-400 text-xs">
-                      {[...Array(Math.floor(product.rating))].map((_, i) => (
-                        <Star key={i} className="h-3 w-3 fill-current" />
-                      ))}
-                      {product.rating % 1 !== 0 && (
-                        <Star className="h-3 w-3 fill-current" />
-                      )}
-                    </div>
-                    <span className="text-xs text-muted-foreground ml-1">
-                      ({product.reviews})
-                    </span>
-                  </div>
-                  <div className="mt-3 flex items-center justify-between">
-                    <span className="font-bold text-foreground">
-                      ${product.price}
-                    </span>
-                    <Button size="sm" variant="ghost" className="p-1 h-8">
-                      <ShoppingCart className="h-4 w-4 text-muted-foreground" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div> */}
-        </div>
-      </section>
 
       <footer className="bg-muted pt-12 pb-6">
         <div className="container mx-auto px-4">

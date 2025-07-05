@@ -6,10 +6,13 @@ import { RatingFilter } from "@/components/common/RatingFilter";
 import { formatUtcToVietnamDate } from "@/helper/format-utc-to-vietnam-date";
 import { getTimeRemaining } from "@/helper/get-time-remaining";
 import type { IProductDetail } from "@/type/products";
-import { ShoppingCart } from "lucide-react";
+import { Minus, RefreshCcw, ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
 import useProductDetail from "./product-detail-helper/use-product-detail";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import CardError from "@/components/common/notification/CardError";
 
 interface Props {
   productDetail?: IProductDetail;
@@ -17,24 +20,50 @@ interface Props {
 
 const ProductDetailInformation = ({ productDetail }: Props) => {
   const [quantity, setQuantity] = useState<number>(1);
-
+  const [isError, setIsError] = useState<boolean>(false);
   const {
     attributeGroups,
     selectedProductVariation,
     validSelectAttrValIds,
+    salePrice,
+    isProductVariation,
+    minPrice,
+    maxPrice,
+    isOnSale,
+    isSelectedAttrVal,
     setProductDetail,
     isCheckedAttrVal,
     handleSelectAttrVal,
-    salePrice,
+    refreshSelectAttrVal,
   } = useProductDetail();
+
+  const handleError = () => {
+    if (isProductVariation && !selectedProductVariation) {
+      setIsError(true);
+    }
+  };
+
+  const handleBuyNow = () => {
+    handleError();
+  };
+
+  const handleAddToCart = () => {
+    handleError();
+  };
 
   useEffect(() => {
     setProductDetail(productDetail);
   }, [productDetail]);
 
   return (
-    <div className="flex-1">
-      <div className="space-y-3">
+    <div className="flex gap-4">
+      <div className="w-[40%] flex h-96 justify-center items-center">
+        <img
+          className="w-full object-cover object-center"
+          src="https://bhstore.vn/uploads/iphone-15-promax-bhstore_3_1731640873.png"
+        />
+      </div>
+      <div className="flex-1 space-y-3.5">
         <div>
           <h1 className="text-2xl font-bold text-foreground">
             {productDetail?.name}
@@ -47,12 +76,12 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
             <span className="text-2xl text-border-primary">|</span>
             <div className="flex items-center gap-1">
               <p>{productDetail?.reviewCount}</p>
-              <p className="text-muted-foreground">ratings</p>
+              <p className="text-muted-foreground">people rated and reviewed</p>
             </div>
           </div>
           <div className="mt-2 flex items-center gap-2">
             <AppBadge badgeColor="green" content="In stock" />
-            <span className="text-sm text-muted-foreground">
+            <span className="text-txt-brand">
               {`Release on ${
                 productDetail?.createdAt &&
                 formatUtcToVietnamDate(productDetail?.createdAt)
@@ -60,21 +89,34 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
             </span>
           </div>
         </div>
-
         <div className="border-t pt-3">
           <div className="flex items-center">
-            <span className="text-3xl font-bold text-foreground">
-              $
-              {salePrice ??
-                selectedProductVariation?.price ??
-                productDetail?.price}
-            </span>
-            {salePrice && (
-              <span className="text-lg text-muted-foreground line-through ml-2">
-                ${selectedProductVariation?.price}
-              </span>
+            {isProductVariation && !selectedProductVariation ? (
+              <div className="flex items-center gap-2">
+                <span className="text-4xl font-semibold text-foreground">
+                  ${minPrice}
+                </span>{" "}
+                <Minus />{" "}
+                <span className="text-4xl font-semibold text-foreground">
+                  ${maxPrice}
+                </span>
+              </div>
+            ) : (
+              <>
+                <span className="text-4xl font-bold text-foreground">
+                  $
+                  {salePrice ??
+                    selectedProductVariation?.price ??
+                    productDetail?.price}
+                </span>
+                {salePrice && (
+                  <span className="text-lg text-muted-foreground line-through ml-2">
+                    ${selectedProductVariation?.price}
+                  </span>
+                )}
+              </>
             )}
-            {salePrice && (
+            {isOnSale && (
               <Badge
                 variant="secondary"
                 className="ml-3 bg-orange-100 text-orange-800 text-xl"
@@ -83,65 +125,88 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
               </Badge>
             )}
           </div>
-          {/* {selectedProductVariation?.price} */}
           {productDetail?.promotion && (
-            <p className="text-sm text-orange-700 font-medium mt-2">
+            <p className="text-txt-system-danger font-medium mt-2">
               Special offer ends in{" "}
               {getTimeRemaining(productDetail?.promotion?.endDate)}
             </p>
           )}
         </div>
-        {attributeGroups.map(([attrName, attrVals]) => {
-          return (
-            <div className="flex items-center gap-8" key={attrName}>
-              <span className="text-txt-secondary">{attrName}</span>
-              <div className="flex gap-2">
-                {[...attrVals].map((attrVal) => {
-                  return (
-                    <AttributeChecked
-                      key={attrVal.id}
-                      name={attrVal.value}
-                      onCheckedChanged={() => handleSelectAttrVal(attrVal)}
-                      checked={isCheckedAttrVal(attrVal)}
-                      disabled={
-                        validSelectAttrValIds.size > 0 &&
-                        !validSelectAttrValIds.has(attrVal.id)
-                      }
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
+        <div
+          className={cn(
+            "flex justify-between items-start",
+            !isProductVariation && "hidden"
+          )}
+        >
+          <div className="space-y-2">
+            {attributeGroups.map(([attrName, attrVals]) => {
+              return (
+                <div className="flex items-center gap-8" key={attrName}>
+                  <span className="text-txt-secondary">{attrName}</span>
+                  <div className="flex gap-3">
+                    {[...attrVals].map((attrVal) => {
+                      return (
+                        <AttributeChecked
+                          key={attrVal.id}
+                          name={attrVal.value}
+                          onCheckedChanged={() => {
+                            handleSelectAttrVal(attrVal);
+                            setIsError(false);
+                          }}
+                          checked={isCheckedAttrVal(attrVal)}
+                          disabled={
+                            validSelectAttrValIds.size > 0 &&
+                            !validSelectAttrValIds.has(attrVal.id)
+                          }
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <Button
+            onClick={refreshSelectAttrVal}
+            variant="ghost"
+            className="flex items-center gap-2"
+            disabled={!isSelectedAttrVal}
+          >
+            <RefreshCcw className="text-txt-brand" />
+            <p className="text-txt-brand">Refresh</p>
+          </Button>
+        </div>
         <div>
           <h3 className="text-base text-txt-secondary">Quantity:</h3>
-          <div className="flex items-center mt-2 gap-3">
+          <div className="flex items-center mt-2 gap-4">
             <QuantityButton
               action={"decrease"}
               onClick={() => setQuantity((pre) => pre - 1)}
               disabled={quantity == 1}
             />
-            <span className="text-foreground text-sm">{quantity}</span>
+            <span className="text-foreground">{quantity}</span>
             <QuantityButton
               action={"increase"}
               onClick={() => setQuantity((pre) => pre + 1)}
             />
           </div>
         </div>
-
-        <div className="flex gap-2 mt-2">
+        {isError && (
+          <CardError message="Please select full attributes before taking actions" />
+        )}
+        <div className="flex gap-2 mt-5">
           <PurchaseButton
             className="min-w-40"
             message="Add to cart"
             variant="outline"
             icon={ShoppingCart}
+            onClick={handleAddToCart}
           />
           <PurchaseButton
             message="Buy now"
             variant="default"
             className="min-w-40"
-            // onClick={handleBuyNow}
+            onClick={handleBuyNow}
           />
         </div>
       </div>
