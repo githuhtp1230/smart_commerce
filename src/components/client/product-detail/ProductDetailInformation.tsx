@@ -3,19 +3,13 @@ import PurchaseButton from "@/components/common/button/PurchaseButton";
 import QuantityButton from "@/components/common/button/QuantityButton";
 import AttributeChecked from "@/components/common/checked/AttributeChecked";
 import { RatingFilter } from "@/components/common/RatingFilter";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { formatUtcToVietnamDate } from "@/helper/format-utc-to-vietnam-date";
 import { getTimeRemaining } from "@/helper/get-time-remaining";
 import type { IProductDetail } from "@/type/products";
 import { ShoppingCart } from "lucide-react";
-import React, { use, useEffect, useMemo, useState } from "react";
-import {
-  getProductVariation,
-  groupVariationAttribute,
-} from "./product-detail-helper";
-import type { IAttributeValue } from "@/type/attribute";
+import { useEffect, useState } from "react";
+import useProductDetail from "./product-detail-helper/use-product-detail";
+import { Badge } from "@/components/ui/badge";
 
 interface Props {
   productDetail?: IProductDetail;
@@ -23,63 +17,20 @@ interface Props {
 
 const ProductDetailInformation = ({ productDetail }: Props) => {
   const [quantity, setQuantity] = useState<number>(1);
-  const [selectedAttrValIds, setSelectedAttrValIds] = useState<Set<number>>(
-    new Set()
-  );
-  const [isClickedAttributeVal, setIsClickedAttributeVal] = useState(false);
 
-  const attributeGroups = useMemo(() => {
-    return Object.entries(
-      groupVariationAttribute(productDetail?.variations || [])
-    );
-  }, [productDetail?.variations]);
-
-  const selectedVariation = useMemo(() => {
-    return getProductVariation(
-      [...selectedAttrValIds],
-      productDetail?.variations ?? []
-    );
-  }, [productDetail?.variations, selectedAttrValIds]);
-
-  const salePrice = useMemo(() => {
-    return productDetail?.promotion && selectedVariation
-      ? selectedVariation.price *
-          (1 - productDetail.promotion.discountValuePercent / 100)
-      : undefined;
-  }, [selectedVariation]);
-
-  const handleCheckedAttrVal = (attrValParam: IAttributeValue) => {
-    const newSelectedAttrValIds = new Set<number>(selectedAttrValIds);
-    let isDeleteOldChecked = false;
-    attributeGroups.forEach(([_, attrValSet]) => {
-      if (!isDeleteOldChecked) {
-        attrValSet.forEach((attrVal) => {
-          if (
-            selectedAttrValIds.has(attrVal.id) &&
-            attrVal.attribute.name === attrValParam.attribute.name
-          ) {
-            newSelectedAttrValIds.delete(attrVal.id);
-            isDeleteOldChecked = true;
-          }
-        });
-      }
-    });
-    newSelectedAttrValIds.add(attrValParam.id);
-    setSelectedAttrValIds(newSelectedAttrValIds);
-  };
-
-  const handleBuyNow = () => {};
+  const {
+    attributeGroups,
+    selectedProductVariation,
+    validSelectAttrValIds,
+    setProductDetail,
+    isCheckedAttrVal,
+    handleSelectAttrVal,
+    salePrice,
+  } = useProductDetail();
 
   useEffect(() => {
-    const defaultAttrIds = attributeGroups
-      .map(([_, attrValMap]) => {
-        console.log(attrValMap);
-        return attrValMap.get(0)?.id;
-      })
-      .filter((id): id is number => id !== undefined);
-
-    setSelectedAttrValIds(new Set(defaultAttrIds));
-  }, [attributeGroups]);
+    setProductDetail(productDetail);
+  }, [productDetail]);
 
   return (
     <div className="flex-1">
@@ -113,11 +64,14 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
         <div className="border-t pt-3">
           <div className="flex items-center">
             <span className="text-3xl font-bold text-foreground">
-              {salePrice ?? selectedVariation?.price}VNĐ
+              $
+              {salePrice ??
+                selectedProductVariation?.price ??
+                productDetail?.price}
             </span>
             {salePrice && (
               <span className="text-lg text-muted-foreground line-through ml-2">
-                {selectedVariation?.price}VNĐ
+                ${selectedProductVariation?.price}
               </span>
             )}
             {salePrice && (
@@ -129,6 +83,7 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
               </Badge>
             )}
           </div>
+          {/* {selectedProductVariation?.price} */}
           {productDetail?.promotion && (
             <p className="text-sm text-orange-700 font-medium mt-2">
               Special offer ends in{" "}
@@ -136,18 +91,22 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
             </p>
           )}
         </div>
-        {attributeGroups.map(([attributeName, attrMap]) => {
+        {attributeGroups.map(([attrName, attrVals]) => {
           return (
-            <div className="flex items-center gap-8" key={attributeName}>
-              <span className="text-txt-secondary">{attributeName}</span>
+            <div className="flex items-center gap-8" key={attrName}>
+              <span className="text-txt-secondary">{attrName}</span>
               <div className="flex gap-2">
-                {[...attrMap].map(([attrValId, attrVal]) => {
+                {[...attrVals].map((attrVal) => {
                   return (
                     <AttributeChecked
-                      key={attrValId}
+                      key={attrVal.id}
                       name={attrVal.value}
-                      onCheckedChanged={(_) => handleCheckedAttrVal(attrVal)}
-                      checked={selectedAttrValIds.has(attrVal.id)}
+                      onCheckedChanged={() => handleSelectAttrVal(attrVal)}
+                      checked={isCheckedAttrVal(attrVal)}
+                      disabled={
+                        validSelectAttrValIds.size > 0 &&
+                        !validSelectAttrValIds.has(attrVal.id)
+                      }
                     />
                   );
                 })}
@@ -182,7 +141,7 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
             message="Buy now"
             variant="default"
             className="min-w-40"
-            onClick={handleBuyNow}
+            // onClick={handleBuyNow}
           />
         </div>
       </div>
