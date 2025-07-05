@@ -36,8 +36,9 @@ const AttributeChecked = ({
     <Button
       variant="outline"
       className={cn(
-        "box-content h-auto hover:border-blue-500 hover:text-blue-600 rounded-sm relative px-5 py-2.5 overflow-hidden",
-        currentChecked && "border-blue-500 text-blue-600 pointer-events-none",
+        "box-content h-auto hover:!border-brand-primary hover:text-txt-brand rounded-sm relative px-5 py-2.5 overflow-hidden",
+        currentChecked &&
+          "!border-brand-primary text-txt-brand pointer-events-none",
         className
       )}
       onClick={handleChecked}
@@ -45,7 +46,7 @@ const AttributeChecked = ({
     >
       {name}
       {currentChecked && (
-        <div className="absolute top-0 -right-[1px] w-8 h-8 clip-triangle bg-blue-500 text-white flex items-center justify-center">
+        <div className="absolute top-0 -right-[1px] w-8 h-8 clip-triangle bg-brand-primary text-white flex items-center justify-center">
           <Check className="absolute -top-1 right-0 !w-[10px]" />
         </div>
       )}

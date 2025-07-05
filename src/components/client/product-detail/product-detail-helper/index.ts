@@ -1,40 +1,96 @@
 import type { IProductVariation } from "@/type/products";
-import type { AttributeGroups } from "./type";
 import type { IAttributeValue } from "@/type/attribute";
 
-export const groupVariationAttribute = (
+type AttributeGroups = Record<string, IAttributeValue[]>;
+
+export const getAttributeGroups = (
   productVariations: IProductVariation[]
 ): AttributeGroups => {
-  const attributeGroups: AttributeGroups = {};
+  const attributeGroup: AttributeGroups = {};
   productVariations.forEach((productVariation) => {
     productVariation.attributeValues.forEach((attrVal) => {
       const attrName = attrVal.attribute.name;
-      if (!attributeGroups[attrName]) {
-        attributeGroups[attrName] = new Map();
+      if (!attributeGroup[attrName]) {
+        attributeGroup[attrName] = [];
       }
-      attributeGroups[attrName].set(attrVal.id, attrVal);
+      if (!findAttrVal(attributeGroup[attrName], attrVal)) {
+        attributeGroup[attrName].push(attrVal);
+      }
     });
   });
-  return attributeGroups;
+  return attributeGroup;
+};
+
+const findAttrVal = (attrVals: IAttributeValue[], attrVal: IAttributeValue) => {
+  return attrVals.find((a) => a.id === attrVal.id);
+};
+
+export const filterAttrValIdSameAttrInAttrGroup = (
+  attrVal: IAttributeValue,
+  attrGroups: AttributeGroups,
+  selectedAttrValIds: Set<number>
+): Set<number> => {
+  const attrVals = attrGroups[attrVal.attribute.name];
+  const newSelectedAttrValIds = new Set(selectedAttrValIds);
+
+  for (const i of attrVals) {
+    if (newSelectedAttrValIds.has(i.id)) {
+      newSelectedAttrValIds.delete(i.id);
+      break;
+    }
+  }
+
+  newSelectedAttrValIds.add(attrVal.id);
+
+  return newSelectedAttrValIds;
 };
 
 export const getProductVariation = (
-  attributeValIds: number[],
-  variations: IProductVariation[]
+  selectedAttrValIds: Set<number>,
+  productVariations: IProductVariation[]
 ): IProductVariation | undefined => {
-  return variations.find((variation) => {
-    return variation.attributeValues.every((attrVal) => {
-      return attributeValIds.includes(attrVal.id);
-    });
+  return productVariations.find((productVariation) => {
+    return productVariation.attributeValues.every((attrVal) =>
+      selectedAttrValIds.has(attrVal.id)
+    );
   });
 };
 
-export const check = (
-  attrVal: IAttributeValue,
-  variations: IProductVariation[]
+// const isProductVariationContainsAttrVal = (
+//   productVariation: IProductVariation,
+//   attrVal: IAttributeValue,
+//   selectedAttrValIds: Set<number>
+// ): boolean => {
+//   for (const attrValIdx of productVariation.attributeValues) {
+//     if (attrVal.attribute.id === attrValIdx.attribute.id) {
+//     }
+//   }
+// };
+
+const getAttrValById = (
+  attrVals: IAttributeValue[],
+  id: number
+): IAttributeValue | undefined => {
+  return attrVals.find((attrVal) => attrVal.id === id);
+};
+
+export const getSelectValidAttrVals = (
+  attrValSelected: IAttributeValue,
+  productVariations: IProductVariation[]
 ) => {
-  for (const variation of variations) {
-    for (const attrVal of variation.attributeValues) {
+  const validAttrValIdVariations = new Set<number>();
+  for (const productVariation of productVariations) {
+    const attrVals = productVariation.attributeValues;
+    for (const attrVal of attrVals) {
+      if (attrVal.attribute.id === attrValSelected?.attribute.id) {
+        validAttrValIdVariations.add(attrVal.id);
+      } else if (
+        getAttrValById(attrVals, attrVal.id) &&
+        getAttrValById(attrVals, attrValSelected.id)
+      ) {
+        validAttrValIdVariations.add(attrVal.id);
+      }
     }
   }
+  return validAttrValIdVariations;
 };
