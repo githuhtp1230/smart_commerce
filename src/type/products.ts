@@ -19,6 +19,7 @@ export interface IProductVariation {
   attributeValues: IAttributeValue[];
 }
 export interface IProductDetail extends IProductSummary {
+  images: string[];
   attributeValues: IAttributeValue[];
   variations: IProductVariation[];
   createdAt: string;

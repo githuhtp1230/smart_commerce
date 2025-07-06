@@ -6,6 +6,6 @@ export interface IAttribute {
 export interface IAttributeValue {
   id: number;
   value: string;
-  imageUrl: string;
+  imageUrl?: string;
   attribute: IAttribute;
 }
