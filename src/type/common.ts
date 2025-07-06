@@ -7,4 +7,4 @@ export interface PaginationResponse<T> {
   last: boolean;
 }
 
-export type RoleType = "ADMIN";
+export type RoleType = "ADMIN" | "USER";

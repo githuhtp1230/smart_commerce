@@ -15,6 +15,7 @@ const useProductDetail = () => {
   const [validSelectAttrValIds, setValidSelectAttrValIds] = useState<
     Set<number>
   >(new Set<number>());
+  const [imagePreview, setImagePreview] = useState<string>();
 
   const attributeGroupsRecord = getAttributeGroups(
     productDetail?.variations || []
@@ -58,6 +59,10 @@ const useProductDetail = () => {
         getSelectValidAttrVals(attrVal, productDetail?.variations ?? [])
       );
 
+      if (attrVal.imageUrl) {
+        setImagePreview(attrVal.imageUrl);
+      }
+
       return next;
     });
   };
@@ -83,6 +88,7 @@ const useProductDetail = () => {
   const refreshSelectAttrVal = () => {
     setSelectedAttrValIds(new Set());
     setValidSelectAttrValIds(new Set());
+    setImagePreview(productDetail?.images[0]);
   };
 
   return {
@@ -97,6 +103,8 @@ const useProductDetail = () => {
     isOnSale,
     selectedAttrValIds,
     isSelectedAttrVal,
+    imagePreview,
+    setImagePreview,
     setProductDetail,
     handleSelectAttrVal,
     isCheckedAttrVal,

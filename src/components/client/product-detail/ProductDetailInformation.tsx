@@ -13,6 +13,8 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import CardError from "@/components/common/notification/CardError";
+import ProductImagePreview from "./ProductImagePreview";
+import type { IAttributeValue } from "@/type/attribute";
 
 interface Props {
   productDetail?: IProductDetail;
@@ -21,6 +23,7 @@ interface Props {
 const ProductDetailInformation = ({ productDetail }: Props) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [isError, setIsError] = useState<boolean>(false);
+
   const {
     attributeGroups,
     selectedProductVariation,
@@ -31,6 +34,8 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
     maxPrice,
     isOnSale,
     isSelectedAttrVal,
+    imagePreview,
+    setImagePreview,
     setProductDetail,
     isCheckedAttrVal,
     handleSelectAttrVal,
@@ -51,18 +56,22 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
     handleError();
   };
 
+  const handleCheckAttrVal = (attrVal: IAttributeValue) => {
+    handleSelectAttrVal(attrVal);
+    setIsError(false);
+  };
+
   useEffect(() => {
     setProductDetail(productDetail);
   }, [productDetail]);
 
   return (
-    <div className="flex gap-4">
-      <div className="w-[40%] flex h-96 justify-center items-center">
-        <img
-          className="w-full object-cover object-center"
-          src="https://bhstore.vn/uploads/iphone-15-promax-bhstore_3_1731640873.png"
-        />
-      </div>
+    <div className="flex gap-10 px-4">
+      <ProductImagePreview
+        images={productDetail?.images ?? []}
+        image={imagePreview}
+        onSelectImage={(value) => setImagePreview(value)}
+      />
       <div className="flex-1 space-y-3.5">
         <div>
           <h1 className="text-2xl font-bold text-foreground">
@@ -149,15 +158,13 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
                         <AttributeChecked
                           key={attrVal.id}
                           name={attrVal.value}
-                          onCheckedChanged={() => {
-                            handleSelectAttrVal(attrVal);
-                            setIsError(false);
-                          }}
+                          onCheckedChanged={() => handleCheckAttrVal(attrVal)}
                           checked={isCheckedAttrVal(attrVal)}
                           disabled={
                             validSelectAttrValIds.size > 0 &&
                             !validSelectAttrValIds.has(attrVal.id)
                           }
+                          image={attrVal.imageUrl}
                         />
                       );
                     })}

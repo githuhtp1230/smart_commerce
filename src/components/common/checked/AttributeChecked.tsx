@@ -8,9 +8,10 @@ interface Props
   extends React.ComponentProps<"button">,
     VariantProps<typeof buttonVariants> {
   checked?: boolean;
-  onCheckedChanged?: (value: boolean) => void;
   name: string;
   className?: string;
+  image?: string;
+  onCheckedChanged?: (value: boolean) => void;
 }
 
 const AttributeChecked = ({
@@ -18,6 +19,7 @@ const AttributeChecked = ({
   onCheckedChanged,
   name,
   className,
+  image,
   ...rest
 }: Props) => {
   const [checkedLocal, setCheckedLocal] = useState<boolean>(false);
@@ -36,7 +38,7 @@ const AttributeChecked = ({
     <Button
       variant="outline"
       className={cn(
-        "box-content h-auto hover:!border-brand-primary hover:text-txt-brand rounded-sm relative px-5 py-2.5 overflow-hidden",
+        "box-content h-auto hover:!border-brand-primary hover:text-txt-brand rounded-sm relative px-5 py-2 overflow-hidden h-7 flex justify-center",
         currentChecked &&
           "!border-brand-primary text-txt-brand pointer-events-none",
         className
@@ -44,7 +46,8 @@ const AttributeChecked = ({
       onClick={handleChecked}
       {...rest}
     >
-      {name}
+      {image && <img src={image} alt="" className="h-full" />}
+      <p>{name}</p>
       {currentChecked && (
         <div className="absolute top-0 -right-[1px] w-8 h-8 clip-triangle bg-brand-primary text-white flex items-center justify-center">
           <Check className="absolute -top-1 right-0 !w-[10px]" />
