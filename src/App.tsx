@@ -20,6 +20,7 @@ import { useAuthStore } from "./store/auth-store";
 import AddProductPage from "./pages/admin/AddProductPage";
 import ProductDetailPage from "./pages/client/ProductDetailPage";
 import Footer from "./components/client/layout/Footer";
+import HistoryOrder from "./components/client/history-orders/HistoryOrder";
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
@@ -60,6 +61,9 @@ function App() {
             />
             <Route element={<AuthRoute allowedRoles={["USER", "ADMIN"]} />}>
               <Route path={PATH.PROFILE} element={<Profile />} />
+            </Route>
+            <Route element={<AuthRoute allowedRoles={["USER", "ADMIN"]} />}>
+              <Route path={PATH.HISTORY} element={<HistoryOrder />} />
             </Route>
           </Route>
 

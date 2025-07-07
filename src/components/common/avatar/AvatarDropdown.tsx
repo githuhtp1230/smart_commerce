@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ADMIN_PATH, PATH } from "@/constants/path";
 import { useAuthStore } from "@/store/auth-store";
-import { LogOutIcon, User, Wrench } from "lucide-react";
+import { History, LogOutIcon, User, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
 import AvatarStore from "./AvatarStore";
 import RequireRole from "../../require-role";
@@ -41,6 +41,15 @@ export default function AvatarDropdown() {
           >
             <User className="w-4 h-4" />{" "}
             <span className="text-sm text-txt-secondary">Profile</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            to={PATH.HISTORY}
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <History className="w-4 h-4" />{" "}
+            <span className="text-sm text-txt-secondary">History orders</span>
           </Link>
         </DropdownMenuItem>
         <RequireRole roles={["ADMIN"]}>

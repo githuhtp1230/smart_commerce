@@ -29,6 +29,7 @@
   --border-quarternary: oklch(0.2077 0.0398 265.75);
   --border-brand: oklch(72.357% 0.1444 258.403);
   --background-gray: oklch(88.365% 0.03568 264.402);
+  --backround-darkgray: oklch(96.8% 0.007 247.896);
   --input: oklch(0.929 0.013 255.508);
   --ring: oklch(0.704 0.04 256.788);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -68,6 +69,7 @@
   --background-secondary: oklch(0.2338 0.037 267.49);
   --background-gray: oklch(0.2024 0.0183 274.9);
   --background-lightgray: oklch(23.889% 0.0207 264.084);
+  --backround-darkgray: oklch(0.2791 0.0226 273.89);
   --foreground: oklch(0.984 0.003 247.858);
   --foreground-system-danger: oklch(0.2602 0.0383 9.27);
   --card: oklch(0.208 0.042 265.755);
@@ -131,6 +133,7 @@
   --color-foreground-system-danger: var(--foreground-system-danger);
   --color-background-gray: var(--background-gray);
   --color-background-lightgray: var(--background-lightgray);
+  --color-backround-darkgray: var(--backround-darkgray);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);

@@ -5,6 +5,7 @@ export const PATH = {
   LOGIN: "/login",
   REGISTER: "/register",
   PROFILE: "/profile",
+  HISTORY: "/history",
   NOT_FOUND: "/404",
 };
 
