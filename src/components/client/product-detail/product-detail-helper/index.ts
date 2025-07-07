@@ -1,4 +1,5 @@
-import { IProductVariation } from "./../../../../type/products";
+
+import type { IProductVariation } from "@/type/products";
 import type { AttributeGroups } from "./type";
 import type { IAttributeValue } from "@/type/attribute";
 
