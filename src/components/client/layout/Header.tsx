@@ -1,3 +1,4 @@
+import { Logo } from "@/assets/icons";
 import AvatarDropdown from "@/components/common/avatar/AvatarDropdown";
 import AvatarStore from "@/components/common/avatar/AvatarStore";
 import ToggleTheme from "@/components/common/ToggleTheme";
@@ -8,7 +9,7 @@ import { useAuthStore } from "@/store/auth-store";
 import { TooltipContent } from "@radix-ui/react-tooltip";
 import { MailIcon, ShoppingCart, User } from "lucide-react";
 import { Link } from "react-router-dom";
-  
+
 const Header = () => {
   const me = useAuthStore((state) => state.me);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -16,7 +17,10 @@ const Header = () => {
   return (
     <div className="flex justify-center w-full items-center py-3 px-10">
       <div className="max-w-screen-xl flex justify-between w-full items-center">
-        <div>Logo</div>
+        <div className="flex gap-1 items-center leading-none">
+          <Logo className="size-9 " />
+          <p className="font-medium text-lg text-txt-blue">MART COMMERCE</p>
+        </div>
         <div className="flex items-center rounded-4xl border border-border-primary focus-within:ring-1 focus-within:ring-ring pl-4 w-150 bg-primary">
           <MailIcon className="h-5 w-5 text-muted-foreground bg-primary" />
           <Input
