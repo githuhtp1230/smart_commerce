@@ -21,6 +21,7 @@ import AddProductPage from "./pages/admin/AddProductPage";
 import ProductDetailPage from "./pages/client/ProductDetailPage";
 import Footer from "./components/client/layout/Footer";
 
+
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
   const [isLoading, setIsLoading] = useState(true);
@@ -49,7 +50,9 @@ function App() {
           <Route element={<AuthLayout />}>
             <Route path={PATH.LOGIN} element={<Login />} />
             <Route path={PATH.REGISTER} element={<Register />} />
+
           </Route>
+
           <Route element={<ClientLayout />}>
             <Route path={PATH.HOME_PAGE} element={<HomePage />} />
             <Route path={PATH.CART} element={<Cart />} />
