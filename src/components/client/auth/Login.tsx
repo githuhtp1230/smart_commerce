@@ -25,6 +25,7 @@ import { useAuthStore } from "@/store/auth-store";
 import saveToken from "@/utils/token-util";
 import { SECURITY } from "@/constants/common";
 import { Eye, EyeOff } from "lucide-react";
+import ForgotPassword from "./ForgotPasswordButton";
 
 const formSchema = z.object({
   email: z.string().min(1, "Vui lòng nhập email"),
@@ -157,13 +158,7 @@ const Login = () => {
               />
               <p className="text-txt-tertiary text-base">Remember me</p>
             </div>
-            <Button
-              variant="link"
-              className="text-blue-500 text-base"
-              type="button"
-            >
-              Forgot password?
-            </Button>
+            <ForgotPassword />
           </div>
           {isShowError && <CardError message="Email or password is invalid" />}
           <Button
