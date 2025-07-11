@@ -1,4 +1,4 @@
-import AvatarStore from "@/components/common/avatar/AvatarStore";
+import CircleAvatar from "@/components/common/avatar/CircleAvatar";
 import {
   Sidebar,
   SidebarContent,

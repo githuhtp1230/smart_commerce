@@ -10,7 +10,7 @@ import { ADMIN_PATH, PATH } from "@/constants/path";
 import { useAuthStore } from "@/store/auth-store";
 import { LogOutIcon, User, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
-import AvatarStore from "./AvatarStore";
+import CircleAvatar from "./CircleAvatar";
 import RequireRole from "../../require-role";
 
 export default function AvatarDropdown() {
@@ -19,7 +19,7 @@ export default function AvatarDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center">
-        <AvatarStore />
+        <CircleAvatar imageUrl={me?.avatar} />
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className="mt-2 w-72 bg-primary"
@@ -27,7 +27,7 @@ export default function AvatarDropdown() {
         alignOffset={-10}
       >
         <DropdownMenuItem disabled={true} className="py-3 !opacity-100">
-          <AvatarStore />
+          <CircleAvatar />
           <div className="ml-1 flex flex-col">
             <p className="text-sm font-medium">{me?.name}</p>
             <p className="text-xs text-muted-foreground">{me?.email}</p>
