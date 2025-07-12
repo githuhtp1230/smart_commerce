@@ -20,6 +20,7 @@ import { useAuthStore } from "./store/auth-store";
 import AddProductPage from "./pages/admin/AddProductPage";
 import ProductDetailPage from "./pages/client/ProductDetailPage";
 import Footer from "./components/client/layout/Footer";
+import ForgotPassword from "./components/client/auth/ForgotPassword";
 
 
 function App() {
@@ -47,10 +48,11 @@ function App() {
     <>
       <div className="h-screen">
         <Routes>
+
           <Route element={<AuthLayout />}>
             <Route path={PATH.LOGIN} element={<Login />} />
             <Route path={PATH.REGISTER} element={<Register />} />
-
+            <Route path={PATH.FORGOT_PASSWORD} element={<ForgotPassword />} />
           </Route>
 
           <Route element={<ClientLayout />}>
