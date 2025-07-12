@@ -6,15 +6,18 @@ import type { LucideIcon } from "lucide-react";
 interface Props extends React.ComponentProps<"button"> {
   action: "increase" | "decrease";
   className?: string;
+  iconClassName?: string;
 }
 
 const IconButton = ({
   icon: Icon,
   className,
+  iconClassName,
   ...rest
 }: {
   icon: LucideIcon;
   className?: string;
+  iconClassName?: string;
 }) => {
   return (
     <Button
@@ -22,15 +25,18 @@ const IconButton = ({
       variant="outline"
       {...rest}
     >
-      <Icon size={16} className="icon text-icon-brand-primary" />
+      <Icon
+        size={16}
+        className={cn("icon text-icon-brand-primary", iconClassName)}
+      />
     </Button>
   );
 };
 
-const QuantityButton = ({ action, ...rest }: Props) => {
+const QuantityButton = ({ action, iconClassName, ...rest }: Props) => {
   const icon = action === "increase" ? Plus : Minus;
 
-  return <IconButton icon={icon} {...rest} />;
+  return <IconButton icon={icon} {...rest} iconClassName={iconClassName} />;
 };
 
 export default QuantityButton;

@@ -11,7 +11,7 @@ import Profile from "./components/client/profile/Profile";
 import { ADMIN_PATH, PATH } from "./constants/path";
 import ManageCategoryPage from "./pages/admin/ManageCategoryPage";
 import ManageProductPage from "./pages/admin/ManageProductPage";
-import Cart from "./pages/client/Cart";
+import CartPage from "./pages/client/CartPage";
 import HomePage from "./pages/client/HomePage";
 import Products from "./pages/client/Products";
 import { AuthRoute } from "./routes/auth-route";
@@ -57,7 +57,7 @@ function App() {
 
           <Route element={<ClientLayout />}>
             <Route path={PATH.HOME_PAGE} element={<HomePage />} />
-            <Route path={PATH.CART} element={<Cart />} />
+            <Route path={PATH.CART} element={<CartPage />} />
             <Route path={PATH.PRODUCTS} element={<Products />} />
             <Route
               path={`${PATH.PRODUCTS}/:productId`}

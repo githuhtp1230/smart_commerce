@@ -1,5 +1,15 @@
 import type { IAttributeValue } from "./attribute";
+import type { ICategory } from "./category";
 import type { IPromotion } from "./promotion";
+
+export interface IProduct {
+  id: number;
+  name: string;
+  description: string;
+  price?: number;
+  category: ICategory;
+  promotion?: IPromotion;
+}
 
 export interface IProductSummary {
   id: number;
@@ -18,6 +28,7 @@ export interface IProductVariation {
   image: string;
   attributeValues: IAttributeValue[];
 }
+
 export interface IProductDetail extends IProductSummary {
   images: string[];
   attributeValues: IAttributeValue[];
@@ -33,6 +44,7 @@ export interface IProductVariation {
   image: string;
   attributeValues: IAttributeValue[];
 }
+
 export interface IProductDetail extends IProductSummary {
   attributeValues: IAttributeValue[];
   variations: IProductVariation[];

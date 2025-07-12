@@ -15,6 +15,9 @@ import { Button } from "@/components/ui/button";
 import CardError from "@/components/common/notification/CardError";
 import ProductImagePreview from "./ProductImagePreview";
 import type { IAttributeValue } from "@/type/attribute";
+import { useMutation } from "@tanstack/react-query";
+import { addCartItem } from "@/services/cart.service";
+import { getProductVariation } from "./product-detail-helper";
 
 interface Props {
   productDetail?: IProductDetail;
@@ -23,6 +26,11 @@ interface Props {
 const ProductDetailInformation = ({ productDetail }: Props) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [isError, setIsError] = useState<boolean>(false);
+  const { mutate } = useMutation({
+    mutationKey: ["addToCart"],
+    mutationFn: addCartItem,
+    onSuccess: (data) => {},
+  });
 
   const {
     attributeGroups,
@@ -54,6 +62,13 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
 
   const handleAddToCart = () => {
     handleError();
+    if (productDetail?.id) {
+      mutate({
+        productId: productDetail?.id,
+        productVariationId: selectedProductVariation?.id,
+        quantity: quantity,
+      });
+    }
   };
 
   const handleCheckAttrVal = (attrVal: IAttributeValue) => {

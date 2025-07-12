@@ -41,7 +41,7 @@ const Login = () => {
   const setMe = useAuthStore((s) => s.setMe);
 
   const mutationKey = ["login"];
-  const { mutate, isPending, data } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationKey,
     mutationFn: loginRequest,
     onError: () => {
