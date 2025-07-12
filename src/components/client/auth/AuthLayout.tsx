@@ -13,7 +13,7 @@ const AuthLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-
+  const isForgotPasswordPage = location.pathname === PATH.FORGOT_PASSWORD;
   useEffect(() => {
     const isAuthPage =
       location.pathname === PATH.LOGIN || location.pathname === PATH.REGISTER;
@@ -45,26 +45,37 @@ const AuthLayout = () => {
           <div></div>
         </div>
         <div className="bg-primary max-w-130 rounded-2xl pt-8 pb-10 px-8 w-full">
-          <h1 className="font-medium text-2xl text-center">
-            Welcome to Smart Commerce
-          </h1>
-          <AuthTabs />
+          {!isForgotPasswordPage && (
+            <>
+              <h1 className="font-medium text-2xl text-center">
+                Welcome to Smart Commerce
+              </h1>
+              <AuthTabs />
+            </>)}
+
           <div className="mt-3">
             <Outlet />
           </div>
-          <div className="relative flex items-center py-3">
-            <div className="flex-grow border-t border-border-primary"></div>
-            <span className="flex-shrink mx-4 text-neutral-primary text-sm">
-              Or Countinue With
-            </span>
-            <div className="flex-grow border-t border-border-primary"></div>
-          </div>
-          <SocialLoginButtons prefixIcon={Google} text="Continue with Google" />
-          <SocialLoginButtons
-            prefixIcon={Facebook}
-            text="Continue with Facebook"
-            className="mt-3"
-          />
+          {!isForgotPasswordPage && (
+            <>
+              <div className="relative flex items-center py-3">
+                <div className="flex-grow border-t border-border-primary"></div>
+                <span className="flex-shrink mx-4 text-neutral-primary text-sm">
+                  Or Continue With
+                </span>
+                <div className="flex-grow border-t border-border-primary"></div>
+              </div>
+              <SocialLoginButtons
+                prefixIcon={Google}
+                text="Continue with Google"
+              />
+              <SocialLoginButtons
+                prefixIcon={Facebook}
+                text="Continue with Facebook"
+                className="mt-3"
+              />
+            </>
+          )}
         </div>
       </div>
     </div>

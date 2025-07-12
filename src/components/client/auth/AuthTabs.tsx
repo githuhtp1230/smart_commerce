@@ -1,9 +1,12 @@
 import { PATH } from "@/constants/path";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const AuthTabs = () => {
+  const { pathname } = useLocation();
+
+  if (pathname === PATH.FORGOT_PASSWORD) return null;
   return (
     <div className="flex bg-secondary p-1 rounded-lg w-70 gap-2 mt-5 w-full">
       <NavLink

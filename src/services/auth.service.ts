@@ -26,3 +26,20 @@ export const verifyOtpRequest = async (body: {
   const res = await httpRequest.post("/auth/register-verify-otp", body);
   return res.data;
 };
+
+
+export const sendForgotPasswordOTPRequest = async (body: {
+  email: string;
+}) => {
+  const res = await httpRequest.post("/auth/forgot-password", body);
+  return res.data;
+};
+
+export const verifyForgotPasswordOtpRequest = async (body: {
+  email: string;
+  otp: string;
+}) => {
+  const res = await httpRequest.post("/auth/reset-password", body);
+  return res.data;
+}
+

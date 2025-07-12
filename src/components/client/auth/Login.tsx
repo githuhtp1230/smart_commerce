@@ -19,12 +19,13 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { loginRequest } from "@/services/auth.service";
 import CardError from "../../common/notification/CardError";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 import { useAuthStore } from "@/store/auth-store";
 import saveToken from "@/utils/token-util";
 import { SECURITY } from "@/constants/common";
 import { Eye, EyeOff } from "lucide-react";
+import ForgotPassword from "./ForgotPassword";
 
 const formSchema = z.object({
   email: z.string().min(1, "Vui lòng nhập email"),
@@ -81,6 +82,7 @@ const Login = () => {
 
   return (
     <div>
+
       <Form {...form}>
         <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-3">
@@ -162,7 +164,8 @@ const Login = () => {
               className="text-blue-500 text-base"
               type="button"
             >
-              Forgot password?
+              <Link to={PATH.FORGOT_PASSWORD}>Forgot password?</Link>
+
             </Button>
           </div>
           {isShowError && <CardError message="Email or password is invalid" />}

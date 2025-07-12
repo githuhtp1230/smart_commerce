@@ -14,7 +14,7 @@ interface OTPInputProps {
 const OTPInputWithSeparator: React.FC<OTPInputProps> = ({
   value,
   onChange,
-  maxLength = 6,
+
 }) => {
   const handleChange = (index: number, digit: string) => {
     const newValue =
@@ -23,7 +23,7 @@ const OTPInputWithSeparator: React.FC<OTPInputProps> = ({
   };
 
   return (
-    <InputOTP maxLength={maxLength}>
+    <InputOTP>
       {[0, 2, 4].map((startIndex, groupIdx) => (
         <Fragment key={groupIdx}>
           <InputOTPGroup>
