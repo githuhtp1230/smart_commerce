@@ -9,24 +9,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useCartStore } from "@/store/cart-store";
 
-type SummaryProps = {
-  subtotal: number;
-  discount: number;
-  tax: number;
-  shippingCost: number;
-  total: number;
-};
+const PaymentSummary: React.FC = () => {
+  const { getTotalPrice } = useCartStore((s) => s);
 
-const Summary: React.FC<SummaryProps> = ({
-  subtotal,
-  discount,
-  tax,
-  shippingCost,
-  total,
-}) => {
   return (
-    <Card className="shadow-md bg-primary">
+    <Card className="bg-primary shadow-none">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-2xl font-bold ">Summary</CardTitle>
       </CardHeader>
@@ -45,22 +34,22 @@ const Summary: React.FC<SummaryProps> = ({
         <div className="space-y-3">
           <div className="flex justify-between">
             <span className="text-muted-foreground">Items subtotal:</span>
-            <span className="font-medium">${subtotal}</span>
+            <span className="font-medium">Subtotl</span>
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Discount:</span>
-            <span className="font-medium text-red-500">-${discount}</span>
+            <span className="font-medium text-red-500">Tl</span>
           </div>
           <div className="flex justify-between border-t pt-3">
             <span className="text-muted-foreground">Subtotal:</span>
-            <span className="font-medium">${subtotal - discount + tax}</span>
+            <span className="font-medium">asdfsdf</span>
           </div>
         </div>
 
         <div className="pt-4 border-t">
           <div className="flex justify-between">
             <span className="text-xl font-bold">Total:</span>
-            <span className="text-xl font-bold">${total.toFixed(2)}</span>
+            <span className="text-xl font-bold">${getTotalPrice()}</span>
           </div>
         </div>
 
@@ -72,4 +61,4 @@ const Summary: React.FC<SummaryProps> = ({
   );
 };
 
-export default Summary;
+export default PaymentSummary;
