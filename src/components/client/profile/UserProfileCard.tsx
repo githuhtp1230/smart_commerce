@@ -1,11 +1,11 @@
+"use client";
+
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -13,26 +13,39 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const nameSchema = z.object({
+  name: z.string().min(1, "Name can not be blank."),
+});
+
+type NameFormValues = z.infer<typeof nameSchema>;
 
 const UserProfileCard: React.FC = () => {
   const [name, setName] = useState("Ansolo Lazinatov");
-  const [nameForm, setNameForm] = useState(name);
-  const [isNameDialogOpen, setIsNameDialogOpen] = useState(false);
-  const [nameError, setNameError] = useState<string | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleNameSave = () => {
-    if (!nameForm.trim()) {
-      setNameError("Tên không được để trống.");
-      return;
-    }
-    setName(nameForm);
-    setNameError(null);
-    setIsNameDialogOpen(false);
-  };
+  const form = useForm<NameFormValues>({
+    resolver: zodResolver(nameSchema),
+    defaultValues: {
+      name,
+    },
+  });
 
-  const handleNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNameForm(e.target.value);
-    setNameError(null); // Clear error on input change
+  const handleSubmit = (values: NameFormValues) => {
+    setName(values.name.trim());
+    setIsDialogOpen(false);
   };
 
   return (
@@ -42,7 +55,7 @@ const UserProfileCard: React.FC = () => {
           <Avatar className="h-40 w-40">
             <AvatarImage
               src="https://readdy.ai/api/search-image?query=professional%20portrait%20of%20a%20smiling%20Asian%20man%20in%20his%2030s%20wearing%20a%20light%20blue%20button-up%20shirt%20against%20a%20neutral%20dark%20green%20background%2C%20business%20headshot%20with%20soft%20lighting%2C%20high%20quality%20professional%20photo&width=300&height=300&seq=1&orientation=squarish"
-              alt="Ansolo Lazinatov"
+              alt="User avatar"
             />
             <AvatarFallback className="text-2xl">AL</AvatarFallback>
           </Avatar>
@@ -52,12 +65,11 @@ const UserProfileCard: React.FC = () => {
                 {name}
               </h2>
               <button
-                id="editNameBtn"
-                className="text-card-foreground dark:hover:text-blue-400 cursor-pointer"
                 onClick={() => {
-                  setNameForm(name);
-                  setIsNameDialogOpen(true);
+                  form.reset({ name });
+                  setIsDialogOpen(true);
                 }}
+                className="text-card-foreground dark:hover:text-blue-400 cursor-pointer"
               >
                 <Pencil className="w-4 h-4" />
               </button>
@@ -94,43 +106,55 @@ const UserProfileCard: React.FC = () => {
         </div>
       </Card>
 
-      {/* Edit Name Dialog */}
-      <Dialog open={isNameDialogOpen} onOpenChange={setIsNameDialogOpen}>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Edit name</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
+
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="space-y-4"
+            >
+              <FormField
+                control={form.control}
                 name="name"
-                value={nameForm}
-                onChange={handleNameInputChange}
-                placeholder="Nhập tên của bạn"
-                className="mt-2"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base">Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Nhập tên của bạn"
+                        className="h-10"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {nameError && <p className="text-red-500 text-sm">{nameError}</p>}
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setIsNameDialogOpen(false);
-                setNameError(null);
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleNameSave}
-              className="bg-blue-500 hover:bg-blue-700 text-white"
-            >
-              Save
-            </Button>
-          </DialogFooter>
+
+              <DialogFooter className="pt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setIsDialogOpen(false);
+                    form.clearErrors();
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-700 text-white"
+                >
+                  Save
+                </Button>
+              </DialogFooter>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
     </>
