@@ -90,10 +90,10 @@ const ProductDetailReview = ({ productDetail }: Props) => {
     };
 
     const indentClass =
-      depth === 0 ? "border-b" : depth === 1 ? "ml-6 pl-4 border-l" : "";
+      depth === 0 ? "border-b py-2" : depth === 1 ? "ml-6 pl-4 border-l" : "";
     return (
       <div className={`border-border ${indentClass}`}>
-        <div className="flex justify-between my-2">
+        <div className="flex justify-between mb-2">
           {depth === 0 && renderStars(review.rating)}
         </div>
         <div className="flex gap-3 mb-1 ">
@@ -118,7 +118,7 @@ const ProductDetailReview = ({ productDetail }: Props) => {
             </div>
           </div>
         </div>
-        <div className="ml-10 flex gap-2 ">
+        <div className="ml-10 flex gap-2">
           <Button
             variant="ghost"
             size="default"
@@ -150,7 +150,6 @@ const ProductDetailReview = ({ productDetail }: Props) => {
                     await createReview(review.productId, replyRequest);
                     setReplyComment("");
                     setIsReplying(false);
-                    // Reload replies
                     const fetchedReplies = await fetchReviewReplies(review.id);
                     setReplies(fetchedReplies);
                     setShowReplies(true);
@@ -228,7 +227,7 @@ const ProductDetailReview = ({ productDetail }: Props) => {
         </Button>
       </div>
 
-      <div className="border-t border-border  ">
+      <div className="border-t border-border">
         {isLoading ? (
           <div className="text-center text-muted-foreground">
             Loading reviews...
