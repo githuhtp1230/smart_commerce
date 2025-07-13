@@ -1,6 +1,6 @@
 import { Logo } from "@/assets/icons";
 import AvatarDropdown from "@/components/common/avatar/AvatarDropdown";
-import AvatarStore from "@/components/common/avatar/AvatarStore";
+import CircleAvatar from "@/components/common/avatar/CircleAvatar";
 import ToggleTheme from "@/components/common/ToggleTheme";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";

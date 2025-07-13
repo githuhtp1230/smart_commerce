@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProductDetailReview from "./ProductDetailReview";
 import ProductDetailAttributeList from "./ProductDetailAttributeList";
@@ -53,8 +53,9 @@ const ProductDetailTabs = ({ productDetail }: Props) => {
           value="reviews"
           className="bg-background p-6 rounded-lg shadow-sm"
         >
-          <ProductDetailReview />
-          none
+          <ProductDetailReview
+            productDetail={productDetail}
+          ></ProductDetailReview>
         </TabsContent>
       </Tabs>
     </div>

@@ -4,15 +4,14 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   className?: string;
+  imageUrl?: string;
 }
 
-const AvatarStore = ({ className }: Props) => {
-  const avatar = useAuthStore((s) => s.me?.avatar);
-
+const CircleAvatar = ({ className, imageUrl }: Props) => {
   return (
     <Avatar className={className}>
       <AvatarImage
-        src={avatar}
+        src={imageUrl}
         className="object-cover object-center border border-border-primary rounded-full"
       />
       <AvatarFallback className="bg-elements-quarternary text-primary">
@@ -22,4 +21,4 @@ const AvatarStore = ({ className }: Props) => {
   );
 };
 
-export default AvatarStore;
+export default CircleAvatar;
