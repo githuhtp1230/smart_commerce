@@ -18,7 +18,7 @@ export default function CardError({ message }: Props) {
         >
           <Alert
             variant="destructive"
-            className="border-0 bg-foreground-system-danger h-13.25 flex items-center"
+            className="border-0 bg-foreground-system-danger-hard h-13.25 flex items-center"
           >
             <AlertDescription className="flex items-center gap-3">
               <div className="size-6 bg-icon-system-danger rounded-full flex justify-center items-center">

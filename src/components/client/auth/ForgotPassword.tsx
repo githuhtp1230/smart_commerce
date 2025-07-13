@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner"
 import { PATH } from "@/constants/path";
 
 import {
@@ -93,7 +94,16 @@ const ForgotPassword = () => {
                     {!isShowOtp && (
                         <Button
                             type="submit"
-                            className="w-full bg-blue-400 hover:bg-blue-400 h-12 mt-3 text-white">
+                            className="w-full bg-blue-400 hover:bg-blue-400 h-12 mt-3 text-white"
+                            onClick={() =>
+                                toast("Event has been created", {
+                                    description: "Sunday, December 03, 2023 at 9:00 AM",
+                                    action: {
+                                        label: "Undo",
+                                        onClick: () => console.log("Undo"),
+                                    },
+                                })
+                            }>
                             Send OTP
                         </Button>
                     )}
