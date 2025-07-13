@@ -19,8 +19,8 @@ const PaymentSummary: React.FC = () => {
         <div className="flex flex-col">
           {cartItems
             .filter((item) => item.isSelected)
-            .map((item) => (
-              <div className="flex justify-between">
+            .map((item, index) => (
+              <div className="flex justify-between" key={index}>
                 <div className="flex gap-2">
                   <span className="">{item.product.name}</span>
                   <span className="text-muted-foreground">
