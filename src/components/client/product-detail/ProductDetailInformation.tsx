@@ -29,7 +29,6 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
   const { mutate } = useMutation({
     mutationKey: ["addToCart"],
     mutationFn: addCartItem,
-    onSuccess: (data) => {},
   });
 
   const {
@@ -50,10 +49,10 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
     refreshSelectAttrVal,
   } = useProductDetail();
 
-  const handleError = () => {
-    if (isProductVariation && !selectedProductVariation) {
-      setIsError(true);
-    }
+  const handleError = (): boolean => {
+    const hasError = !!(isProductVariation && !selectedProductVariation);
+    setIsError(hasError);
+    return hasError;
   };
 
   const handleBuyNow = () => {
@@ -61,8 +60,8 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
   };
 
   const handleAddToCart = () => {
-    handleError();
-    if (productDetail?.id && !isError) {
+    const hasError = handleError();
+    if (productDetail?.id && !hasError) {
       mutate({
         productId: productDetail?.id,
         productVariationId: selectedProductVariation?.id,
