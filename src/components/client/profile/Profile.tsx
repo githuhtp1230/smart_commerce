@@ -1,14 +1,9 @@
 import React from "react";
 
-
-
-
 import ChangePasswordButton from "@/components/common/button/ChangePasswordButton";
 import UserProfileCard from "./UserProfileCard";
 import UserContactCard from "./UserContactCard";
 const Profile: React.FC = () => {
-
-
   return (
     <div className="min-h-screen ">
       {/* Header */}
