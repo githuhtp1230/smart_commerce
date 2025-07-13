@@ -2,6 +2,8 @@ import QuantityButton from "@/components/common/button/QuantityButton";
 import { DataTable } from "@/components/common/table/DataTable";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@/lib/utils";
 import {
   deleteCartItemRequest,
   updateQuantityCartItemRequest,
@@ -14,8 +16,14 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Trash2 } from "lucide-react";
 
 const CartItemList = () => {
-  const { cartItems, getItemTotalPrice, deleteCartItem, updateQuantityItem } =
-    useCartStore((s) => s);
+  const {
+    cartItems,
+    getItemTotalPrice,
+    deleteCartItem,
+    updateQuantityItem,
+    setIsSelected,
+    setIsSelectedAllItem,
+  } = useCartStore((s) => s);
 
   const deleteItemMutation = useMutation({
     mutationFn: (itemId: number) => deleteCartItemRequest(itemId),
@@ -34,6 +42,38 @@ const CartItemList = () => {
   });
 
   const columns: ColumnDef<ICartItem>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => {
+            setIsSelectedAllItem(!!value);
+            table.toggleAllPageRowsSelected(!!value);
+          }}
+          aria-label="Select all"
+          className={cn(
+            table.getIsAllPageRowsSelected() && "!bg-brand-primary !text-white"
+          )}
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => {
+            row.toggleSelected(!!value);
+            setIsSelected(row.original.id, !!value);
+          }}
+          aria-label="Select row"
+          className={cn(row.getIsSelected() && "!bg-brand-primary !text-white")}
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
     {
       accessorKey: "index",
       header: () => <div>#</div>,
@@ -137,6 +177,7 @@ const CartItemList = () => {
                 change: -1,
               });
             }}
+            disabled={row.original.quantity <= 1}
           />
           {row.getValue("quantity")}
           <QuantityButton
