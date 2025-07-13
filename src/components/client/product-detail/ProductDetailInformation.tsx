@@ -62,7 +62,7 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
 
   const handleAddToCart = () => {
     handleError();
-    if (productDetail?.id) {
+    if (productDetail?.id && !isError) {
       mutate({
         productId: productDetail?.id,
         productVariationId: selectedProductVariation?.id,
