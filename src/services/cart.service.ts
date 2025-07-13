@@ -3,7 +3,10 @@ import httpRequest from "@/utils/http-request";
 
 export const fetchCartItems = async (): Promise<ICartItem[]> => {
   const res = await httpRequest.get("cart/items");
-  return res.data.data;
+  return res.data.data.map((item: ICartItem) => ({
+    ...item,
+    isSelected: false,
+  }));
 };
 
 export const addCartItem = async (

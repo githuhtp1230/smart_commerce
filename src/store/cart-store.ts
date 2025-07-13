@@ -6,8 +6,12 @@ interface CartState {
   setCartItems: (cartItems: ICartItem[]) => void;
   getTotalPrice: () => number;
   getItemTotalPrice: (itemId: number) => number;
+  getSelectedItemSize: () => number;
+  getSelectedItemTotalPrice: () => number;
   deleteCartItem: (itemId: number) => void;
   updateQuantityItem: (itemId: number, change: number) => void;
+  setIsSelected: (itemId: number, isSelected: boolean) => void;
+  setIsSelectedAllItem: (isSelected: boolean) => void;
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -45,6 +49,33 @@ export const useCartStore = create<CartState>((set, get) => ({
         : cartItem
     );
 
+    set({ cartItems: updateCartItems });
+  },
+  setIsSelected: (itemId, isSelected) => {
+    const updateCartItems = get().cartItems.map((cartItem) =>
+      cartItem.id === itemId ? { ...cartItem, isSelected } : cartItem
+    );
+    set({ cartItems: updateCartItems });
+  },
+  getSelectedItemSize: () => {
+    return get().cartItems.filter((item) => item.isSelected).length;
+  },
+  getSelectedItemTotalPrice: () => {
+    const { cartItems } = get();
+    return cartItems.reduce((total, item) => {
+      if (!item.isSelected) return total;
+      const price = item.productVariation?.price ?? item.product.price ?? 0;
+      const discount = item.product.promotion?.discountValuePercent ?? 0;
+      const finalPrice = price * (1 - discount / 100);
+      return total + finalPrice * item.quantity;
+    }, 0);
+  },
+  setIsSelectedAllItem: (isSelected) => {
+    const { cartItems } = get();
+    const updateCartItems = cartItems.map((item: ICartItem) => ({
+      ...item,
+      isSelected,
+    }));
     set({ cartItems: updateCartItems });
   },
 }));

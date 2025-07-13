@@ -13,4 +13,5 @@ export interface ICartItem {
   image: string;
   quantity: number;
   productVariation?: IProductVariation;
+  isSelected?: boolean;
 }
