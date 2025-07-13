@@ -11,6 +11,9 @@
   --background-lightgray: oklch(0.96 0.0063 255.48);
   --foreground: oklch(0.129 0.042 264.695);
   --foreground-system-danger: oklch(0.9356 0.0309 17.72);
+  --foreground-system-success: oklch(0.958 0.041 156.36);
+  --foreground-system-information: oklch(0.9232 0.0394 245.9);
+  --foreground-system-warning: oklch(0.9542 0.0372 75.16);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
@@ -46,12 +49,14 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
   --txt-secondary: oklch(0.339 0.0328 270.26);
   --txt-tertiary: oklch(0.4976 0.04 268.84);
-  --txt-system-danger: oklch(0.712 0.165 22.59);
   --txt-brand: oklch(0.6187 0.2067 259.23);
   --txt-blue: oklch(0.6005 0.2165 263.58);
   --txt-primary-blue: oklch(48.814% 0.23413 263.223);
   --txt-primary: oklch(0.2109 0.0246 269.98);
   --txt-system-danger: oklch(0.506 0.1899 27.66);
+  --txt-system-success: oklch(0.4987 0.1168 157.07);
+  --txt-system-information: oklch(0.5093 0.1955 260.89);
+  --txt-system-warning: oklch(0.5562 0.1741 38.73);
   --neutral-primary: oklch(0.18 0 0);
   --neutral-secondary: oklch(0.3171 0 0);
   --system-danger-hard: oklch(0.51 0.1899 27.66);
@@ -70,6 +75,9 @@
   --background-lightgray: oklch(23.889% 0.0207 264.084);
   --foreground: oklch(0.984 0.003 247.858);
   --foreground-system-danger: oklch(0.2602 0.0383 9.27);
+  --foreground-system-success: oklch(0.958 0.041 156.36);
+  --foreground-system-information: oklch(0.9232 0.0394 245.9);
+  --foreground-system-warning: oklch(0.9542 0.0372 75.16);
   --card: oklch(0.208 0.042 265.755);
   --card-foreground: oklch(0.984 0.003 247.858);
   --popover: oklch(0.208 0.042 265.755);
@@ -109,6 +117,9 @@
   --txt-primary-blue: oklch(48.814% 0.23413 263.223);
   --txt-primary: oklch(1 0 0);
   --txt-system-danger: oklch(70.575% 0.17917 22.792);
+  --txt-system-success: oklch(0.4987 0.1168 157.07);
+  --txt-system-information: oklch(0.5093 0.1955 260.89);
+  --txt-system-warning: oklch(0.5562 0.1741 38.73);
   --neutral-primary: oklch(1 0 0);
   --neutral-secondary: oklch(0.8699 0 0);
   --system-danger-hard: oklch(0.51 0.1899 27.66);
@@ -129,6 +140,9 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-foreground-system-danger: var(--foreground-system-danger);
+  --color-foreground-system-success: var(--foreground-system-success);
+  --color-foreground-system-information: var(--foreground-system-information);
+  --color-foreground-system-warning: var(--foreground-system-warning);
   --color-background-gray: var(--background-gray);
   --color-background-lightgray: var(--background-lightgray);
   --color-card: var(--card);
@@ -170,6 +184,9 @@
   --color-txt-primary-blue: var(--txt-primary-blue);
   --color-txt-primary: var(--txt-primary);
   --color-txt-system-danger: var(--txt-system-danger);
+  --color-txt-system-success: var(--txt-system-success);
+  --color-txt-system-information: var(--txt-system-information);
+  --color-txt-system-warning: var(--txt-system-warning);
   --color-neutral-primary: var(--neutral-primary);
   --color-neutral-secondary: var(--neutral-secondary);
   --color-system-danger-hard: var(--system-danger-hard);
@@ -186,9 +203,11 @@
     font-size: 16px;
     font-family: "Roboto", sans-serif;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
