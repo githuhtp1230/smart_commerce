@@ -72,9 +72,6 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
         quantity: quantity,
       });
       toastSuccess("Add item to cart successfully")
-      toastError("Error")
-      toastWarning("Warning")
-      toastInfo("Info")
     }
   };
 

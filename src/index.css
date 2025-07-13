@@ -11,6 +11,7 @@
   --background-lightgray: oklch(0.96 0.0063 255.48);
   --foreground: oklch(0.129 0.042 264.695);
   --foreground-system-danger: oklch(0.9356 0.0309 17.72);
+  --foreground-system-danger-hard: oklch(0.9356 0.0309 17.72);
   --foreground-system-success: oklch(0.958 0.041 156.36);
   --foreground-system-information: oklch(0.9232 0.0394 245.9);
   --foreground-system-warning: oklch(0.9542 0.0372 75.16);
@@ -74,10 +75,11 @@
   --background-gray: oklch(0.2024 0.0183 274.9);
   --background-lightgray: oklch(23.889% 0.0207 264.084);
   --foreground: oklch(0.984 0.003 247.858);
-  --foreground-system-danger: oklch(0.2602 0.0383 9.27);
-  --foreground-system-success: oklch(0.958 0.041 156.36);
-  --foreground-system-information: oklch(0.9232 0.0394 245.9);
-  --foreground-system-warning: oklch(0.9542 0.0372 75.16);
+  --foreground-system-danger: oklch(0.35 0.0383 9.27);
+  --foreground-system-danger-hard: oklch(0.2602 0.0383 9.27);
+  --foreground-system-success: oklch(0.35 0.041 156.36);
+  --foreground-system-information: oklch(0.35 0.0394 245.9);
+  --foreground-system-warning: oklch(0.35 0.0372 75.16);
   --card: oklch(0.208 0.042 265.755);
   --card-foreground: oklch(0.984 0.003 247.858);
   --popover: oklch(0.208 0.042 265.755);
@@ -117,9 +119,9 @@
   --txt-primary-blue: oklch(48.814% 0.23413 263.223);
   --txt-primary: oklch(1 0 0);
   --txt-system-danger: oklch(70.575% 0.17917 22.792);
-  --txt-system-success: oklch(0.4987 0.1168 157.07);
-  --txt-system-information: oklch(0.5093 0.1955 260.89);
-  --txt-system-warning: oklch(0.5562 0.1741 38.73);
+  --txt-system-success: oklch(0.72 0.1168 157.07);
+  --txt-system-information: oklch(0.72 0.1955 260.89);
+  --txt-system-warning: oklch(0.85 0.216584 37.071);
   --neutral-primary: oklch(1 0 0);
   --neutral-secondary: oklch(0.8699 0 0);
   --system-danger-hard: oklch(0.51 0.1899 27.66);
@@ -140,6 +142,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-foreground-system-danger: var(--foreground-system-danger);
+  --color-foreground-system-danger-hard: var(--foreground-system-danger-hard);
   --color-foreground-system-success: var(--foreground-system-success);
   --color-foreground-system-information: var(--foreground-system-information);
   --color-foreground-system-warning: var(--foreground-system-warning);
