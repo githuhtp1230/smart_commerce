@@ -12,6 +12,15 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['sonner'],
+    include: ["sonner"],
+  },
+  server: {
+    host: true,
+    port: 5173,
+    allowedHosts: [
+      "localhost",
+      "127.0.0.1",
+      "59eb69dcebbf.ngrok-free.app", // 👈 thêm domain ngrok vào đây
+    ],
   },
 });
