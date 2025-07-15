@@ -6,7 +6,7 @@ interface AuthState {
   isAuthenticated: boolean;
   setMe: (me: IUser) => void;
   logout: () => void;
-  // hỏi chat gpt cái này là gì, rồi hỏi cách sửa tên, phone, có thể hiểu đây là state toàn cục, bình thường dùng useState phải truyền từ cha xuống
+  // hỏi chat gpt cái này là gì, rồi hỏi cách sửa tên, phone, có thể hiểu đây là state toàn cục, bình thường dùng useState phải truyền từ cha xuống, giờ state toàn cục thì không cần phải truyền, chỉ cần lấy ra
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
