@@ -17,6 +17,7 @@ export interface IProductSummary {
   averageRating: number;
   reviewCount: number;
   price: number;
+  image: string;
   promotion?: IPromotion;
 }
 

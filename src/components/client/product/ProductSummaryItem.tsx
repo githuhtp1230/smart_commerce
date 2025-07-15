@@ -20,7 +20,7 @@ const ProductSummaryItem = ({ product }: Props) => {
   return (
     <Link to={`${PATH.PRODUCTS}/${product.id}`} className="group">
       <Card className="bg-primary shadow-xs p-0">
-        <img src="null" className="h-50 rounded-lg" />
+        <img src={product.image} className="h-50 rounded-lg" />
         <div className="p-3">
           <h1 className="text-base group-hover:text-blue-400">
             {product.name}
