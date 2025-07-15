@@ -12,6 +12,7 @@ interface CartState {
   updateQuantityItem: (itemId: number, change: number) => void;
   setIsSelected: (itemId: number, isSelected: boolean) => void;
   setIsSelectedAllItem: (isSelected: boolean) => void;
+  addItemToCart: (item: ICartItem) => void;
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -77,5 +78,8 @@ export const useCartStore = create<CartState>((set, get) => ({
       isSelected,
     }));
     set({ cartItems: updateCartItems });
+  },
+  addItemToCart: (item) => {
+    const { cartItems } = get();
   },
 }));
