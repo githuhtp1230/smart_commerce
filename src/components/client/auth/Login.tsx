@@ -26,6 +26,7 @@ import saveToken from "@/utils/token-util";
 import { SECURITY } from "@/constants/common";
 import { Eye, EyeOff } from "lucide-react";
 import ForgotPassword from "./ForgotPassword";
+import { toastError, toastSuccess } from "@/components/common/sonner";
 
 const formSchema = z.object({
   email: z.string().min(1, "Vui lòng nhập email"),
@@ -45,9 +46,11 @@ const Login = () => {
     mutationKey,
     mutationFn: loginRequest,
     onError: () => {
+      toastError("Login failed")
       setIsShowError(true);
     },
     onSuccess: (data) => {
+      toastSuccess("Login successful")
       navigate(PATH.HOME_PAGE);
       setMe(data.user);
       if (data.accessToken) {

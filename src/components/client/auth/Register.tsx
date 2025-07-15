@@ -17,6 +17,7 @@ import { registerRequest, verifyOtpRequest } from "@/services/auth.service";
 import OTPInputWithSeparator from "@/components/OTPInput";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
+import { toastError, toastSuccess } from "@/components/common/sonner";
 
 const formSchema = z
   .object({
@@ -52,10 +53,10 @@ const Register = () => {
 
       setEmailState(values.email);
       setIsShowOtp(true);
-      alert("Mã OTP đã được gửi đến email của bạn.");
+      toastSuccess("OTP code has been sent to your email")
     } catch (err) {
       console.error(err);
-      alert("Đăng ký thất bại. Email có thể đã tồn tại.");
+      toastError("Registration failed. Email may already exist.")
     }
   };
 
@@ -65,11 +66,11 @@ const Register = () => {
         email: emailState,
         otp,
       });
-      alert("Đăng ký thành công!");
+      toastSuccess("Registration successful")
       navigate(PATH.LOGIN);
     } catch (err) {
       console.error(err);
-      alert("Mã OTP không chính xác hoặc đã hết hạn.");
+      toastError("OTP code is incorrect or expired");
     }
   };
 

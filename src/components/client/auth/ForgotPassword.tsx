@@ -20,6 +20,7 @@ import { sendForgotPasswordOTPRequest, verifyForgotPasswordOtpRequest } from '@/
 import { useState } from "react";
 import OTPInputWithSeparator from "@/components/OTPInput";
 import { useNavigate } from "react-router-dom";
+import { toastError, toastSuccess } from '@/components/common/sonner';
 
 const formSchema = z.object({
     email: z.string().nonempty("Vui lòng nhập email").email("Email không hợp lệ"),
@@ -40,7 +41,8 @@ const ForgotPassword = () => {
             });
             setEmailState(values.email);
             setIsShowOtp(true);
-            alert("Mã OTP đã được gửi đến email của bạn.");
+            toastSuccess("Mã OTP đã được gửi đến email của bạn.")
+
         } catch (err) {
             console.error(err);
             alert("Gửi mã OTP thất bại. Vui lòng thử lại.");
@@ -52,11 +54,11 @@ const ForgotPassword = () => {
                 email: emailState,
                 otp,
             });
-            alert("Mật khẩu mới đã được gửi đến email của bạn, vui lòng kiểm tra email!");
+            toastSuccess("Mật khẩu mới đã được gửi đến email của bạn, vui lòng kiểm tra email!")
             navigate(PATH.LOGIN);
         } catch (err) {
             console.error(err);
-            alert("Mã OTP không chính xác hoặc đã hết hạn.");
+            toastError("Mã OTP không chính xác hoặc đã hết hạn.")
         }
     };
 
@@ -95,15 +97,7 @@ const ForgotPassword = () => {
                         <Button
                             type="submit"
                             className="w-full bg-blue-400 hover:bg-blue-400 h-12 mt-3 text-white"
-                            onClick={() =>
-                                toast("Event has been created", {
-                                    description: "Sunday, December 03, 2023 at 9:00 AM",
-                                    action: {
-                                        label: "Undo",
-                                        onClick: () => console.log("Undo"),
-                                    },
-                                })
-                            }>
+                        >
                             Send OTP
                         </Button>
                     )}

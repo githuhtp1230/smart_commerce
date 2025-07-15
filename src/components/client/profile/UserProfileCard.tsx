@@ -13,21 +13,37 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { useAuthStore } from "@/store/auth-store";
+import { useMutation } from "@tanstack/react-query";
+import { updateProfile } from "@/services/me.service";
+import { toastError, toastSuccess } from "@/components/common/sonner";
 
 const UserProfileCard: React.FC = () => {
-  const [name, setName] = useState("Ansolo Lazinatov");
-  const [nameForm, setNameForm] = useState(name);
+  const me = useAuthStore((state) => state.me);
+  const [name, setName] = useState(me?.name || "");
+  const [nameForm, setNameForm] = useState(me?.name || "");
   const [isNameDialogOpen, setIsNameDialogOpen] = useState(false);
   const [nameError, setNameError] = useState<string | null>(null);
-
+  const setMe = useAuthStore((s) => s.setMe);
+  const { mutate: updateName, isPending } = useMutation({
+    mutationFn: updateProfile,
+    onSuccess: (data) => {
+      setName(data.name);
+      setMe(data);
+      setIsNameDialogOpen(false);
+      toastSuccess("Name updated successfully");
+    },
+    onError: () => {
+      setNameError("Cập nhật thất bại. Vui lòng thử lại.");
+      toastError("Name update failed, please try again");
+    },
+  });
   const handleNameSave = () => {
     if (!nameForm.trim()) {
-      setNameError("Tên không được để trống.");
+      setNameError("Name cannot be blank.");
       return;
     }
-    setName(nameForm);
-    setNameError(null);
-    setIsNameDialogOpen(false);
+    updateName({ name: nameForm })
   };
 
   const handleNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,6 +143,7 @@ const UserProfileCard: React.FC = () => {
             <Button
               onClick={handleNameSave}
               className="bg-blue-500 hover:bg-blue-700 text-white"
+              disabled={isPending}
             >
               Save
             </Button>
