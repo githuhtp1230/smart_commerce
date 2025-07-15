@@ -10,7 +10,7 @@ import { TooltipContent } from "@radix-ui/react-tooltip";
 import { MailIcon, ShoppingCart, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = () => { 
   const me = useAuthStore((state) => state.me);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 

@@ -1,4 +1,5 @@
 import QuantityButton from "@/components/common/button/QuantityButton";
+import { toastSuccess } from "@/components/common/sonner";
 import { DataTable } from "@/components/common/table/DataTable";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,7 @@ const CartItemList = () => {
     mutationFn: (itemId: number) => deleteCartItemRequest(itemId),
     onSuccess: (_, itemId) => {
       deleteCartItem(itemId);
+      toastSuccess("Product deleted successfully")
     },
   });
 

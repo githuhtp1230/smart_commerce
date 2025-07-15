@@ -9,3 +9,12 @@ export const fetchMe = async (): Promise<IUser> => {
     throw error;
   }
 };
+
+export const updateProfile = async (body: { name: string }): Promise<IUser> => {
+  try {
+    const res = await httpRequest.post("me/profile/update", body);
+    return res.data.data;
+  } catch (error) {
+    throw error;
+  }
+};
