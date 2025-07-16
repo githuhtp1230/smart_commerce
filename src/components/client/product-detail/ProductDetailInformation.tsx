@@ -18,7 +18,13 @@ import type { IAttributeValue } from "@/type/attribute";
 import { useMutation } from "@tanstack/react-query";
 import { addCartItem } from "@/services/cart.service";
 import { getProductVariation } from "./product-detail-helper";
-import { toastError, toastInfo, toastSuccess, toastWarning } from "@/components/common/sonner";
+import {
+  toastError,
+  toastInfo,
+  toastSuccess,
+  toastWarning,
+} from "@/components/common/sonner";
+import { useCartStore } from "@/store/cart-store";
 
 interface Props {
   productDetail?: IProductDetail;
@@ -27,9 +33,13 @@ interface Props {
 const ProductDetailInformation = ({ productDetail }: Props) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [isError, setIsError] = useState<boolean>(false);
+  const { addItemToCart } = useCartStore((s) => s);
   const { mutate } = useMutation({
     mutationKey: ["addToCart"],
     mutationFn: addCartItem,
+    onSuccess: (data) => {
+      addItemToCart(data);
+    },
   });
 
   const {
@@ -52,9 +62,6 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
 
   const handleError = (): boolean => {
     const hasError = !!(isProductVariation && !selectedProductVariation);
-    console.log(isProductVariation);
-    console.log(selectedProductVariation);
-    console.log(hasError);
     setIsError(hasError);
     return hasError;
   };
@@ -71,7 +78,7 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
         productVariationId: selectedProductVariation?.id,
         quantity: quantity,
       });
-      toastSuccess("Add item to cart successfully")
+      toastSuccess("Add item to cart successfully");
     }
   };
 
@@ -110,9 +117,10 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
           <div className="mt-2 flex items-center gap-2">
             <AppBadge badgeColor="green" content="In stock" />
             <span className="text-txt-brand">
-              {`Release on ${productDetail?.createdAt &&
+              {`Release on ${
+                productDetail?.createdAt &&
                 formatUtcToVietnamDate(productDetail?.createdAt)
-                }`}
+              }`}
             </span>
           </div>
         </div>

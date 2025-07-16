@@ -79,7 +79,20 @@ export const useCartStore = create<CartState>((set, get) => ({
     }));
     set({ cartItems: updateCartItems });
   },
-  addItemToCart: (item) => {
+  addItemToCart: (itemParam) => {
     const { cartItems } = get();
+    const findItem = cartItems.find((item) => item.id === itemParam.id);
+    if (findItem) {
+      const updateCartItems = cartItems.map((item) => {
+        if (item.id === findItem.id) {
+          return itemParam;
+        } else {
+          return item;
+        }
+      });
+      set({ cartItems: updateCartItems });
+    } else {
+      set({ cartItems: [...cartItems, itemParam] });
+    }
   },
 }));
