@@ -33,16 +33,15 @@ const ProductSummaryItem = ({ product }: Props) => {
             <div className="flex items-center gap-2">
               {salePrice && (
                 <p className="line-through font-light text-txt-secondary">
-                  ${product.price}
+                  {product.price}đ
                 </p>
               )}
-              <h1 className="font-semibold text-3xl">
-                ${salePrice ?? product.price}
+              <h1 className="font-semibold text-2xl">
+                {salePrice ?? product.price}đ
               </h1>
             </div>
             <Button className="bg-blue-400 hover:bg-blue-400">
               <ShoppingCart className="text-white" />
-              <span className="text-sm text-white">Add to cart</span>
             </Button>
           </div>
         </div>

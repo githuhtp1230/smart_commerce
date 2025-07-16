@@ -18,7 +18,12 @@ import type { IAttributeValue } from "@/type/attribute";
 import { useMutation } from "@tanstack/react-query";
 import { addCartItem } from "@/services/cart.service";
 import { getProductVariation } from "./product-detail-helper";
-import { toastError, toastInfo, toastSuccess, toastWarning } from "@/components/common/sonner";
+import {
+  toastError,
+  toastInfo,
+  toastSuccess,
+  toastWarning,
+} from "@/components/common/sonner";
 
 interface Props {
   productDetail?: IProductDetail;
@@ -71,7 +76,7 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
         productVariationId: selectedProductVariation?.id,
         quantity: quantity,
       });
-      toastSuccess("Add item to cart successfully")
+      toastSuccess("Add item to cart successfully");
     }
   };
 
@@ -110,9 +115,10 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
           <div className="mt-2 flex items-center gap-2">
             <AppBadge badgeColor="green" content="In stock" />
             <span className="text-txt-brand">
-              {`Release on ${productDetail?.createdAt &&
+              {`Release on ${
+                productDetail?.createdAt &&
                 formatUtcToVietnamDate(productDetail?.createdAt)
-                }`}
+              }`}
             </span>
           </div>
         </div>
@@ -121,20 +127,20 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
             {isProductVariation && !selectedProductVariation ? (
               <div className="flex items-center gap-2">
                 <span className="text-4xl font-semibold text-foreground">
-                  ${minPrice}
+                  {minPrice}đ
                 </span>{" "}
                 <Minus />{" "}
                 <span className="text-4xl font-semibold text-foreground">
-                  ${maxPrice}
+                  {maxPrice}đ
                 </span>
               </div>
             ) : (
               <>
                 <span className="text-4xl font-bold text-foreground">
-                  $
                   {salePrice ??
                     selectedProductVariation?.price ??
                     productDetail?.price}
+                  đ
                 </span>
                 {salePrice && (
                   <span className="text-lg text-muted-foreground line-through ml-2">

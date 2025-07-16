@@ -20,7 +20,7 @@ export default defineConfig({
     allowedHosts: [
       "localhost",
       "127.0.0.1",
-      "59eb69dcebbf.ngrok-free.app", // 👈 thêm domain ngrok vào đây
+      "59eb69dcebbf.ngrok-free.app", 
     ],
   },
 });
