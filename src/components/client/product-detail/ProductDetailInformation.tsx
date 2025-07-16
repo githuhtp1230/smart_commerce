@@ -19,6 +19,8 @@ import { useMutation } from "@tanstack/react-query";
 import { addCartItem } from "@/services/cart.service";
 import { getProductVariation } from "./product-detail-helper";
 import { toastError, toastInfo, toastSuccess, toastWarning } from "@/components/common/sonner";
+import { useCartStore } from "@/store/cart-store";
+import type { ICartItem } from "@/type/cart";
 
 interface Props {
   productDetail?: IProductDetail;
@@ -63,17 +65,57 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
     handleError();
   };
 
-  const handleAddToCart = () => {
-    const hasError = handleError();
-    if (productDetail?.id && !hasError) {
-      mutate({
-        productId: productDetail?.id,
-        productVariationId: selectedProductVariation?.id,
-        quantity: quantity,
-      });
-      toastSuccess("Add item to cart successfully")
-    }
-  };
+const addToCart = async ({
+  productId,
+  variationId,
+  quantity,
+}: {
+  productId: number;
+  variationId?: number;
+  quantity: number;
+}) => {
+  try {
+    const newItem = await addCartItem({
+      productId,
+      quantity,
+      productVariationId: variationId,
+    });
+
+    useCartStore.setState((state) => {
+      const existingIndex = state.cartItems.findIndex(
+        (item) =>
+          item.product.id === productId &&
+          item.productVariation?.id === variationId
+      );
+
+      let updatedCart: ICartItem[] = [];
+
+      if (existingIndex !== -1) {
+        updatedCart = [...state.cartItems];
+        updatedCart[existingIndex].quantity += quantity;
+      } else {
+        updatedCart = [...state.cartItems, newItem];
+      }
+
+      return { cartItems: updatedCart };
+    });
+  } catch (error) {
+    console.error("Add to cart failed", error);
+  }
+};
+
+const handleAddToCart = () => {
+  const hasError = handleError();
+  if (productDetail?.id && !hasError) {
+    addToCart({
+      productId: productDetail.id,
+      variationId: selectedProductVariation?.id,
+      quantity: quantity,
+    });
+    toastSuccess("Add item to cart successfully");
+  }
+};
+
 
   const handleCheckAttrVal = (attrVal: IAttributeValue) => {
     handleSelectAttrVal(attrVal);
