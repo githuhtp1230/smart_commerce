@@ -10,7 +10,7 @@ export const fetchMe = async (): Promise<IUser> => {
   }
 };
 
-export const updateProfile = async (body: { name: string }): Promise<IUser> => {
+export const updateProfile = async (body: Partial<IUser>): Promise<IUser> => {
   try {
     const res = await httpRequest.post("me/profile/update", body);
     return res.data.data;
@@ -18,3 +18,5 @@ export const updateProfile = async (body: { name: string }): Promise<IUser> => {
     throw error;
   }
 };
+
+
