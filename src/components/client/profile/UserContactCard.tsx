@@ -12,7 +12,9 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-
+import { useAuthStore } from "@/store/auth-store";
+import { useMutation } from "@tanstack/react-query";
+import { updateProfile } from "@/services/me.service";
 interface ContactInfo {
   address: string;
   email: string;
@@ -20,16 +22,37 @@ interface ContactInfo {
 }
 
 const UserContactCard: React.FC = () => {
+  const me = useAuthStore((state) => state.me);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isPhoneDialogOpen, setIsPhoneDialogOpen] = useState(false);
   const [contactInfo, setContactInfo] = useState<ContactInfo>({
     address: "Vancouver, British Columbia\nCanada",
-    email: "shatinon@jeemail.com",
-    phone: "+1234567890",
+    email: me?.email || "",
+    phone: me?.phone || "",
   });
   const [editForm, setEditForm] = useState<ContactInfo>(contactInfo);
   const [phoneForm, setPhoneForm] = useState(contactInfo.phone);
+  const phoneRegex = /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/;
   const [phoneError, setPhoneError] = useState<string | null>(null);
+  const normalizePhone = (phone: string) => {
+    return phone.startsWith("+84") ? "0" + phone.slice(3) : phone;
+  };
+  const setMe = useAuthStore((s) => s.setMe);
+
+  const { mutate: updatePhone, isPending } = useMutation({
+    mutationFn: updateProfile,
+    onSuccess: (data) => {
+      setContactInfo((prev) => ({
+        ...prev,
+        phone: data.phone,
+      }));
+      setMe(data);
+      setIsPhoneDialogOpen(false);
+    },
+    onError: () => {
+      setPhoneError("Cập nhật số điện thoại thất bại.");
+    },
+  });
 
   const handleSave = () => {
     setContactInfo(editForm);
@@ -37,13 +60,17 @@ const UserContactCard: React.FC = () => {
   };
 
   const handlePhoneSave = () => {
+    const normalizedPhone = normalizePhone(phoneForm);
     if (!phoneForm.trim()) {
       setPhoneError("Số điện thoại không được để trống.");
       return;
     }
-    setContactInfo((prev) => ({ ...prev, phone: phoneForm }));
-    setPhoneError(null);
-    setIsPhoneDialogOpen(false);
+    if (!phoneRegex.test(normalizedPhone)) {
+      setPhoneError("Số điện thoại không hợp lệ.");
+      return;
+    }
+
+    updatePhone({ phone: normalizedPhone });
   };
 
   const handlePhoneInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -147,6 +174,7 @@ const UserContactCard: React.FC = () => {
             <Button
               onClick={handlePhoneSave}
               className="bg-blue-500 hover:bg-blue-700 text-white"
+              disabled={isPending}
             >
               Save
             </Button>
