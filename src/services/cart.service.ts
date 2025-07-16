@@ -13,8 +13,12 @@ export const addCartItem = async (
   body: IAddCartItemRequest
 ): Promise<ICartItem> => {
   const res = await httpRequest.post("cart/items", body);
-  return res.data.data;
+  return {
+    ...res.data.data,
+    isSelected: false,  
+  };
 };
+
 
 export const deleteCartItemRequest = async (itemId: number): Promise<void> => {
   const res = await httpRequest.delete(`cart/items/${itemId}`);
