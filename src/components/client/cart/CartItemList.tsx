@@ -1,4 +1,3 @@
-import PurchaseButton from "@/components/common/button/PurchaseButton";
 import QuantityButton from "@/components/common/button/QuantityButton";
 import { toastSuccess } from "@/components/common/sonner";
 import { DataTable } from "@/components/common/table/DataTable";
@@ -16,10 +15,8 @@ import type { ICartItem } from "@/type/cart";
 import { useMutation } from "@tanstack/react-query";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Trash2 } from "lucide-react";
-import { useState } from "react";
 
 const CartItemList = () => {
-  const [selectedItems, setSelectedItems] = useState<ICartItem[]>([]);
   const {
     cartItems,
     getItemTotalPrice,
@@ -27,7 +24,6 @@ const CartItemList = () => {
     updateQuantityItem,
     setIsSelected,
     setIsSelectedAllItem,
-    getSelectedItemTotalPrice,
   } = useCartStore((s) => s);
 
   const deleteItemMutation = useMutation({
@@ -227,37 +223,7 @@ const CartItemList = () => {
 
   return (
     <div className="bg-primary rounded-xl p-3">
-      <DataTable
-        columns={columns}
-        data={cartItems}
-        onSelectionChange={setSelectedItems}
-      />
-      {selectedItems.length > 0 && (
-        <div className="flex justify-end mt-4">
-          {/* <Button
-      variant="destructive"
-      onClick={() => {
-        selectedItems.forEach((item) => {
-          deleteItemMutation.mutate(item.id);
-        });
-      }}
-    >
-      Xóa mục đã chọn
-    </Button> */}
-          <PurchaseButton
-            onClick={() => {
-              selectedItems.forEach((item) => {
-                deleteItemMutation.mutate(item.id);
-              });
-            }}
-            icon={Trash2}
-            variant="outline"
-            message="Xóa mục đã chọn"
-            className="text-base"
-            disabled={getSelectedItemTotalPrice() === 0}
-          />
-        </div>
-      )}
+      <DataTable columns={columns} data={cartItems} />
     </div>
   );
 };

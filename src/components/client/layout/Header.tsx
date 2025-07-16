@@ -9,7 +9,6 @@ import { useAuthStore } from "@/store/auth-store";
 import { TooltipContent } from "@radix-ui/react-tooltip";
 import { MailIcon, ShoppingCart, User } from "lucide-react";
 import { Link } from "react-router-dom";
-import CartIcon from "../cart/CartIcon";
 
 const Header = () => { 
   const me = useAuthStore((state) => state.me);
@@ -33,7 +32,7 @@ const Header = () => {
         <div className="flex gap-3 items-center">
           <ToggleTheme />
           <Link to={PATH.CART}>
-            <CartIcon />
+            <ShoppingCart />
           </Link>
           {isAuthenticated ? (
             <Link to={PATH.PROFILE}>

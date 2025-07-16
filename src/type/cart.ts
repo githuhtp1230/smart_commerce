@@ -1,4 +1,4 @@
-
+import type { IAttributeValue } from "./attribute";
 import type { IProduct, IProductVariation } from "./products";
 
 export interface IAddCartItemRequest {
