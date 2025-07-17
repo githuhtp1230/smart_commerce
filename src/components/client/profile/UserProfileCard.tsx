@@ -5,7 +5,6 @@ import { Separator } from "@/components/ui/separator";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -17,13 +16,37 @@ import { useAuthStore } from "@/store/auth-store";
 import { useMutation } from "@tanstack/react-query";
 import { updateProfile } from "@/services/me.service";
 import { toastError, toastSuccess } from "@/components/common/sonner";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
+import {
+  Form,
+  FormControl,
+
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+
+
+const formSchema = z.object({
+  username: z.string().min(3, "Vui lòng nhập username"),
+})
 const UserProfileCard: React.FC = () => {
   const me = useAuthStore((state) => state.me);
   const [name, setName] = useState(me?.name || "");
   const [nameForm, setNameForm] = useState(me?.name || "");
   const [isNameDialogOpen, setIsNameDialogOpen] = useState(false);
   const [nameError, setNameError] = useState<string | null>(null);
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: me?.name || "",
+    },
+  });
+
   const setMe = useAuthStore((s) => s.setMe);
   const { mutate: updateName, isPending } = useMutation({
     mutationFn: updateProfile,
@@ -38,18 +61,12 @@ const UserProfileCard: React.FC = () => {
       toastError("Name update failed, please try again");
     },
   });
-  const handleNameSave = () => {
-    if (!nameForm.trim()) {
-      setNameError("Name cannot be blank.");
-      return;
-    }
-    updateName({ name: nameForm })
+  const handleNameSave = (values: z.infer<typeof formSchema>) => {
+    updateName({ name: values.username }); // 
   };
 
-  const handleNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNameForm(e.target.value);
-    setNameError(null); // Clear error on input change
-  };
+
+
 
   return (
     <>
@@ -116,38 +133,43 @@ const UserProfileCard: React.FC = () => {
           <DialogHeader>
             <DialogTitle>Edit name</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                name="name"
-                value={nameForm}
-                onChange={handleNameInputChange}
-                placeholder="Nhập tên của bạn"
-                className="mt-2"
+
+          <Form {...form}>
+            <form className="w-full space-y-3" onSubmit={form.handleSubmit(handleNameSave)}>
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {nameError && <p className="text-red-500 text-sm">{nameError}</p>}
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setIsNameDialogOpen(false);
-                setNameError(null);
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleNameSave}
-              className="bg-blue-500 hover:bg-blue-700 text-white"
-              disabled={isPending}
-            >
-              Save
-            </Button>
-          </DialogFooter>
+
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setIsNameDialogOpen(false);
+                    setNameError(null);
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-700 text-white"
+                  disabled={isPending}
+                >
+                  Save
+                </Button>
+              </DialogFooter>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
     </>
