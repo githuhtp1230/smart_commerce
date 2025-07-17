@@ -30,14 +30,13 @@ import {
 } from "@/components/ui/form";
 
 const formSchema = z.object({
-  username: z.string().min(3, "Vui lòng nhập username"),
+  username: z.string().min(3, "User must be longer than 3 characters"),
 });
+
 const LeftUserProfile: React.FC = () => {
-  const me = useAuthStore((state) => state.me);
-  const [name, setName] = useState(me?.name || "");
-  const [nameForm, setNameForm] = useState(me?.name || "");
+  const { me, setMe } = useAuthStore((state) => state);
   const [isNameDialogOpen, setIsNameDialogOpen] = useState(false);
-  const [nameError, setNameError] = useState<string | null>(null);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,18 +44,14 @@ const LeftUserProfile: React.FC = () => {
     },
   });
 
-  const setMe = useAuthStore((s) => s.setMe);
-
   const { mutate: updateName, isPending } = useMutation({
     mutationFn: updateProfile,
     onSuccess: (data) => {
-      setName(data.name);
       setMe(data);
       setIsNameDialogOpen(false);
       toastSuccess("Name updated successfully");
     },
     onError: () => {
-      setNameError("Cập nhật thất bại. Vui lòng thử lại.");
       toastError("Name update failed, please try again");
     },
   });
@@ -79,13 +74,12 @@ const LeftUserProfile: React.FC = () => {
           <div className="flex-1 space-y-4 mt-10">
             <div className="flex items-center gap-2">
               <h2 className="text-2xl font-semibold text-secondary-foreground">
-                {name}
+                {me?.name}
               </h2>
               <button
                 id="editNameBtn"
                 className="text-card-foreground dark:hover:text-blue-400 cursor-pointer"
                 onClick={() => {
-                  setNameForm(name);
                   setIsNameDialogOpen(true);
                 }}
               >
@@ -123,7 +117,6 @@ const LeftUserProfile: React.FC = () => {
           </div>
         </div>
       </Card>
-
       {/* Edit Name Dialog */}
       <Dialog open={isNameDialogOpen} onOpenChange={setIsNameDialogOpen}>
         <DialogContent>
@@ -155,8 +148,8 @@ const LeftUserProfile: React.FC = () => {
                   variant="outline"
                   onClick={() => {
                     setIsNameDialogOpen(false);
-                    setNameError(null);
                   }}
+                  type="button"
                 >
                   Cancel
                 </Button>
