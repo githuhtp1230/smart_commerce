@@ -1,8 +1,8 @@
 import React from "react";
 
 import ChangePasswordButton from "@/components/common/button/ChangePasswordButton";
-import RightUserProfile from "./RightUserProfile";
 import LeftUserProfile from "./LeftUserProfile";
+import RightUserProfile from "./RightUserProfile";
 const Profile: React.FC = () => {
   return (
     <div className="min-h-screen ">
@@ -19,7 +19,7 @@ const Profile: React.FC = () => {
         {/* Profile Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Profile Info */}
-          <RightUserProfile />
+          <LeftUserProfile />
           {/* Address Info */}
           <LeftUserProfile />
         </div>
