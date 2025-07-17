@@ -58,7 +58,7 @@ const LeftUserProfile: React.FC = () => {
   });
 
   const handleNameSave = (values: z.infer<typeof formSchema>) => {
-    updateName({ name: values.username }); //
+    updateName({ name: values.username });
   };
 
   return (

@@ -48,7 +48,6 @@ const RightUserProfile: React.FC = () => {
     email: me?.email || "",
     phone: me?.phone || "",
   });
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
