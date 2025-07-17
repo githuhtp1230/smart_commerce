@@ -15,7 +15,6 @@ import RequireRole from "../../require-role";
 
 export default function AvatarDropdown() {
   const { me, logout } = useAuthStore((state) => state);
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center">
@@ -26,11 +25,11 @@ export default function AvatarDropdown() {
         align="end"
         alignOffset={-10}
       >
-        <DropdownMenuItem disabled={true} className="py-3 !opacity-100">
+        <DropdownMenuItem disabled={true} className="py-1 !opacity-100">
           <CircleAvatar />
           <div className="ml-1 flex flex-col">
             <p className="text-sm font-medium">{me?.name}</p>
-            <p className="text-xs text-muted-foreground">{me?.email}</p>
+            <p className="text-sm text-muted-foreground">{me?.email}</p>
           </div>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
