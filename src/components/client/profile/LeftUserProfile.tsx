@@ -14,9 +14,9 @@ import {
 import { useAuthStore } from "@/store/auth-store";
 import { useMutation } from "@tanstack/react-query";
 import { updateProfile } from "@/services/me.service";
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import {
   Form,
@@ -25,7 +25,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 import { toastSuccess } from "@/components/common/sonner";
 
 interface ContactInfo {
@@ -36,9 +36,9 @@ interface ContactInfo {
 
 const formSchema = z.object({
   phone: z.string().min(3, "Vui lòng nhập số điện thoại"),
-})
+});
 
-const UserContactCard: React.FC = () => {
+const LeftUserProfile: React.FC = () => {
   const me = useAuthStore((state) => state.me);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isPhoneDialogOpen, setIsPhoneDialogOpen] = useState(false);
@@ -75,7 +75,7 @@ const UserContactCard: React.FC = () => {
 
   const handlePhoneSave = (values: z.infer<typeof formSchema>) => {
     updatePhone({ phone: values.phone });
-    toastSuccess("Phone number updated successfully")
+    toastSuccess("Phone number updated successfully");
   };
 
   const handlePhoneInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,7 +143,10 @@ const UserContactCard: React.FC = () => {
             <DialogTitle>Edit phone number</DialogTitle>
           </DialogHeader>
           <Form {...form}>
-            <form className="w-full space-y-3" onSubmit={form.handleSubmit(handlePhoneSave)}>
+            <form
+              className="w-full space-y-3"
+              onSubmit={form.handleSubmit(handlePhoneSave)}
+            >
               <FormField
                 control={form.control}
                 name="phone"
@@ -184,4 +187,4 @@ const UserContactCard: React.FC = () => {
   );
 };
 
-export default UserContactCard;
+export default LeftUserProfile;

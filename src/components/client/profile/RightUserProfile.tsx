@@ -16,25 +16,23 @@ import { useAuthStore } from "@/store/auth-store";
 import { useMutation } from "@tanstack/react-query";
 import { updateProfile } from "@/services/me.service";
 import { toastError, toastSuccess } from "@/components/common/sonner";
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import {
   Form,
   FormControl,
-
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-
+} from "@/components/ui/form";
 
 const formSchema = z.object({
   username: z.string().min(3, "Vui lòng nhập username"),
-})
-const UserProfileCard: React.FC = () => {
+});
+const RightUserProfile: React.FC = () => {
   const me = useAuthStore((state) => state.me);
   const [name, setName] = useState(me?.name || "");
   const [nameForm, setNameForm] = useState(me?.name || "");
@@ -62,11 +60,8 @@ const UserProfileCard: React.FC = () => {
     },
   });
   const handleNameSave = (values: z.infer<typeof formSchema>) => {
-    updateName({ name: values.username }); // 
+    updateName({ name: values.username }); //
   };
-
-
-
 
   return (
     <>
@@ -135,7 +130,10 @@ const UserProfileCard: React.FC = () => {
           </DialogHeader>
 
           <Form {...form}>
-            <form className="w-full space-y-3" onSubmit={form.handleSubmit(handleNameSave)}>
+            <form
+              className="w-full space-y-3"
+              onSubmit={form.handleSubmit(handleNameSave)}
+            >
               <FormField
                 control={form.control}
                 name="username"
@@ -176,4 +174,4 @@ const UserProfileCard: React.FC = () => {
   );
 };
 
-export default UserProfileCard;
+export default RightUserProfile;
