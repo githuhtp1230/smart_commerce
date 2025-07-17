@@ -4,7 +4,6 @@ import { Pencil } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -15,11 +14,29 @@ import {
 import { useAuthStore } from "@/store/auth-store";
 import { useMutation } from "@tanstack/react-query";
 import { updateProfile } from "@/services/me.service";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { toastSuccess } from "@/components/common/sonner";
+
 interface ContactInfo {
   address: string;
   email: string;
   phone: string;
 }
+
+const formSchema = z.object({
+  phone: z.string().min(3, "Vui lòng nhập số điện thoại"),
+})
 
 const UserContactCard: React.FC = () => {
   const me = useAuthStore((state) => state.me);
@@ -32,11 +49,13 @@ const UserContactCard: React.FC = () => {
   });
   const [editForm, setEditForm] = useState<ContactInfo>(contactInfo);
   const [phoneForm, setPhoneForm] = useState(contactInfo.phone);
-  const phoneRegex = /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/;
   const [phoneError, setPhoneError] = useState<string | null>(null);
-  const normalizePhone = (phone: string) => {
-    return phone.startsWith("+84") ? "0" + phone.slice(3) : phone;
-  };
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      phone: me?.phone || "",
+    },
+  });
   const setMe = useAuthStore((s) => s.setMe);
 
   const { mutate: updatePhone, isPending } = useMutation({
@@ -54,23 +73,9 @@ const UserContactCard: React.FC = () => {
     },
   });
 
-  const handleSave = () => {
-    setContactInfo(editForm);
-    setIsEditDialogOpen(false);
-  };
-
-  const handlePhoneSave = () => {
-    const normalizedPhone = normalizePhone(phoneForm);
-    if (!phoneForm.trim()) {
-      setPhoneError("Số điện thoại không được để trống.");
-      return;
-    }
-    if (!phoneRegex.test(normalizedPhone)) {
-      setPhoneError("Số điện thoại không hợp lệ.");
-      return;
-    }
-
-    updatePhone({ phone: normalizedPhone });
+  const handlePhoneSave = (values: z.infer<typeof formSchema>) => {
+    updatePhone({ phone: values.phone });
+    toastSuccess("Phone number updated successfully")
   };
 
   const handlePhoneInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,48 +142,42 @@ const UserContactCard: React.FC = () => {
           <DialogHeader>
             <DialogTitle>Edit phone number</DialogTitle>
           </DialogHeader>
-          <div className="space-y-3">
-            <div className="flex flex-col space-y-2">
-              <Label
-                htmlFor="phone"
-                className="text-sm font-medium text-secondary-foreground transition-colors duration-200"
-              >
-                Number phone
-              </Label>
-              <Input
-                id="phone"
+          <Form {...form}>
+            <form className="w-full space-y-3" onSubmit={form.handleSubmit(handlePhoneSave)}>
+              <FormField
+                control={form.control}
                 name="phone"
-                value={phoneForm}
-                onChange={handlePhoneInputChange}
-                placeholder="Nhập số điện thoại (VD: +84 123 456 789)"
-                type="tel"
-                className="w-full px-4 py-2 "
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Number phone</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {phoneError && (
-                <p className="text-sm text-red-500 font-medium mt-1 animate-fade-in">
-                  {phoneError}
-                </p>
-              )}
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setIsPhoneDialogOpen(false);
-                setPhoneError(null);
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handlePhoneSave}
-              className="bg-blue-500 hover:bg-blue-700 text-white"
-              disabled={isPending}
-            >
-              Save
-            </Button>
-          </DialogFooter>
+
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setIsPhoneDialogOpen(false);
+                    setPhoneError(null);
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-700 text-white"
+                  disabled={isPending}
+                >
+                  Save
+                </Button>
+              </DialogFooter>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
     </>
