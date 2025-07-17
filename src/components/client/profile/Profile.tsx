@@ -21,7 +21,7 @@ const Profile: React.FC = () => {
           {/* Profile Info */}
           <LeftUserProfile />
           {/* Address Info */}
-          <LeftUserProfile />
+          <RightUserProfile />
         </div>
       </main>
     </div>

@@ -46,6 +46,7 @@ const LeftUserProfile: React.FC = () => {
   });
 
   const setMe = useAuthStore((s) => s.setMe);
+
   const { mutate: updateName, isPending } = useMutation({
     mutationFn: updateProfile,
     onSuccess: (data) => {
@@ -59,6 +60,7 @@ const LeftUserProfile: React.FC = () => {
       toastError("Name update failed, please try again");
     },
   });
+
   const handleNameSave = (values: z.infer<typeof formSchema>) => {
     updateName({ name: values.username }); //
   };
