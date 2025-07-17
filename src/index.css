@@ -224,3 +224,10 @@
 .clip-triangle {
   clip-path: polygon(50% 0%, 100% 0, 100% 45%);
 }
+
+@layer utilities {
+  input::selection {
+    background-color: var(--color-blue-500) !important;
+    color: white !important;
+  }
+}
