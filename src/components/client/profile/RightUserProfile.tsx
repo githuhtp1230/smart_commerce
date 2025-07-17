@@ -26,7 +26,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toastSuccess } from "@/components/common/sonner";
+import { toastError } from "@/components/common/sonner";
 
 interface ContactInfo {
   address: string;
@@ -35,28 +35,28 @@ interface ContactInfo {
 }
 
 const formSchema = z.object({
-  phone: z.string().min(3, "Vui lòng nhập số điện thoại"),
+  phone: z
+    .string()
+    .regex(/^0(3|5|7|8|9)\d{8}$/, {
+      message: "Invalid phone number.",
+    }),
 });
 
 const RightUserProfile: React.FC = () => {
-  const me = useAuthStore((state) => state.me);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const { me, setMe } = useAuthStore((state) => state);
   const [isPhoneDialogOpen, setIsPhoneDialogOpen] = useState(false);
   const [contactInfo, setContactInfo] = useState<ContactInfo>({
     address: "Vancouver, British Columbia\nCanada",
     email: me?.email || "",
     phone: me?.phone || "",
   });
-  const [editForm, setEditForm] = useState<ContactInfo>(contactInfo);
-  const [phoneForm, setPhoneForm] = useState(contactInfo.phone);
-  const [phoneError, setPhoneError] = useState<string | null>(null);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       phone: me?.phone || "",
     },
   });
-  const setMe = useAuthStore((s) => s.setMe);
 
   const { mutate: updatePhone, isPending } = useMutation({
     mutationFn: updateProfile,
@@ -69,19 +69,15 @@ const RightUserProfile: React.FC = () => {
       setIsPhoneDialogOpen(false);
     },
     onError: () => {
-      setPhoneError("Cập nhật số điện thoại thất bại.");
+      toastError("Phone number failed, please try again");
     },
   });
 
   const handlePhoneSave = (values: z.infer<typeof formSchema>) => {
     updatePhone({ phone: values.phone });
-    toastSuccess("Phone number updated successfully");
   };
 
-  const handlePhoneInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneForm(e.target.value);
-    setPhoneError(null); // Clear error on input change
-  };
+
 
   return (
     <>
@@ -93,7 +89,7 @@ const RightUserProfile: React.FC = () => {
           <button
             id="editContactBtn"
             className="text-card-foreground dark:hover:text-blue-400 cursor-pointer"
-            onClick={() => setIsEditDialogOpen(true)}
+
           >
             <Pencil className="w-4 h-4" />
           </button>
@@ -120,12 +116,11 @@ const RightUserProfile: React.FC = () => {
             <div className="flex items-center gap-50">
               <h3 className="font-medium text-secondary-foreground">Phone</h3>
               <div className="flex items-center gap-2">
-                <p className="text-txt-brand">{contactInfo.phone}</p>
+                <p className="text-txt-brand">{me?.phone}</p>
                 <button
                   id="editPhoneBtn"
                   className="text-card-foreground dark:hover:text-blue-400 cursor-pointer"
                   onClick={() => {
-                    setPhoneForm(contactInfo.phone);
                     setIsPhoneDialogOpen(true);
                   }}
                 >
@@ -166,8 +161,10 @@ const RightUserProfile: React.FC = () => {
                   variant="outline"
                   onClick={() => {
                     setIsPhoneDialogOpen(false);
-                    setPhoneError(null);
+
+
                   }}
+                  type="button"
                 >
                   Cancel
                 </Button>
