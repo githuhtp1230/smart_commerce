@@ -1,32 +1,29 @@
+import CustomInput from "@/components/common/input/CustomInput";
+import { toastSuccess } from "@/components/common/sonner";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
+  Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Form,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import AuthTabs from "./AuthTabs";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState, type FC } from "react";
-import { cn } from "@/lib/utils";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
-import { useMutation } from "@tanstack/react-query";
-import { loginRequest } from "@/services/auth.service";
-import CardError from "../../common/notification/CardError";
-import { Link, useNavigate } from "react-router-dom";
+import { SECURITY } from "@/constants/common";
 import { PATH } from "@/constants/path";
+import { cn } from "@/lib/utils";
+import { loginRequest } from "@/services/auth.service";
 import { useAuthStore } from "@/store/auth-store";
 import saveToken from "@/utils/token-util";
-import { SECURITY } from "@/constants/common";
-import { Eye, EyeOff } from "lucide-react";
-import ForgotPassword from "./ForgotPassword";
-import { toastError, toastSuccess } from "@/components/common/sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { Lock, Mail } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { z } from "zod";
+import CardError from "../../common/notification/CardError";
 
 const formSchema = z.object({
   email: z.string().min(1, "Vui lòng nhập email"),
@@ -46,11 +43,10 @@ const Login = () => {
     mutationKey,
     mutationFn: loginRequest,
     onError: () => {
-      toastError("Login failed")
       setIsShowError(true);
     },
     onSuccess: (data) => {
-      toastSuccess("Login successful")
+      toastSuccess("Login successful");
       navigate(PATH.HOME_PAGE);
       setMe(data.user);
       if (data.accessToken) {
@@ -85,7 +81,6 @@ const Login = () => {
 
   return (
     <div>
-
       <Form {...form}>
         <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-3">
@@ -98,14 +93,15 @@ const Login = () => {
                     Email
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      className="focus:!ring-0 h-10 selection:bg-blue-400"
+                    <CustomInput
+                      prefixIcon={Mail}
                       placeholder="Enter email here"
-                      {...field}
+                      field={field}
                       onChange={(e) => {
                         field.onChange(e);
                         handleOnChange();
                       }}
+                      hasError={!!form.formState.errors.email}
                     />
                   </FormControl>
                   <FormMessage />
@@ -121,27 +117,17 @@ const Login = () => {
                     Password
                   </FormLabel>
                   <FormControl>
-                    <div className="relative">
-                      <Input
-                        type={showPassword ? "***" : "password"}
-                        className="focus:!ring-0 h-10 selection:bg-blue-400 pr-10"
-                        placeholder="Enter password here"
-                        {...field}
-                        onChange={(e) => {
-                          field.onChange(e);
-                          handleOnChange();
-                        }}
-                      />
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setShowPassword((showPassword) => !showPassword)
-                        }
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-txt-tertiary text-base"
-                      >
-                        {showPassword ? <Eye /> : <EyeOff />}
-                      </button>
-                    </div>
+                    <CustomInput
+                      prefixIcon={Lock}
+                      placeholder="Enter password here"
+                      field={field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        handleOnChange();
+                      }}
+                      hasError={!!form.formState.errors.password}
+                      isPassword
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -168,7 +154,6 @@ const Login = () => {
               type="button"
             >
               <Link to={PATH.FORGOT_PASSWORD}>Forgot password?</Link>
-
             </Button>
           </div>
           {isShowError && <CardError message="Email or password is invalid" />}
