@@ -6,18 +6,18 @@ import {
   FormMessage,
   Form,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Lock, Mail } from "lucide-react";
 import { registerRequest, verifyOtpRequest } from "@/services/auth.service";
 import OTPInputWithSeparator from "@/components/OTPInput";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 import { toastError, toastSuccess } from "@/components/common/sonner";
+import CustomInput from "@/components/common/input/CustomInput";
 
 const formSchema = z
   .object({
@@ -37,8 +37,6 @@ const Register = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isShowOtp, setIsShowOtp] = useState(false);
   const [otp, setOtp] = useState("");
   const [emailState, setEmailState] = useState("");
@@ -53,10 +51,10 @@ const Register = () => {
 
       setEmailState(values.email);
       setIsShowOtp(true);
-      toastSuccess("OTP code has been sent to your email")
+      toastSuccess("OTP code has been sent to your email");
     } catch (err) {
       console.error(err);
-      toastError("Registration failed. Email may already exist.")
+      toastError("Registration failed. Email may already exist.");
     }
   };
 
@@ -66,13 +64,19 @@ const Register = () => {
         email: emailState,
         otp,
       });
-      toastSuccess("Registration successful")
+      toastSuccess("Registration successful");
       navigate(PATH.LOGIN);
     } catch (err) {
       console.error(err);
       toastError("OTP code is incorrect or expired");
     }
   };
+  const handleOnChange = () => {
+    if (isShowError) {
+      setIsShowError(false);
+    }
+  };
+  const [isShowError, setIsShowError] = useState<boolean>(false);
 
   return (
     <Form {...form}>
@@ -84,7 +88,7 @@ const Register = () => {
             <FormItem className="gap-1">
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input
+                <CustomInput
                   placeholder="Nhập username"
                   {...field}
                   className="h-10"
@@ -101,7 +105,16 @@ const Register = () => {
             <FormItem className="gap-1">
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Nhập email" {...field} className="h-10" />
+                <CustomInput
+                  prefixIcon={Mail}
+                  placeholder="Enter email here"
+                  field={field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleOnChange();
+                  }}
+                  hasError={!!form.formState.errors.email}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -114,21 +127,17 @@ const Register = () => {
             <FormItem className="gap-1">
               <FormLabel>Mật khẩu</FormLabel>
               <FormControl>
-                <div className="relative">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Nhập mật khẩu"
-                    {...field}
-                    className="h-10"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword((p) => !p)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2"
-                  >
-                    {showPassword ? <Eye /> : <EyeOff />}
-                  </button>
-                </div>
+                <CustomInput
+                  prefixIcon={Lock}
+                  placeholder="Enter password here"
+                  field={field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleOnChange();
+                  }}
+                  hasError={!!form.formState.errors.password}
+                  isPassword
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -141,21 +150,17 @@ const Register = () => {
             <FormItem className="gap-1">
               <FormLabel>Xác nhận mật khẩu</FormLabel>
               <FormControl>
-                <div className="relative">
-                  <Input
-                    type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Nhập lại mật khẩu"
-                    {...field}
-                    className="h-10"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword((p) => !p)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2"
-                  >
-                    {showConfirmPassword ? <Eye /> : <EyeOff />}
-                  </button>
-                </div>
+                <CustomInput
+                  prefixIcon={Lock}
+                  placeholder="Enter confirm password here"
+                  field={field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleOnChange();
+                  }}
+                  hasError={!!form.formState.errors.confirmPassword}
+                  isPassword
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
