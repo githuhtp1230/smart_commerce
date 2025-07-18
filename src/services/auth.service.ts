@@ -9,7 +9,13 @@ export const loginRequest = async (body: ILoginRequest): Promise<IAuth> => {
     throw error;
   }
 };
-
+export const changePassword = async (body: {
+  currentPassword: string;
+  newPassword: string;
+}) => {
+  const res = await httpRequest.post("/auth/change-password", body);
+  return res.data;
+};
 export const registerRequest = async (body: {
   username: string;
   email: string;
@@ -27,10 +33,7 @@ export const verifyOtpRequest = async (body: {
   return res.data;
 };
 
-
-export const sendForgotPasswordOTPRequest = async (body: {
-  email: string;
-}) => {
+export const sendForgotPasswordOTPRequest = async (body: { email: string }) => {
   const res = await httpRequest.post("/auth/forgot-password", body);
   return res.data;
 };
@@ -41,5 +44,4 @@ export const verifyForgotPasswordOtpRequest = async (body: {
 }) => {
   const res = await httpRequest.post("/auth/reset-password", body);
   return res.data;
-}
-
+};

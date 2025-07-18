@@ -77,7 +77,6 @@ const Login = () => {
       setIsShowError(false);
     }
   };
-  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
     <div>

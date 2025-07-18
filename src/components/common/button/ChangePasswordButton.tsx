@@ -24,14 +24,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "sonner";
+import { toastSuccess } from "../sonner";
+import { useMutation } from "@tanstack/react-query";
+import { changePassword } from "@/services/auth.service";
+import CardError from "../notification/CardError";
 const formSchema = z
   .object({
-    currentPassword: z.string().min(6, "Vui lòng nhập mật khẩu hiện tại"),
-    newPassword: z.string().min(6, "Vui lòng nhập mật khẩu mới"),
+    currentPassword: z.string().min(1, "Vui lòng nhập mật khẩu hiện tại"),
+    newPassword: z.string().min(1, "Vui lòng nhập mật khẩu mới"),
     confirmNewPassword: z
       .string()
-      .min(6, "Vui lòng nhập xác nhận lại mật khẩu mới"),
+      .min(1, "Vui lòng nhập xác nhận lại mật khẩu mới"),
   })
   .refine((data) => data.newPassword === data.confirmNewPassword, {
     path: ["confirmNewPassword"],
@@ -39,7 +42,7 @@ const formSchema = z
   });
 const ChangePasswordButton = () => {
   const [isShowError, setIsShowError] = useState<boolean>(false);
-
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   type ChangePasswordForm = z.infer<typeof formSchema>;
 
   const form = useForm<ChangePasswordForm>({
@@ -50,16 +53,27 @@ const ChangePasswordButton = () => {
       confirmNewPassword: "",
     },
   });
+  const onSubmit = async (values: ChangePasswordForm) => {
+    const { currentPassword, newPassword } = values;
+    if (currentPassword && newPassword) {
+      mutate({ currentPassword, newPassword });
+    }
+  };
 
-  function onSubmit(data: ChangePasswordForm) {
-    toast("You submitted the following values", {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }
+  const mutationKey = ["changepassword"];
+  const { mutate, isPending } = useMutation({
+    mutationKey,
+    mutationFn: changePassword,
+    onError: () => {
+      setIsShowError(true);
+    },
+    onSuccess: () => {
+      toastSuccess("Change password successful");
+      form.reset();
+      setIsDialogOpen(false);
+    },
+  });
+
   const handleOnChange = () => {
     if (isShowError) {
       setIsShowError(false);
@@ -67,7 +81,7 @@ const ChangePasswordButton = () => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button
           variant="outline"
@@ -84,13 +98,13 @@ const ChangePasswordButton = () => {
         </DialogHeader>
         <Form {...form}>
           <form className="w-full " onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="space-y-3">
+            <div className="space-y-3 mb-3">
               <FormField
                 control={form.control}
                 name="currentPassword"
                 render={({ field }) => (
                   <FormItem className="gap-1">
-                    <FormLabel className="text-txt-tertiary font-medium text-base">
+                    <FormLabel className="text-txt-tertiary  text-base">
                       Current Password
                     </FormLabel>
                     <FormControl>
@@ -115,7 +129,7 @@ const ChangePasswordButton = () => {
                 name="newPassword"
                 render={({ field }) => (
                   <FormItem className="gap-1">
-                    <FormLabel className="text-txt-tertiary font-medium text-base">
+                    <FormLabel className="text-txt-tertiary  text-base">
                       New Password
                     </FormLabel>
                     <FormControl>
@@ -140,7 +154,7 @@ const ChangePasswordButton = () => {
                 name="confirmNewPassword"
                 render={({ field }) => (
                   <FormItem className="gap-1">
-                    <FormLabel className="text-txt-tertiary font-medium text-base">
+                    <FormLabel className="text-txt-tertiary  text-base">
                       Confirm New Password
                     </FormLabel>
                     <FormControl>
@@ -161,14 +175,25 @@ const ChangePasswordButton = () => {
                 )}
               />
             </div>
+            {isShowError && (
+              <CardError message="Current password is invalid !" />
+            )}
             <DialogFooter className="mt-3">
               <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setIsShowError(false);
+                  }}
+                >
+                  Cancel
+                </Button>
               </DialogClose>
               <Button
                 variant="outline"
                 type="submit"
                 className=" bg-blue-500 hover:bg-blue-600 text-white hover:text-white"
+                disabled={isPending}
               >
                 Save
               </Button>
