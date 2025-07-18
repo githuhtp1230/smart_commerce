@@ -29,13 +29,14 @@ import { ADMIN_PATH } from "@/constants/path";
 import SwitchCustomizationDemo from "./customized/switch/switch-07";
 import { useTheme } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/store/auth-store";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
+  // user: {
+  //   name: "shadcn",
+  //   email: "m@example.com",
+  //   avatar: "/avatars/shadcn.jpg",
+  // },
   teams: [
     {
       name: "Acme Inc",
@@ -164,7 +165,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { setTheme, theme } = useTheme();
   const { open } = useSidebar();
-
+  const { me } = useAuthStore();
   const handleCheckedChange = (checked: boolean) => {
     if (checked) {
       setTheme("dark");
@@ -180,7 +181,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     >
       <SidebarHeader>
         {/* <TeamSwitcher teams={data.teams} /> */}
-        <NavUser user={data.user} />
+        <NavUser user={me} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
