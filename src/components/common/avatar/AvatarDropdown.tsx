@@ -18,15 +18,15 @@ export default function AvatarDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center">
-        <CircleAvatar imageUrl={me?.avatar} />
+        <CircleAvatar isMe />
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className="mt-2 w-72 bg-primary"
         align="end"
         alignOffset={-10}
       >
-        <DropdownMenuItem disabled={true} className="py-1 !opacity-100">
-          <CircleAvatar />
+        <DropdownMenuItem disabled={true} className="py-2 !opacity-100">
+          <CircleAvatar isMe />
           <div className="ml-1 flex flex-col">
             <p className="text-sm font-medium">{me?.name}</p>
             <p className="text-sm text-muted-foreground">{me?.email}</p>

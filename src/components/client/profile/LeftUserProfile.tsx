@@ -28,6 +28,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import CircleAvatar from "@/components/common/avatar/CircleAvatar";
 
 const formSchema = z.object({
   username: z.string().min(3, "User must be longer than 3 characters"),
@@ -64,13 +65,11 @@ const LeftUserProfile: React.FC = () => {
     <>
       <Card className="col-span-2 p-6 bg-primary">
         <div className="flex items-start gap-6">
-          <Avatar className="h-40 w-40">
-            <AvatarImage
-              src="https://readdy.ai/api/search-image?query=professional%20portrait%20of%20a%20smiling%20Asian%20man%20in%20his%2030s%20wearing%20a%20light%20blue%20button-up%20shirt%20against%20a%20neutral%20dark%20green%20background%2C%20business%20headshot%20with%20soft%20lighting%2C%20high%20quality%20professional%20photo&width=300&height=300&seq=1&orientation=squarish"
-              alt="Ansolo Lazinatov"
-            />
-            <AvatarFallback className="text-2xl">AL</AvatarFallback>
-          </Avatar>
+          <CircleAvatar
+            className="size-35 border border-border-primary"
+            canCrop
+            isMe
+          />
           <div className="flex-1 space-y-4 mt-10">
             <div className="flex items-center gap-2">
               <h2 className="text-2xl font-semibold text-secondary-foreground">
