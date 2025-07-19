@@ -35,11 +35,9 @@ interface ContactInfo {
 }
 
 const formSchema = z.object({
-  phone: z
-    .string()
-    .regex(/^0(3|5|7|8|9)\d{8}$/, {
-      message: "Invalid phone number.",
-    }),
+  phone: z.string().regex(/^0(3|5|7|8|9)\d{8}$/, {
+    message: "Invalid phone number.",
+  }),
 });
 
 const RightUserProfile: React.FC = () => {
@@ -77,8 +75,6 @@ const RightUserProfile: React.FC = () => {
     updatePhone({ phone: values.phone });
   };
 
-
-
   return (
     <>
       <Card className="p-6 rounded-md shadow bg-primary">
@@ -89,7 +85,6 @@ const RightUserProfile: React.FC = () => {
           <button
             id="editContactBtn"
             className="text-card-foreground dark:hover:text-blue-400 cursor-pointer"
-
           >
             <Pencil className="w-4 h-4" />
           </button>
@@ -161,10 +156,9 @@ const RightUserProfile: React.FC = () => {
                   variant="outline"
                   onClick={() => {
                     setIsPhoneDialogOpen(false);
-
-
                   }}
                   type="button"
+                  className="border-border-primary"
                 >
                   Cancel
                 </Button>
