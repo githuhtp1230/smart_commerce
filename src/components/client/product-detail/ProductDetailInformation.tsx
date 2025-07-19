@@ -129,24 +129,24 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
             {isProductVariation && !selectedProductVariation ? (
               <div className="flex items-center gap-2">
                 <span className="text-4xl font-semibold text-foreground">
-                  ${minPrice}
+                  {minPrice}đ
                 </span>{" "}
                 <Minus />{" "}
                 <span className="text-4xl font-semibold text-foreground">
-                  ${maxPrice}
+                  {maxPrice}đ
                 </span>
               </div>
             ) : (
               <>
                 <span className="text-4xl font-bold text-foreground">
-                  $
                   {salePrice ??
                     selectedProductVariation?.price ??
                     productDetail?.price}
+                  đ
                 </span>
                 {salePrice && (
                   <span className="text-lg text-muted-foreground line-through ml-2">
-                    ${selectedProductVariation?.price}
+                    {selectedProductVariation?.price}đ
                   </span>
                 )}
               </>
