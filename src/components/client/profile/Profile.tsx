@@ -1,5 +1,5 @@
 import React from "react";
-
+import "react-image-crop/dist/ReactCrop.css";
 import ChangePasswordButton from "@/components/common/button/ChangePasswordButton";
 import LeftUserProfile from "./LeftUserProfile";
 import RightUserProfile from "./RightUserProfile";
