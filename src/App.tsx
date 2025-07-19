@@ -22,7 +22,6 @@ import ProductDetailPage from "./pages/client/ProductDetailPage";
 import Footer from "./components/client/layout/Footer";
 import ForgotPassword from "./components/client/auth/ForgotPassword";
 
-
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +47,6 @@ function App() {
     <>
       <div className="h-screen">
         <Routes>
-
           <Route element={<AuthLayout />}>
             <Route path={PATH.LOGIN} element={<Login />} />
             <Route path={PATH.REGISTER} element={<Register />} />
@@ -86,7 +84,6 @@ function App() {
             </Route>
           </Route>
         </Routes>
-        <Footer></Footer>
       </div>
     </>
   );
