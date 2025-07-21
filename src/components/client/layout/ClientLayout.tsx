@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import { useCartStore } from "@/store/cart-store";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCartItems } from "@/services/cart.service";
+import Footer from "./Footer";
 
 const ClientLayout = () => {
   const { setCartItems } = useCartStore((s) => s);
@@ -29,6 +30,7 @@ const ClientLayout = () => {
           <Outlet />
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

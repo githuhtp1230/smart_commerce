@@ -1,13 +1,13 @@
-import { Facebook } from '@/assets/icons';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { CreditCard, Instagram, Youtube } from 'lucide-react';
-import React from 'react';
+import { Facebook, Logo } from "@/assets/icons";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { CreditCard, Instagram, Youtube } from "lucide-react";
+import React from "react";
 
 const Footer = () => {
-    return (
-        <div>
-            <footer className="py-4 w-full bg-background-secondary py-1 flex justify-center px-10">
+  return (
+    <div className="w-full">
+      <footer className="py-4 w-full bg-background-secondary py-1 flex justify-center px-10">
         <div className="container justify-between max-w-screen-xl w-full">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
@@ -120,22 +120,15 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="border-t border-border pt-6">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-              <div className="flex items-center mb-4 md:mb-0">
-                <img
-                  src="https://readdy.ai/api/search-image?query=A%20minimalist%20modern%20tech%20company%20logo%20with%20an%20abstract%20phoenix%20bird%20design%20in%20orange%20gradient%20colors%2C%20simple%20and%20clean%20design%20on%20transparent%20background%2C%20professional%20corporate%20identity&width=120&height=40&seq=15&orientation=landscape"
-                  alt="Phoenix Logo"
-                  className="h-8"
-                />
-              </div>
+          <div className="border-t border-border pt-6 ">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-center ml-100">
               <div className="text-sm text-muted-foreground">
-                © 2025 Phoenix Electronics. All rights reserved. |{" "}
-                <a href="#" className="hover:text-primary">
+                © 2025 Smart Commerce. All rights reserved. |{" "}
+                <a href="#" className="hover:text-primary text-sm ">
                   Privacy Policy
                 </a>{" "}
                 |{" "}
-                <a href="#" className="hover:text-primary">
+                <a href="#" className="hover:text-primary text-sm">
                   Terms of Service
                 </a>
               </div>
@@ -143,8 +136,8 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default Footer;
