@@ -11,6 +11,7 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  UsersRound,
 } from "lucide-react";
 import { useEffect } from "react";
 import { NavMain } from "@/components/nav-main";
@@ -88,6 +89,18 @@ const data = {
           title: "Quantum",
           url: "#",
         },
+      ],
+    },
+    {
+      title: "Manage Users",
+      url: "#",
+      icon: UsersRound,
+      items: [
+        {
+          title: "Users",
+          url: ADMIN_PATH.USER,
+        },
+
       ],
     },
     {

@@ -27,7 +27,7 @@ const CategoriesTable = ({ categories }: Props) => {
             },
         },
         {
-            id: "actions",
+            id: "deleteAction",
             header: () => <div>Delete</div>,
             cell: () => {
                 return (
@@ -40,7 +40,7 @@ const CategoriesTable = ({ categories }: Props) => {
             },
         },
         {
-            id: "actions",
+            id: "updateAction",
             header: () => <div>Update</div>,
             cell: () => {
                 return (
