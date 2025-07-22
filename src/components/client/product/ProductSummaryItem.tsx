@@ -6,13 +6,7 @@ import type { IProductSummary } from "@/type/products";
 import { ShoppingCart } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
-
-const formatPrice = (price: number) => {
-  return price.toLocaleString("vi-VN", {
-    style: "decimal",
-    minimumFractionDigits: 0,
-  });
-};
+import { formatPrice } from "@/helper/format-price-vietnam";
 
 interface Props {
   product: IProductSummary;

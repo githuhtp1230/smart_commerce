@@ -20,9 +20,8 @@ import { addCartItem } from "@/services/cart.service";
 import { toastSuccess } from "@/components/common/sonner";
 import { useCartStore } from "@/store/cart-store";
 
-// Utility function to format price with thousand separators
 const formatPrice = (price: number | undefined): string => {
-  if (price === undefined) return "N/A"; // Fallback for undefined prices
+  if (price === undefined) return "N/A";
   return price.toLocaleString("vi-VN", {
     style: "decimal",
     minimumFractionDigits: 0,
