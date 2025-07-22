@@ -14,4 +14,5 @@ export const ADMIN_PATH = {
   ADD_PRODUCT: "admin/add-product",
   CUSTOMER: "admin/customer",
   CATEGORY: "admin/category",
+  USER: "admin/users"
 };
