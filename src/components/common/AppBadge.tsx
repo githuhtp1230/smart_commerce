@@ -17,8 +17,8 @@ export const AppBadge = ({ badgeColor, content }: Props) => {
         );
       case "red":
         return (
-          <Badge className="bg-red-600/10 dark:bg-red-600/20 hover:bg-red-600/10 text-red-500 border-red-600/60 shadow-none rounded-full">
-            <div className="h-1.5 w-1.5 rounded-full bg-red-500 mr-2" />{" "}
+          <Badge className="bg-foreground-system-danger-hard text-txt-system-danger hover:bg-red-600/10 border-red-600/60 shadow-none rounded-full">
+            <div className="h-1.5 w-1.5 rounded-full bg-txt-system-danger mr-2" />{" "}
             {content}
           </Badge>
         );
@@ -38,8 +38,8 @@ export const AppBadge = ({ badgeColor, content }: Props) => {
         );
       case "green":
         return (
-          <Badge className="bg-green-600/10 dark:bg-green-600/20 hover:bg-green-600/10 text-green-500 border-green-600/60 shadow-none rounded-full">
-            <div className="h-1.5 w-1.5 rounded-full bg-green-500 mr-2" />{" "}
+          <Badge className="bg-foreground-system-success  text-txt-system-success border-green-600/60 shadow-none rounded-full">
+            <div className="h-1.5 w-1.5 rounded-full bg-txt-system-success mr-2" />{" "}
             {content}
           </Badge>
         );
