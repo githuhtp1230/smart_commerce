@@ -4,7 +4,8 @@ import type { IUser } from '@/type/auth';
 import type { ColumnDef } from '@tanstack/react-table';
 import { fetchUsers } from '@/services/users.service';
 import { Button } from '@/components/ui/button';
-import { SquarePen, Trash2 } from 'lucide-react';
+import { SquarePen } from 'lucide-react';
+import { AppBadge } from '@/components/common/AppBadge';
 
 const ManageUserPage = () => {
     const [users, setUsers] = useState<IUser[]>([]);
@@ -59,21 +60,21 @@ const ManageUserPage = () => {
             },
         },
         {
-            accessorKey: "deleteAction",
-            header: () => <div>Delete</div>,
-            cell: () => {
+            accessorKey: "isActive",
+            header: () => <div>isActive</div>,
+            cell: ({ row }) => {
+                const isActive = row.original.isActive;
                 return (
-                    <Button
-                        variant="ghost"
-                    >
-                        <Trash2 className="text-icon-system-danger" />
-                    </Button>
+                    <div>
+                        {isActive ? <AppBadge badgeColor="green" content={'Hoạt động'} /> : <AppBadge badgeColor="red" content={'Đã khóa'} />}
+                    </div>
                 );
             },
         },
+
         {
             id: "updateAction",
-            header: () => <div>Update</div>,
+            header: () => <div>Action</div>,
             cell: () => {
                 return (
                     <Button

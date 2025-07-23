@@ -17,4 +17,5 @@ export interface IUser {
   avatar: string;
   phone: string;
   role: RoleType;
+  isActive: boolean
 }
