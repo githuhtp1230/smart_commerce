@@ -4,6 +4,7 @@ import { DataTable } from "@/components/common/table/DataTable";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { formatPrice } from "@/helper/format-price-vietnam";
 import { cn } from "@/lib/utils";
 import {
   deleteCartItemRequest,
@@ -30,7 +31,7 @@ const CartItemList = () => {
     mutationFn: (itemId: number) => deleteCartItemRequest(itemId),
     onSuccess: (_, itemId) => {
       deleteCartItem(itemId);
-      toastSuccess("Product deleted successfully")
+      toastSuccess("Product deleted successfully");
     },
   });
 
@@ -138,10 +139,10 @@ const CartItemList = () => {
           <div className="flex gap-2 items-center">
             {isOnSale && (
               <p className="line-through text-muted-foreground text-sm">
-                ${originalPrice}
+                {formatPrice(originalPrice)}đ
               </p>
             )}
-            <p>${finalPrice}</p>
+            <p>{formatPrice(finalPrice)}đ</p>
           </div>
         );
       },
@@ -199,7 +200,7 @@ const CartItemList = () => {
       accessorFn: (row) => row.id,
       header: () => <div>Total Price</div>,
       cell: ({ getValue }) => (
-        <div>${getItemTotalPrice(getValue() as number)}</div>
+        <div>{formatPrice(getItemTotalPrice(getValue() as number))}đ</div>
       ),
     },
     {
