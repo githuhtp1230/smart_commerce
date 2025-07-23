@@ -22,6 +22,7 @@ import ProductDetailPage from "./pages/client/ProductDetailPage";
 import Footer from "./components/client/layout/Footer";
 import ForgotPassword from "./components/client/auth/ForgotPassword";
 import ManageUserPage from "./pages/admin/ManageUserPage";
+import SubCategory from "./components/admin/category/SubCategories";
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
@@ -78,14 +79,12 @@ function App() {
                 path={ADMIN_PATH.CATEGORY}
                 element={<ManageCategoryPage />}
               />
+              <Route path={ADMIN_PATH.SUBCATEGORY} element={<SubCategory />} />
               <Route
                 path={ADMIN_PATH.ADD_PRODUCT}
                 element={<AddProductPage />}
               />
-              <Route
-                path={ADMIN_PATH.USER}
-                element={<ManageUserPage />}
-              />
+              <Route path={ADMIN_PATH.USER} element={<ManageUserPage />} />
             </Route>
           </Route>
         </Routes>
