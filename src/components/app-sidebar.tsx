@@ -91,13 +91,13 @@ const data = {
       ],
     },
     {
-      title: "Documentation",
+      title: "Manage Promotions",
       url: "#",
       icon: BookOpen,
       items: [
         {
-          title: "Introduction",
-          url: "#",
+          title: "Promotions",
+          url: ADMIN_PATH.PROMOTION,
         },
         {
           title: "Get Started",

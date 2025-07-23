@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cart-store";
 import PaymentsSelect from "@/components/common/select/PaymentsSelect";
 import PurchaseButton from "@/components/common/button/PurchaseButton";
+import { formatPrice } from "@/helper/format-price-vietnam";
 
 const PaymentSummary: React.FC = () => {
   const { cartItems, getItemTotalPrice, getSelectedItemTotalPrice } =
@@ -28,7 +28,7 @@ const PaymentSummary: React.FC = () => {
                   </span>
                 </div>
                 <span className="font-medium">
-                  ${getItemTotalPrice(item.id)}
+                  {formatPrice(getItemTotalPrice(item.id))} đ
                 </span>
               </div>
             ))}
@@ -38,7 +38,7 @@ const PaymentSummary: React.FC = () => {
           <div className="flex justify-between">
             <span className="text-xl font-bold">Total:</span>
             <span className="text-xl font-bold">
-              ${getSelectedItemTotalPrice()}
+              {formatPrice(getSelectedItemTotalPrice())} đ
             </span>
           </div>
         </div>

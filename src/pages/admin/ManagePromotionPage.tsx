@@ -1,28 +1,27 @@
 "use client";
-
-import CategoriesTable from "@/components/admin/category/CategoriesTable";
+import PromotionsTable from "@/components/admin/promotion/PromotionsTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { fetchCategories } from "@/services/categories.service";
-import type { ICategory } from "@/type/category";
+import { fetchPromotions } from "@/services/promotions.service";
+import type { IPromotion } from "@/type/promotion";
 import { useEffect, useState } from "react";
 
 const tabs = [
-  { name: "Danh mục đang hoạt động", value: "false" },
-  { name: "Danh mục đã xoá", value: "true" },
+  { name: "Khuyến mãi đang hoạt động", value: "false" },
+  { name: "Khuyến mãi đã hết hạn", value: "true" },
 ];
 
-export default function ManageCategoryPage() {
-  const [categories, setCategories] = useState<ICategory[]>([]);
+export default function ManagePromotionPage() {
+  const [promotions, setPromotions] = useState<IPromotion[]>([]);
   const [tabValue, setTabValue] = useState("false");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const isDeleted = tabValue === "true"; // chuyển về boolean
-        const data = await fetchCategories(isDeleted);
-        setCategories(data);
+        const isActived = tabValue === "true"; // chuyển về boolean
+        const data = await fetchPromotions(isActived);
+        setPromotions(data);
       } catch (error) {
-        console.error("Lỗi khi lấy danh mục:", error);
+        console.error("Lỗi khi lấy khuyến mãi:", error);
       }
     };
 
@@ -50,7 +49,7 @@ export default function ManageCategoryPage() {
 
       {tabs.map((tab) => (
         <TabsContent key={tab.value} value={tab.value}>
-          <CategoriesTable categories={categories} />
+          <PromotionsTable promotions={promotions} />
         </TabsContent>
       ))}
     </Tabs>

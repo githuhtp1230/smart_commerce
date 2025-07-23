@@ -19,8 +19,8 @@ import { fetchMe } from "./services/me.service";
 import { useAuthStore } from "./store/auth-store";
 import AddProductPage from "./pages/admin/AddProductPage";
 import ProductDetailPage from "./pages/client/ProductDetailPage";
-import Footer from "./components/client/layout/Footer";
 import ForgotPassword from "./components/client/auth/ForgotPassword";
+import ManagePromotionPage from "./pages/admin/ManagePromotionPage";
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
@@ -80,6 +80,10 @@ function App() {
               <Route
                 path={ADMIN_PATH.ADD_PRODUCT}
                 element={<AddProductPage />}
+              />
+              <Route
+                path={ADMIN_PATH.PROMOTION}
+                element={<ManagePromotionPage />}
               />
             </Route>
           </Route>
