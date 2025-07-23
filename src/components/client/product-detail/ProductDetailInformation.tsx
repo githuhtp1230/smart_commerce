@@ -19,14 +19,7 @@ import { useMutation } from "@tanstack/react-query";
 import { addCartItem } from "@/services/cart.service";
 import { toastSuccess } from "@/components/common/sonner";
 import { useCartStore } from "@/store/cart-store";
-
-const formatPrice = (price: number | undefined): string => {
-  if (price === undefined) return "N/A";
-  return price.toLocaleString("vi-VN", {
-    style: "decimal",
-    minimumFractionDigits: 0,
-  });
-};
+import { formatPrice } from "@/helper/format-price-vietnam";
 
 interface Props {
   productDetail?: IProductDetail;

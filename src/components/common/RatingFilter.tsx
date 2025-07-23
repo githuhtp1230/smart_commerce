@@ -1,12 +1,13 @@
+import { cn } from "@/lib/utils";
 import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
-import { set } from "react-hook-form";
 
 interface Props {
   averageRating?: number;
+  className?: string;
 }
 
-export function RatingFilter({ averageRating }: Props) {
+export function RatingFilter({ averageRating, className }: Props) {
   const [rating, setRating] = useState<number | null>(null);
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
 
@@ -17,7 +18,7 @@ export function RatingFilter({ averageRating }: Props) {
   }, [averageRating]);
 
   return (
-    <div className="flex space-x-1">
+    <div className={cn("flex space-x-1", className)}>
       {[1, 2, 3, 4, 5].map((ratingValue) => (
         <Star
           key={ratingValue}

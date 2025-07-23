@@ -19,25 +19,31 @@ const ProductSummaryItem = ({ product }: Props) => {
 
   return (
     <Link to={`${PATH.PRODUCTS}/${product.id}`} className="group">
-      <Card className="bg-primary shadow-xs p-0">
-        <img src={product.image} className="h-60 rounded-lg object-contain  " />
-        <div className="p-3">
+      <Card className="bg-primary shadow-xs p-4 gap-0">
+        <img
+          src={product.image}
+          className="h-60 rounded-lg object-cover object-center"
+        />
+        <div className="mt-3 px-2">
           <h1 className="text-base group-hover:text-blue-400">
             {product.name}
           </h1>
           <div className="flex items-center gap-2 text-muted-foreground mt-2">
-            <RatingFilter />
+            <RatingFilter
+              className="pointer-events-none"
+              averageRating={product.averageRating}
+            />
             <p className="text-sm">( {product.reviewCount} people rated )</p>
           </div>
           <div className="flex justify-between items-center mt-2">
             <div className="flex items-center gap-2">
               {salePrice && (
                 <p className="line-through font-light text-txt-secondary">
-                  {formatPrice(product.price)} đ
+                  {formatPrice(product.price)} ₫
                 </p>
               )}
               <h1 className="font-semibold text-xl">
-                {formatPrice(salePrice ?? product.price)} đ
+                {formatPrice(salePrice ?? product.price)} ₫
               </h1>
             </div>
             <Button className="bg-blue-400 hover:bg-blue-400">
