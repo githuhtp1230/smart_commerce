@@ -17,14 +17,9 @@ import ProductImagePreview from "./ProductImagePreview";
 import type { IAttributeValue } from "@/type/attribute";
 import { useMutation } from "@tanstack/react-query";
 import { addCartItem } from "@/services/cart.service";
-import { getProductVariation } from "./product-detail-helper";
-import {
-  toastError,
-  toastInfo,
-  toastSuccess,
-  toastWarning,
-} from "@/components/common/sonner";
+import { toastSuccess } from "@/components/common/sonner";
 import { useCartStore } from "@/store/cart-store";
+import { formatPrice } from "@/helper/format-price-vietnam";
 
 interface Props {
   productDetail?: IProductDetail;
@@ -129,24 +124,26 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
             {isProductVariation && !selectedProductVariation ? (
               <div className="flex items-center gap-2">
                 <span className="text-4xl font-semibold text-foreground">
-                  ${minPrice}
+                  {formatPrice(minPrice)} đ
                 </span>{" "}
                 <Minus />{" "}
                 <span className="text-4xl font-semibold text-foreground">
-                  ${maxPrice}
+                  {formatPrice(maxPrice)} đ
                 </span>
               </div>
             ) : (
               <>
                 <span className="text-4xl font-bold text-foreground">
-                  $
-                  {salePrice ??
-                    selectedProductVariation?.price ??
-                    productDetail?.price}
+                  {formatPrice(
+                    salePrice ??
+                      selectedProductVariation?.price ??
+                      productDetail?.price
+                  )}{" "}
+                  đ
                 </span>
-                {salePrice && (
+                {salePrice && selectedProductVariation?.price && (
                   <span className="text-lg text-muted-foreground line-through ml-2">
-                    ${selectedProductVariation?.price}
+                    {formatPrice(selectedProductVariation?.price)} đ
                   </span>
                 )}
               </>

@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -17,11 +16,11 @@ interface Props {
 
 const ProductImagePreview = ({ images, image, onSelectImage }: Props) => {
   return (
-    <div className="w-[40%]">
-      <div className="h-96 flex justify-center items-center">
+    <div className="w-[40%] ">
+      <div className="h-96 flex justify-center items-center ">
         {image || images[0] ? (
           <img
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-contain object-center"
             src={image || images[0]}
           />
         ) : (
