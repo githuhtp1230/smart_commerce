@@ -78,12 +78,12 @@ const data = {
       icon: Bot,
       items: [
         {
-          title: "Categories",
+          title: "Parent Category",
           url: ADMIN_PATH.CATEGORY,
         },
         {
-          title: "Explorer",
-          url: "#",
+          title: "Subcategory",
+          url: ADMIN_PATH.SUBCATEGORY,
         },
         {
           title: "Quantum",
@@ -100,7 +100,6 @@ const data = {
           title: "Users",
           url: ADMIN_PATH.USER,
         },
-
       ],
     },
     {
