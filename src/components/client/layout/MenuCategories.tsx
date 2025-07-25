@@ -10,16 +10,13 @@ import { PATH } from "@/constants/path";
 import { fetchCategories } from "@/services/categories.service";
 import { useQuery } from "@tanstack/react-query";
 import { Menu } from "lucide-react";
-import { useEffect } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const MenuCategories = () => {
-  const navigate = useNavigate();
-
   const { data } = useQuery({
     queryKey: ["categories"],
     refetchOnMount: false,
-    queryFn: fetchCategories,
+    queryFn: () => fetchCategories(false),
   });
 
   return (
