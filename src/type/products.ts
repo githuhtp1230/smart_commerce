@@ -51,3 +51,7 @@ export interface IProductDetail extends IProductSummary {
   variations: IProductVariation[];
   createdAt: string;
 }
+export interface PaginationProductSummaries {
+  data: IProductSummary[];
+  total: number;
+}
