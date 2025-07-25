@@ -8,6 +8,7 @@ import { queryFilter } from "@/helper/query-filter";
 import {
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -21,7 +22,6 @@ const ProductSummaries = () => {
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Add page parameter to queryParams
   const queryParams = queryFilter(searchParams, "categoryId");
   queryParams.set("page", currentPage.toString());
 
@@ -46,6 +46,33 @@ const ProductSummaries = () => {
 
   const totalPages = data?.totalPages || 1;
 
+  const visiblePages = 5;
+  let startPage = Math.max(currentPage - Math.floor(visiblePages / 2), 1);
+  let endPage = startPage + visiblePages - 1;
+
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(endPage - visiblePages + 1, 1);
+  }
+
+  const pages: number[] = [];
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i);
+  }
+
+  const showLeftEllipsis = startPage > 1;
+  const showRightEllipsis = endPage < totalPages;
+
+  const handleEllipsisLeft = () => {
+    const newPage = Math.max(1, currentPage - visiblePages);
+    handlePageChange(newPage);
+  };
+
+  const handleEllipsisRight = () => {
+    const newPage = Math.min(totalPages, currentPage + visiblePages);
+    handlePageChange(newPage);
+  };
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-3 gap-x-4 gap-y-4">
@@ -58,24 +85,30 @@ const ProductSummaries = () => {
       </div>
 
       {totalPages > 1 && (
-        <Pagination>
+        <Pagination className="cursor-pointer">
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
                 onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-                className={
-                  currentPage === 1 ? "pointer-events-none opacity-50 " : ""
-                }
+                className={cn(
+                  currentPage === 1 && "pointer-events-none opacity-50 "
+                )}
               />
             </PaginationItem>
 
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            {showLeftEllipsis && (
+              <PaginationItem>
+                <PaginationEllipsis onClick={handleEllipsisLeft} />
+              </PaginationItem>
+            )}
+
+            {pages.map((page) => (
               <PaginationItem key={page}>
                 <PaginationLink
                   onClick={() => handlePageChange(page)}
-                  isActive={currentPage === page}
+                  isActive={page === currentPage}
                   className={cn(
-                    currentPage == page && "bg-blue-500 text-white"
+                    page === currentPage && "bg-blue-500 text-white"
                   )}
                 >
                   {page}
@@ -83,16 +116,20 @@ const ProductSummaries = () => {
               </PaginationItem>
             ))}
 
+            {showRightEllipsis && (
+              <PaginationItem>
+                <PaginationEllipsis onClick={handleEllipsisRight} />
+              </PaginationItem>
+            )}
+
             <PaginationItem>
               <PaginationNext
                 onClick={() =>
                   handlePageChange(Math.min(totalPages, currentPage + 1))
                 }
-                className={
-                  currentPage === totalPages
-                    ? "pointer-events-none opacity-50"
-                    : ""
-                }
+                className={cn(
+                  currentPage === totalPages && "pointer-events-none opacity-50"
+                )}
               />
             </PaginationItem>
           </PaginationContent>
