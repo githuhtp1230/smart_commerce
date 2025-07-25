@@ -16,7 +16,7 @@ const MenuCategories = () => {
   const { data } = useQuery({
     queryKey: ["categories"],
     refetchOnMount: false,
-    queryFn: () => fetchCategories(false),
+    queryFn: () => fetchCategories({ isDeleted: false, isFetchChildren: true }),
   });
 
   return (
