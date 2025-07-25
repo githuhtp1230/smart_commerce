@@ -1,5 +1,5 @@
-import type { IProductDetail, IProductVariation } from "@/type/products";
-import React, { useEffect, useState } from "react";
+import type { IProductDetail } from "@/type/products";
+import { useState } from "react";
 import {
   filterAttrValIdSameAttrInAttrGroup,
   getAttributeGroups,
@@ -25,21 +25,25 @@ const useProductDetail = () => {
 
   const isSelectedAttrVal = selectedAttrValIds.size > 0;
 
-  const minPrice =
-    productDetail &&
-    Math.min(
-      ...productDetail?.variations.map(
-        (productVariation) => productVariation.price
+  const minPrice = productDetail?.variations?.length
+    ? Math.min(
+        ...productDetail.variations
+          .filter(
+            (productVariation) => typeof productVariation.price === "number"
+          )
+          .map((productVariation) => productVariation.price)
       )
-    );
+    : undefined;
 
-  const maxPrice =
-    productDetail &&
-    Math.max(
-      ...productDetail?.variations.map(
-        (productVariation) => productVariation.price
+  const maxPrice = productDetail?.variations?.length
+    ? Math.max(
+        ...productDetail.variations
+          .filter(
+            (productVariation) => typeof productVariation.price === "number"
+          )
+          .map((productVariation) => productVariation.price)
       )
-    );
+    : undefined;
 
   const isProductVariation =
     productDetail && productDetail?.variations.length > 0;
@@ -67,21 +71,26 @@ const useProductDetail = () => {
     });
   };
 
-  const selectedProductVariation = productDetail?.variations.find(
-    (productVariation) => {
-      return productVariation.attributeValues.every((attrVal) =>
-        selectedAttrValIds.has(attrVal.id)
-      );
-    }
-  );
+  const selectedProductVariation =
+    productDetail?.variations?.length && selectedAttrValIds instanceof Set
+      ? productDetail.variations.find((productVariation) =>
+          productVariation.attributeValues.every(
+            (attrVal) =>
+              typeof attrVal.id !== "undefined" &&
+              selectedAttrValIds.has(attrVal.id)
+          )
+        ) || undefined
+      : undefined;
 
-  const salePrice =
-    productDetail?.promotion &&
-    selectedProductVariation &&
-    (isProductVariation
-      ? selectedProductVariation?.price *
-        (productDetail.promotion.discountValuePercent / 100)
-      : productDetail.price);
+  const salePrice = productDetail
+    ? productDetail.promotion &&
+      typeof productDetail.promotion.discountValuePercent === "number"
+      ? ((isProductVariation && selectedProductVariation?.price) ||
+          productDetail.price) *
+        (1 - productDetail.promotion.discountValuePercent / 100)
+      : (isProductVariation && selectedProductVariation?.price) ||
+        productDetail.price
+    : undefined;
 
   const isOnSale = productDetail?.promotion;
 

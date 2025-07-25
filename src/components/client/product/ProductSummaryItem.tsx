@@ -14,7 +14,7 @@ interface Props {
 
 const ProductSummaryItem = ({ product }: Props) => {
   const salePrice = product.promotion
-    ? product.price * (product.promotion?.discountValuePercent / 100)
+    ? product.price * (1 - product.promotion.discountValuePercent / 100)
     : undefined;
 
   return (
@@ -22,7 +22,7 @@ const ProductSummaryItem = ({ product }: Props) => {
       <Card className="bg-primary shadow-xs p-4 gap-0">
         <img
           src={product.image}
-          className="h-60 rounded-lg object-cover object-center"
+          className="h-60 rounded-lg object-contain object-center"
         />
         <div className="mt-3 px-2">
           <h1 className="text-base group-hover:text-blue-400">
@@ -46,7 +46,7 @@ const ProductSummaryItem = ({ product }: Props) => {
                 {formatPrice(salePrice ?? product.price)} ₫
               </h1>
             </div>
-            <Button className="bg-blue-400 hover:bg-blue-400">
+            <Button className="bg-blue-400 hover:bg-blue-400 size-8">
               <ShoppingCart className="text-white" />
             </Button>
           </div>
