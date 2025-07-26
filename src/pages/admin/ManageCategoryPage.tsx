@@ -6,7 +6,6 @@ import { fetchCategories } from "@/services/categories.service";
 import type { ICategory } from "@/type/category";
 import { useEffect, useState } from "react";
 
-
 const tabs = [
   { name: "Danh mục đang hoạt động", value: "false" },
   { name: "Danh mục đã xoá", value: "true" },
@@ -19,8 +18,8 @@ export default function TabsUnderlinedDemo() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const isDeleted = tabValue === "true"; // chuyển về boolean
-        const data = await fetchCategories(isDeleted);
+        const isDeleted = tabValue === "true";
+        const data = await fetchCategories({ isDeleted });
         setCategories(data);
       } catch (error) {
         console.error("Lỗi khi lấy danh mục:", error);
