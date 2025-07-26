@@ -17,7 +17,7 @@ import { updateProfile } from "@/services/me.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import CustomInput from "@/components/common/input/CustomInput";
 import {
   Form,
   FormControl,
@@ -27,6 +27,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toastError } from "@/components/common/sonner";
+import { LocationCombobox } from "@/components/common/combobox/LocationCombobox";
 
 interface ContactInfo {
   address: string;
@@ -34,15 +35,24 @@ interface ContactInfo {
   phone: string;
 }
 
+
+
+
 const formSchema = z.object({
   phone: z.string().regex(/^0(3|5|7|8|9)\d{8}$/, {
     message: "Invalid phone number.",
   }),
+  province: z.string().min(1, "Select a province"),
+  district: z.string().min(1, "Select a district"),
+  ward: z.string().min(1, "Select a ward"),
 });
+
 
 const RightUserProfile: React.FC = () => {
   const { me, setMe } = useAuthStore((state) => state);
   const [isPhoneDialogOpen, setIsPhoneDialogOpen] = useState(false);
+  const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
+
   const [contactInfo, setContactInfo] = useState<ContactInfo>({
     address: "Vancouver, British Columbia\nCanada",
     email: me?.email || "",
@@ -53,6 +63,9 @@ const RightUserProfile: React.FC = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       phone: me?.phone || "",
+      province: "",
+      district: "",
+      ward: "",
     },
   });
 
@@ -78,6 +91,7 @@ const RightUserProfile: React.FC = () => {
   return (
     <>
       <Card className="p-6 rounded-md shadow bg-primary">
+
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-secondary-foreground">
             Contact Information
@@ -98,6 +112,15 @@ const RightUserProfile: React.FC = () => {
               <p className="text-popover-foreground whitespace-pre-line">
                 {contactInfo.address}
               </p>
+              <button
+                id="editPhoneBtn"
+                className="text-card-foreground dark:hover:text-blue-400 cursor-pointer"
+                onClick={() => {
+                  setIsAddressDialogOpen(true);
+                }}
+              >
+                <Pencil className="w-4 h-4" />
+              </button>
             </div>
           </div>
           <Separator className="my-4" />
@@ -156,6 +179,44 @@ const RightUserProfile: React.FC = () => {
                   variant="outline"
                   onClick={() => {
                     setIsPhoneDialogOpen(false);
+                  }}
+                  type="button"
+                  className="border-border-primary"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-700 text-white"
+                  disabled={isPending}
+                >
+                  Save
+                </Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
+      {/* Dialog Adress */}
+      <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Address</DialogTitle>
+          </DialogHeader>
+          <Form {...form}>
+            <form
+              className="w-full space-y-3 "
+              onSubmit={form.handleSubmit(handlePhoneSave)}
+            >
+              <LocationCombobox level={"province"} />
+              <CustomInput
+                placeholder="Nhập số nhà/ tên đường"
+              />
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setIsAddressDialogOpen(false);
                   }}
                   type="button"
                   className="border-border-primary"
