@@ -20,7 +20,6 @@ const CategoriesTable = ({ categories }: Props) => {
   const [editCategory, setEditCategory] = useState<ICategory | null>(null);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
-  // --- Xóa danh mục ---
   const deleteCategoryMutation = useMutation({
     mutationFn: async (id: number) => await categoryApi.deleteCategory(id),
     onSuccess: () => {
@@ -31,7 +30,6 @@ const CategoriesTable = ({ categories }: Props) => {
     },
   });
 
-  // --- Cập nhật danh mục ---
   const updateCategoryMutation = useMutation({
     mutationFn: async ({ id, name }: { id: number | string; name: string }) =>
       await categoryApi.updateCategory(id, { name }),
@@ -112,8 +110,6 @@ const CategoriesTable = ({ categories }: Props) => {
       <div className="bg-primary rounded-xl p-3">
         <DataTable columns={columns} data={sortedCategories} />
       </div>
-
-      {/* Dialog cập nhật danh mục */}
       {editCategory && (
         <EditCategoryDialog
           open={isEditOpen}
