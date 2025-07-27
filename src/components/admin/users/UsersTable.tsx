@@ -1,28 +1,15 @@
-import { useEffect, useState } from 'react';
 import { DataTable } from '@/components/common/table/DataTable';
 import type { IUser } from '@/type/auth';
 import type { ColumnDef } from '@tanstack/react-table';
-import { fetchUsers } from '@/services/users.service';
 import { Button } from '@/components/ui/button';
 import { SquarePen } from 'lucide-react';
 import { AppBadge } from '@/components/common/AppBadge';
+import RoleBadge from '@/components/common/RoleBadge';
 
-const ManageUserPage = () => {
-    const [users, setUsers] = useState<IUser[]>([]);
-
-    useEffect(() => {
-        const getUsers = async () => {
-            try {
-                const data = await fetchUsers();
-                setUsers(data);
-            } catch (err) {
-                console.error("Lỗi khi fetch users:", err);
-            }
-        };
-
-        getUsers();
-    }, []);
-
+interface Props {
+    users: IUser[];
+}
+const UsersTable = ({ users }: Props) => {
     const columns: ColumnDef<IUser>[] = [
         {
             accessorKey: "id",
@@ -56,7 +43,15 @@ const ManageUserPage = () => {
             accessorKey: "role",
             header: () => <div>Role</div>,
             cell: ({ row }) => {
-                return <div> {row.original.role}</div >;
+                type roleKey = "admin" | "manage" | "user";
+                const role = (row.original.role ?? "user").toLowerCase() as roleKey;
+
+                return (
+                    <RoleBadge
+                        badgeColor={role}
+                        content={row.original.role}
+                    />
+                );
             },
         },
         {
@@ -89,10 +84,9 @@ const ManageUserPage = () => {
 
     return (
         <div className="bg-primary rounded-xl p-3 ">
-            <Button className="bg-blue-500 hover:bg-blue-600 mt-5 mb-5">Thêm mới người dùng</Button>
             <DataTable columns={columns} data={users} />
         </div>
     );
 };
 
-export default ManageUserPage;
+export default UsersTable;
