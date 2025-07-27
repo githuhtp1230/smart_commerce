@@ -44,22 +44,23 @@ const EditCategoryDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Cập nhật danh mục</DialogTitle>
+          <DialogTitle>Update Category</DialogTitle>
         </DialogHeader>
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Nhập tên danh mục mới"
+          placeholder="Enter new name category"
         />
         <DialogFooter className="flex justify-end gap-2 mt-4">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Hủy
+            Cancel
           </Button>
           <Button
             onClick={handleUpdate}
             disabled={name.trim() === "" || name.trim() === initialName.trim()}
+            className="bg-blue-500 text-white"
           >
-            Cập nhật
+            Update
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -1,39 +1,32 @@
 "use client";
 
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+
 import AddCategoriesParent from "@/components/admin/category/AddCategoriesParent";
 import CategoriesTable from "@/components/admin/category/CategoriesTable";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchCategories } from "@/services/categories.service";
 import type { ICategory } from "@/type/category";
-import { useEffect, useState } from "react";
 
 const tabs = [
   { name: "Danh mục đang hoạt động", value: "false" },
   { name: "Danh mục đã xoá", value: "true" },
 ];
 
-export default function TabsUnderlinedDemo() {
-  const [categories, setCategories] = useState<ICategory[]>([]);
+export default function ManageCategoryPage() {
   const [tabValue, setTabValue] = useState("false");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const isDeleted = tabValue === "true";
-        const data = await fetchCategories({ isDeleted });
-        setCategories(data);
-      } catch (error) {
-        console.error("Lỗi khi lấy danh mục:", error);
-      }
-    };
-
-    fetchData();
-  }, [tabValue]);
+  const isDeleted = tabValue === "true";
+  const { data: categories = [], isLoading } = useQuery<ICategory[]>({
+    queryKey: ["categories", tabValue],
+    queryFn: () => fetchCategories({ isDeleted }),
+  });
 
   return (
     <div>
-      <div className="">
+      <div className="mb-4">
         <AddCategoriesParent />
       </div>
 
@@ -48,7 +41,7 @@ export default function TabsUnderlinedDemo() {
             <TabsTrigger
               key={tab.value}
               value={tab.value}
-              className=" bg-background h-full"
+              className="bg-background h-full"
             >
               <p className="text-[15px]">{tab.name}</p>
             </TabsTrigger>
@@ -57,7 +50,18 @@ export default function TabsUnderlinedDemo() {
 
         {tabs.map((tab) => (
           <TabsContent key={tab.value} value={tab.value}>
-            <CategoriesTable categories={categories} />
+            {isLoading ? (
+              <div className="text-gray-500 px-4 py-6">
+                Đang tải danh mục...
+              </div>
+            ) : (
+              <CategoriesTable
+                categories={categories}
+                onSwitchTab={
+                  tab.value === "false" ? () => setTabValue("true") : undefined
+                }
+              />
+            )}
           </TabsContent>
         ))}
       </Tabs>

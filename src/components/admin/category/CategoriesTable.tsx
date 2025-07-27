@@ -12,9 +12,10 @@ import EditCategoryDialog from "./EditCategoryDialog";
 
 interface Props {
   categories: ICategory[];
+  onSwitchTab?: () => void;
 }
 
-const CategoriesTable = ({ categories }: Props) => {
+const CategoriesTable = ({ categories, onSwitchTab }: Props) => {
   const queryClient = useQueryClient();
 
   const [editCategory, setEditCategory] = useState<ICategory | null>(null);
@@ -24,6 +25,7 @@ const CategoriesTable = ({ categories }: Props) => {
     mutationFn: async (id: number) => await categoryApi.deleteCategory(id),
     onSuccess: () => {
       toastSuccess("Xoá danh mục thành công");
+      onSwitchTab?.();
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
