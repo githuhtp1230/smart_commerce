@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { capitalizeFirstLetter } from "@/helper/capitalize-first-letter";
 import { ShieldCheck, UserRoundCog, Users } from "lucide-react";
 
 
@@ -11,22 +12,22 @@ export const RoleBadge = ({ badgeColor, content }: Props) => {
         switch (badgeColor) {
             case "admin":
                 return (
-                    <Badge className="bg-foreground-system-success text-txt-system-success w-[100px]">
-                        <div><ShieldCheck /> {" "}</div>
-                        {content}
+                    <Badge className="bg-foreground-system-success text-txt-system-success w-[90px] flex justify-center items-center gap-1">
+                        <div className="flex items-center"><ShieldCheck className="size-5.5" /></div>
+                        <span className="text-sm">{capitalizeFirstLetter(content)}</span>
                     </Badge>
                 );
             case "manage":
                 return (
-                    <Badge className="bg-foreground-system-information text-txt-system-information w-[100px]">
-                        <div><UserRoundCog /> {" "}</div>
+                    <Badge className="bg-foreground-system-information text-txt-system-information w-[90px] flex justify-center items-center gap-1">
+                        <div className="flex items-center"><UserRoundCog className="size-5.5" /> </div>
                         {content}
                     </Badge>
                 );
             case "user":
                 return (
-                    <Badge className="bg-gray-200 text-gray-700 w-[100px]">
-                        <div><Users /> {" "}</div>
+                    <Badge className="bg-background-lightgray-secondary text-txt-secondary w-[90px] flex justify-center items-center gap-1">
+                        <div className="flex items-center"><Users className="size-5.5" /> </div>
                         {content}
                     </Badge>
                 );

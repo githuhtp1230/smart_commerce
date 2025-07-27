@@ -10,14 +10,14 @@ export const AppBadge = ({ badgeColor, content }: Props) => {
     switch (badgeColor) {
       case "amber":
         return (
-          <Badge className="bg-amber-600/10 dark:bg-amber-600/20 hover:bg-amber-600/10 text-amber-500 border-amber-600/60 shadow-none rounded-full">
+          <Badge className="bg-amber-600/10 dark:bg-amber-600/20 hover:bg-amber-600/10 text-amber-500 border-amber-600/60 shadow-none rounded-full w-[90px]">
             <div className="h-1.5 w-1.5 rounded-full bg-amber-500 mr-2" />{" "}
             {content}
           </Badge>
         );
       case "red":
         return (
-          <Badge className="bg-foreground-system-danger-hard text-txt-system-danger hover:bg-red-600/10 border-red-600/60 shadow-none rounded-full">
+          <Badge className="bg-foreground-system-danger-hard text-txt-system-danger hover:bg-red-600/10 border-red-600/60 shadow-none rounded-full w-[90px]">
             <div className="h-1.5 w-1.5 rounded-full bg-txt-system-danger mr-2" />{" "}
             {content}
           </Badge>
