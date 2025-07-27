@@ -14,7 +14,6 @@ import { ADMIN_PATH, PATH } from "./constants/path";
 import AddProductPage from "./pages/admin/AddProductPage";
 import ManageCategoryPage from "./pages/admin/ManageCategoryPage";
 import ManageProductPage from "./pages/admin/ManageProductPage";
-import ManageUserPage from "./pages/admin/ManageUserPage";
 import CartPage from "./pages/client/CartPage";
 import HomePage from "./pages/client/HomePage";
 import ProductDetailPage from "./pages/client/product/ProductDetailPage";
@@ -23,6 +22,7 @@ import { AuthRoute } from "./routes/auth-route";
 import { fetchMe } from "./services/me.service";
 import { useAuthStore } from "./store/auth-store";
 import CheckoutCompletedPage from "./pages/client/CheckoutCompletedPage";
+import ManageUsersPage from "./pages/admin/ManageUsersPage";
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
@@ -88,7 +88,7 @@ function App() {
                 path={ADMIN_PATH.ADD_PRODUCT}
                 element={<AddProductPage />}
               />
-              <Route path={ADMIN_PATH.USER} element={<ManageUserPage />} />
+              <Route path={ADMIN_PATH.USER} element={<ManageUsersPage />} />
             </Route>
           </Route>
         </Routes>
