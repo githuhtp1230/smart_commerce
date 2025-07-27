@@ -4,10 +4,31 @@ import { useCartStore } from "@/store/cart-store";
 import PaymentsSelect from "@/components/common/select/PaymentsSelect";
 import PurchaseButton from "@/components/common/button/PurchaseButton";
 import { formatPrice } from "@/helper/format-price-vietnam";
+import { useMutation } from "@tanstack/react-query";
+import { checkout } from "@/services/checkout.service";
 
 const PaymentSummary: React.FC = () => {
   const { cartItems, getItemTotalPrice, getSelectedItemTotalPrice } =
     useCartStore((s) => s);
+
+  const { mutate } = useMutation({
+    mutationFn: checkout,
+    onSuccess: (data) => {
+      window.location.href = data.data.payment.vnp_url;
+    },
+    onError: () => {},
+  });
+
+  const handleCheckout = () => {
+    const cartItemIds = cartItems
+      .filter((cartItem) => cartItem.isSelected)
+      .map((cartItem) => cartItem.id);
+    mutate({
+      cartItemIds,
+      addressId: 1,
+      paymentId: 1,
+    });
+  };
 
   return (
     <Card className="bg-primary shadow-none">
@@ -48,6 +69,7 @@ const PaymentSummary: React.FC = () => {
           message="Checkout"
           className="w-full text-base"
           disabled={getSelectedItemTotalPrice() === 0}
+          onClick={handleCheckout}
         />
       </CardContent>
     </Card>

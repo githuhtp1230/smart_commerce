@@ -6,6 +6,7 @@ export const PATH = {
   REGISTER: "/register",
   FORGOT_PASSWORD: "/forgot-password",
   PROFILE: "/profile",
+  CHECKOUT_COMPLETED: "/checkout-completed",
   NOT_FOUND: "/404",
 };
 

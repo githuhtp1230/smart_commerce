@@ -1,15 +1,12 @@
 import { Logo } from "@/assets/icons";
 import AvatarDropdown from "@/components/common/avatar/AvatarDropdown";
-import CircleAvatar from "@/components/common/avatar/CircleAvatar";
 import ToggleTheme from "@/components/common/ToggleTheme";
 import { Input } from "@/components/ui/input";
-import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import { PATH } from "@/constants/path";
 import { useAuthStore } from "@/store/auth-store";
-import { TooltipContent } from "@radix-ui/react-tooltip";
-import { MailIcon, ShoppingCart, User } from "lucide-react";
+import { MailIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import CartIcon from "../../common/cart/CartIcon";
+import CartIcon from "../../common/icon/CartIcon";
 
 const Header = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
