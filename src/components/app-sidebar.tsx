@@ -3,21 +3,23 @@ import {
   AudioWaveform,
   BookOpen,
   Bot,
+  ClipboardList,
   Command,
   Frame,
   GalleryVerticalEnd,
   Map,
   MonitorSmartphone,
   PieChart,
+  Puzzle,
   Settings2,
-  SquareTerminal,
+  TicketPercent,
+  Truck,
+  UserLock,
   UsersRound,
 } from "lucide-react";
-import { useEffect } from "react";
 import { NavMain } from "@/components/nav-main";
 import { NavProjects } from "@/components/nav-projects";
 import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -103,20 +105,112 @@ const data = {
       ],
     },
     {
-      title: "Documentation",
+      title: "Manage Attribute",
       url: "#",
-      icon: BookOpen,
+      icon: Puzzle,
       items: [
         {
-          title: "Introduction",
+          title: "Attribute",
           url: "#",
         },
         {
-          title: "Get Started",
+          title: "Attribute value",
           url: "#",
         },
         {
-          title: "Tutorials",
+          title: "Attribute value detail",
+          url: "#",
+        },
+        {
+          title: "Changelog",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Manage promotion",
+      url: "#",
+      icon: TicketPercent,
+      items: [
+        {
+          title: "promotion",
+          url: "#",
+        },
+        {
+          title: "vouchers",
+          url: "#",
+        },
+        {
+          title: "Attribute value detail",
+          url: "#",
+        },
+        {
+          title: "Changelog",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Manage order",
+      url: "#",
+      icon: Truck,
+      items: [
+        {
+          title: "Attribute",
+          url: "#",
+        },
+        {
+          title: "Attribute value",
+          url: "#",
+        },
+        {
+          title: "Attribute value detail",
+          url: "#",
+        },
+        {
+          title: "Changelog",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Manage review",
+      url: "#",
+      icon: ClipboardList,
+      items: [
+        {
+          title: "Attribute",
+          url: "#",
+        },
+        {
+          title: "Attribute value",
+          url: "#",
+        },
+        {
+          title: "Attribute value detail",
+          url: "#",
+        },
+        {
+          title: "Changelog",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Manage permission",
+      url: "#",
+      icon: UserLock,
+      items: [
+        {
+          title: "Attribute",
+          url: "#",
+        },
+        {
+          title: "Attribute value",
+          url: "#",
+        },
+        {
+          title: "Attribute value detail",
           url: "#",
         },
         {
@@ -148,30 +242,8 @@ const data = {
         },
       ],
     },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      type: "sidebar-tab",
-    },
   ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
+  projects: [],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -202,7 +274,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarFooter>
         <div
           className={cn(
-            "flex justify-between items-center bg-background",
+            "flex justify-between items-center bg-background-primary",
             open ? "" : "hidden"
           )}
         >
