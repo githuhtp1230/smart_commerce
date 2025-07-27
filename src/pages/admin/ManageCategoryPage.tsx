@@ -20,7 +20,7 @@ export default function TabsUnderlinedDemo() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const isDeleted = tabValue === "true"; // chuyển về boolean
+        const isDeleted = tabValue === "true";
         const data = await fetchCategories({ isDeleted });
         setCategories(data);
       } catch (error) {
