@@ -3,8 +3,8 @@ import type { IUser } from '@/type/auth';
 import type { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { SquarePen } from 'lucide-react';
-import { AppBadge } from '@/components/common/AppBadge';
-import RoleBadge from '@/components/common/RoleBadge';
+import { AppBadge } from '@/components/common/badge/AppBadge';
+import RoleBadge from '@/components/common/badge/RoleBadge';
 
 interface Props {
     users: IUser[];

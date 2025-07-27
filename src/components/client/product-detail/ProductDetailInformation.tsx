@@ -1,4 +1,4 @@
-import { AppBadge } from "@/components/common/AppBadge";
+import { AppBadge } from "@/components/common/badge/AppBadge";
 import PurchaseButton from "@/components/common/button/PurchaseButton";
 import QuantityButton from "@/components/common/button/QuantityButton";
 import AttributeChecked from "@/components/common/checked/AttributeChecked";
@@ -112,10 +112,9 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
           <div className="mt-2 flex items-center gap-2">
             <AppBadge badgeColor="green" content="In stock" />
             <span className="text-txt-brand">
-              {`Release on ${
-                productDetail?.createdAt &&
+              {`Release on ${productDetail?.createdAt &&
                 formatUtcToVietnamDate(productDetail?.createdAt)
-              }`}
+                }`}
             </span>
           </div>
         </div>
@@ -136,8 +135,8 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
                 <span className="text-4xl font-bold text-foreground">
                   {formatPrice(
                     salePrice ??
-                      selectedProductVariation?.price ??
-                      productDetail?.price
+                    selectedProductVariation?.price ??
+                    productDetail?.price
                   )}{" "}
                   đ
                 </span>
