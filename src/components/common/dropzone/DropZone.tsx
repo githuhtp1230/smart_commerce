@@ -1,12 +1,23 @@
+import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import { RiImageAddFill, RiImageAddLine } from "react-icons/ri";
 
 interface Props {
   onSelectedFile?: (file: File) => void;
+  className?: string;
+  textClassName?: string;
+  subTextClassName?: string;
+  iconClassName?: string;
 }
 
-const DropZone = ({ onSelectedFile }: Props) => {
+const DropZone = ({
+  onSelectedFile,
+  className,
+  textClassName,
+  subTextClassName,
+  iconClassName,
+}: Props) => {
   const handleSelectedFile = (file: File) => {
     onSelectedFile?.(file);
   };
@@ -16,16 +27,23 @@ const DropZone = ({ onSelectedFile }: Props) => {
       {({ getRootProps, getInputProps }) => (
         <div
           {...getRootProps()}
-          className="border-2 border-dashed border-border-primary rounded-sm h-100 flex flex-col justify-center items-center cursor-pointer gap-2"
+          className={cn(
+            "border-2 border-dashed border-border-primary rounded-sm h-full flex flex-col justify-center items-center cursor-pointer gap-2",
+            className
+          )}
         >
           <input {...getInputProps()} />
-          <p className="text-muted-foreground">
+          <p className={cn("text-muted-foreground", textClassName)}>
             Drag your photo here or{" "}
-            <span className="text-blue-400 hover:underline">
+            <span
+              className={cn("hover:underline text-blue-400", subTextClassName)}
+            >
               Browse form device
             </span>
           </p>
-          <RiImageAddFill className="text-muted-foreground size-18" />
+          <RiImageAddFill
+            className={cn("text-muted-foreground size-18", iconClassName)}
+          />
         </div>
       )}
     </Dropzone>
