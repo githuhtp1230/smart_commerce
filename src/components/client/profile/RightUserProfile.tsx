@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Pencil, Plus } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,6 +35,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAdministrativeAddress } from "./useAdministrativeAddress";
+ 
+
 interface ContactInfo {
   address: string;
   email: string;
@@ -69,10 +72,6 @@ const RightUserProfile: React.FC = () => {
     phone: me?.phone || "",
   });
 
-  const [provinces, setProvinces] = useState<any[]>([]);
-  const [districts, setDistricts] = useState<any[]>([]);
-  const [wards, setWards] = useState<any[]>([]);
-
   const formPhone = useForm<z.infer<typeof phoneSchema>>({
     resolver: zodResolver(phoneSchema),
     defaultValues: {
@@ -103,10 +102,7 @@ const RightUserProfile: React.FC = () => {
   const { mutate: updatePhone, isPending: isPhonePending } = useMutation({
     mutationFn: updateProfile,
     onSuccess: (data) => {
-      setContactInfo((prev) => ({
-        ...prev,
-        phone: data.phone,
-      }));
+      setContactInfo((prev) => ({ ...prev, phone: data.phone }));
       setMe(data);
       setIsPhoneDialogOpen(false);
     },
@@ -132,18 +128,28 @@ const RightUserProfile: React.FC = () => {
     queryKey: ["myAddresses"],
     queryFn: getMyAddresses,
   });
-useEffect(() => {
-  if (addresses && addresses.length > 0 && !selectedAddressId) {
-    const defaultAddress = addresses.find((addr) => addr.isDefault);
-    if (defaultAddress) {
-      setSelectedAddressId(defaultAddress.id);
+
+  useEffect(() => {
+    if (addresses && addresses.length > 0 && !selectedAddressId) {
+      const defaultAddress = addresses.find((addr) => addr.isDefault);
+      if (defaultAddress) {
+        setSelectedAddressId(defaultAddress.id);
+      }
     }
-  }
-}, [addresses]);
+  }, [addresses]);
 
   const handlePhoneSave = (values: z.infer<typeof phoneSchema>) => {
     updatePhone({ phone: values.phone });
   };
+
+ 
+  const {
+    provinces,
+    districts,
+    wards,
+    handleProvinceChange,
+    handleDistrictChange,
+  } = useAdministrativeAddress(isAddressDialogOpen);
 
   const handleAddAddress = (values: z.infer<typeof addressSchema>) => {
     const provinceName =
@@ -172,34 +178,6 @@ useEffect(() => {
       district: districtName,
       ward: wardName,
     });
-  };
-
-  useEffect(() => {
-    if (isAddressDialogOpen) {
-      fetch("https://provinces.open-api.vn/api/p/")
-        .then((res) => res.json())
-        .then((data) => setProvinces(data));
-    }
-  }, [isAddressDialogOpen]);
-
-  const handleProvinceChange = async (provinceCode: string) => {
-    const res = await fetch(
-      `https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`
-    );
-    const data = await res.json();
-    setDistricts(data.districts || []);
-    setWards([]);
-    formAddress.setValue("district", "");
-    formAddress.setValue("ward", "");
-  };
-
-  const handleDistrictChange = async (districtCode: string) => {
-    const res = await fetch(
-      `https://provinces.open-api.vn/api/d/${districtCode}?depth=2`
-    );
-    const data = await res.json();
-    setWards(data.wards || []);
-    formAddress.setValue("ward", "");
   };
 
   return (
@@ -308,7 +286,7 @@ useEffect(() => {
                   </FormItem>
                 )}
               />
-              {/* Render address */}
+
               <FormField
                 control={formAddress.control}
                 name="province"
@@ -400,6 +378,7 @@ useEffect(() => {
                   </FormItem>
                 )}
               />
+
               <DialogFooter>
                 <Button
                   variant="outline"

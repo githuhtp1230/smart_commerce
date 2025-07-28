@@ -19,3 +19,20 @@ export const setDefaultAddress = async (id: number) => {
   const res = await httpRequest.put(`/addresses/${id}/set-default`);
   return res.data;
 };
+
+export const updateAddress = async (payload: {
+  id: number;
+  streetAddress: string;
+  ward: string;
+  district: string;
+  province: string;
+}) => {
+  const { id, ...data } = payload;
+  const res = await httpRequest.put(`/addresses/${id}`, data);
+  return res.data.data;
+};
+
+export const deleteAddress = async (id: number) => {
+  const res = await httpRequest.delete(`/addresses/${id}/delete`);
+  return res.data.data;
+};
