@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchSubCategories } from "@/services/categories.service";
 import type { ICategory } from "@/type/category";
 import { useEffect, useState } from "react";
+import AddSubCategory from "./AddSubCategories";
 
 const tabs = [
   { name: "Danh mục con đang hoạt động", value: "false" },
@@ -18,7 +19,7 @@ export default function SubCategory() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const isChildren = tabValue === "true"; // chuyển về boolean
+        const isChildren = tabValue === "true";
         const data = await fetchSubCategories(isChildren);
         setCategories(data);
       } catch (error) {
@@ -30,29 +31,34 @@ export default function SubCategory() {
   }, [tabValue]);
 
   return (
-    <Tabs
-      defaultValue="false"
-      value={tabValue}
-      onValueChange={setTabValue}
-      className="w-full"
-    >
-      <TabsList className="w-full p-0 justify-start border-b rounded-none">
-        {tabs.map((tab) => (
-          <TabsTrigger
-            key={tab.value}
-            value={tab.value}
-            className=" bg-background h-full"
-          >
-            <p className="text-[15px]">{tab.name}</p>
-          </TabsTrigger>
-        ))}
-      </TabsList>
+    <div>
+      <div className="ml-70">
+        <AddSubCategory />
+      </div>
+      <Tabs
+        defaultValue="false"
+        value={tabValue}
+        onValueChange={setTabValue}
+        className="w-full"
+      >
+        <TabsList className="w-full p-0 justify-start border-b rounded-none">
+          {tabs.map((tab) => (
+            <TabsTrigger
+              key={tab.value}
+              value={tab.value}
+              className=" bg-background h-full"
+            >
+              <p className="text-[15px]">{tab.name}</p>
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-      {tabs.map((tab) => (
-        <TabsContent key={tab.value} value={tab.value}>
-          <CategoriesTable categories={categories} />
-        </TabsContent>
-      ))}
-    </Tabs>
+        {tabs.map((tab) => (
+          <TabsContent key={tab.value} value={tab.value}>
+            <CategoriesTable categories={categories} />
+          </TabsContent>
+        ))}
+      </Tabs>
+    </div>
   );
 }
