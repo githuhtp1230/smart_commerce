@@ -16,10 +16,9 @@ const CustomTabsTrigger = ({ className, value, ...props }: Props) => {
             value={value}
             {...props}
             className={cn(
-                "py-2 rounded-none text-txt-secondary h-9 p-5",
-                "hover:border-b-border-primary hover:border-b-2 hover:bg-background-lightgray-secondary dark:hover:bg-background-gray",
-                "data-[state=active]:text-txt-primary-blue data-[state=active]:border-b-blue-600 data-[state=active]:border-b-2 data-[state=active]:shadow-none data-[state=active]:bg-background-lightgray",
-                "dark:bg-background-primary dark:data-[state=active]:border-b-blue-600 dark:data-[state=active]:border-t-0 dark:data-[state=active]:border-r-0 dark:data-[state=active]:border-l-0 dark:data-[state=active]:bg-background-lightgray",
+                "bg-background py-2 rounded-none text-txt-secondary h-9 p-5 border-b-3 border-b-transparent",
+                "hover:text-blue-400 hover:border-border-primary",
+                "data-[state=active]:text-blue-500 border-t-0 border-r-0 border-l-0 data-[state=active]:!border-blue-500 data-[state=active]:!border-b-3  data-[state=active]:shadow-none data-[state=active]:!bg-background ",
                 className
             )}
         ></TabsTrigger>

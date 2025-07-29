@@ -1,10 +1,11 @@
-import React from "react";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import ProductDetailReview from "./ProductDetailReview";
 import ProductDetailAttributeList from "./ProductDetailAttributeList";
 import ProductDetailDescription from "./ProductDetailDescription";
 import type { IProductDetail } from "@/type/products";
+import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
 
 interface Props {
   productDetail?: IProductDetail;
@@ -15,24 +16,21 @@ const ProductDetailTabs = ({ productDetail }: Props) => {
     <div className="container">
       <Tabs defaultValue="description" className="w-full">
         <TabsList className="flex justify-start gap-2 bg-transparent">
-          <TabsTrigger
+          <CustomTabsTrigger
             value="description"
-            className="!bg-transparent text-[17px] pb-1 box-content border-t-0 border-x-0 border-b-2 border-b-transparent rounded-none hover:text-blue-500 hover:border-b-blue-500 data-[state=active]:text-blue-500 data-[state=active]:border-b-blue-500  dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 dark:data-[state=active]:border-b-blue-500 "
           >
             Description
-          </TabsTrigger>
-          <TabsTrigger
+          </CustomTabsTrigger>
+          <CustomTabsTrigger
             value="specifications"
-            className="!bg-transparent text-[17px] pb-1 box-content border-t-0 border-x-0 border-b-2 border-b-transparent rounded-none hover:text-blue-500 hover:border-b-blue-500  data-[state=active]:text-blue-500 data-[state=active]:border-b-blue-500  dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 dark:data-[state=active]:border-b-blue-500 "
           >
             Specifications
-          </TabsTrigger>
-          <TabsTrigger
+          </CustomTabsTrigger>
+          <CustomTabsTrigger
             value="reviews"
-            className="!bg-transparent text-[17px] pb-1 box-content border-t-0 border-x-0 border-b-2 border-b-transparent rounded-none hover:text-blue-500 hover:border-b-blue-500  data-[state=active]:text-blue-500 data-[state=active]:border-b-blue-500   dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 dark:data-[state=active]:border-b-blue-500 "
           >
             Ratings & reviews (1,283)
-          </TabsTrigger>
+          </CustomTabsTrigger>
         </TabsList>
 
         <TabsContent
