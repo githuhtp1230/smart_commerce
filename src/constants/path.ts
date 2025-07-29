@@ -16,5 +16,7 @@ export const ADMIN_PATH = {
   CUSTOMER: "admin/customer",
   CATEGORY: "admin/category",
   SUBCATEGORY: "admin/subcategory",
+  ATTRIBUTE: "admin/attribute",
+  ATTRIBUTEVALUE: "admin/attribute-values",
   USER: "admin/users",
 };

@@ -111,11 +111,11 @@ const data = {
       items: [
         {
           title: "Attribute",
-          url: "#",
+          url: ADMIN_PATH.ATTRIBUTE,
         },
         {
           title: "Attribute value",
-          url: "#",
+          url: ADMIN_PATH.ATTRIBUTEVALUE,
         },
         {
           title: "Attribute value detail",
