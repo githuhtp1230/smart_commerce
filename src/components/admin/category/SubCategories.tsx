@@ -1,6 +1,7 @@
 "use client";
 
 import CategoriesTable from "@/components/admin/category/CategoriesTable";
+import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchSubCategories } from "@/services/categories.service";
 import type { ICategory } from "@/type/category";
@@ -38,13 +39,13 @@ export default function SubCategory() {
     >
       <TabsList className="w-full p-0 justify-start border-b rounded-none">
         {tabs.map((tab) => (
-          <TabsTrigger
+          <CustomTabsTrigger
             key={tab.value}
             value={tab.value}
             className=" bg-background h-full"
           >
             <p className="text-[15px]">{tab.name}</p>
-          </TabsTrigger>
+          </CustomTabsTrigger>
         ))}
       </TabsList>
 
