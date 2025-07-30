@@ -1,8 +1,9 @@
 import { fetchCustomer, fetchMembership, fetchUsers } from '@/services/users.service';
 import type { IUser } from '@/type/auth';
 import React, { useEffect, useState } from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import UsersTable from '../../components/admin/users/UsersTable';
+import CustomTabsTrigger from '@/components/common/tabs/CustomTabsTrigger';
 
 
 const tabs = [
@@ -40,13 +41,13 @@ const ManageUsersPage = () => {
             >
                 <TabsList className="w-full p-0 justify-start border-b rounded-none">
                     {tabs.map((tab) => (
-                        <TabsTrigger
+                        <CustomTabsTrigger
                             key={tab.key}
                             value={tab.key}
-                            className="bg-background h-full"
+                            className=""
                         >
                             <p className="text-[15px]">{tab.label}</p>
-                        </TabsTrigger>
+                        </CustomTabsTrigger>
                     ))}
                 </TabsList>
 
