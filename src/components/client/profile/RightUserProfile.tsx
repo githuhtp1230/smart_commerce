@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Pencil } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
@@ -12,7 +12,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { useAuthStore } from "@/store/auth-store";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { updateProfile } from "@/services/me.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -27,6 +27,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toastError } from "@/components/common/sonner";
+import { useAddress } from "./profile-helper/use-address";
+import HandleAddressDialog from "@/components/common/dialog/HandleAddressDialog";
+import { getMyAddresses } from "@/services/address.service";
 
 interface ContactInfo {
   address: string;
@@ -48,6 +51,9 @@ const RightUserProfile: React.FC = () => {
     email: me?.email || "",
     phone: me?.phone || "",
   });
+  const { defaultAddr } = useAddress();
+  const [isOpenAddressDialog, setIsOpenAddressDialog] =
+    useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -92,13 +98,33 @@ const RightUserProfile: React.FC = () => {
         <Separator className="my-4" />
         {/* Contact Info Display */}
         <div className="space-y-2 mt-0">
-          <div>
-            <div className="flex gap-20 mb-20">
-              <h3 className="font-medium text-secondary-foreground">Address</h3>
-              <p className="text-popover-foreground whitespace-pre-line">
-                {contactInfo.address}
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-sm text-muted-foreground">
+                Địa chỉ đang sử dụng
               </p>
+              {defaultAddr ? (
+                <p className="text-base font-medium mt-1">
+                  {defaultAddr.streetAddress}, {defaultAddr.ward},{" "}
+                  {defaultAddr.district}, {defaultAddr.province}
+                  {defaultAddr.isDefault && (
+                    <span className="ml-2 text-xs text-green-600">
+                      (Mặc định)
+                    </span>
+                  )}
+                </p>
+              ) : (
+                <p className="text-base text-destructive mt-1">
+                  Chưa chọn địa chỉ
+                </p>
+              )}
             </div>
+            <Button
+              variant="outline"
+              onClick={() => setIsOpenAddressDialog(true)}
+            >
+              Thay đổi
+            </Button>
           </div>
           <Separator className="my-4" />
           <div>
@@ -158,7 +184,6 @@ const RightUserProfile: React.FC = () => {
                     setIsPhoneDialogOpen(false);
                   }}
                   type="button"
-                  className="border-border-primary"
                 >
                   Cancel
                 </Button>
@@ -174,6 +199,11 @@ const RightUserProfile: React.FC = () => {
           </Form>
         </DialogContent>
       </Dialog>
+
+      <HandleAddressDialog
+        isOpen={isOpenAddressDialog}
+        onOpenChange={setIsOpenAddressDialog}
+      />
     </>
   );
 };
