@@ -1,5 +1,5 @@
-export const formatPrice = (price: number | undefined): string => {
-  if (price === undefined) return "N/A";
+export const formatPrice = (price?: number | null): string => {
+  if (price == null || isNaN(price)) return "N/A";
   return price.toLocaleString("vi-VN", {
     style: "decimal",
     minimumFractionDigits: 0,
