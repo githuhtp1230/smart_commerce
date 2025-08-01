@@ -21,3 +21,23 @@ export const fetchProductDetail = async (
   const data = res.data.data as IProductDetail;
   return data;
 };
+
+export const fetchProductSummariesByStatus = async (
+  isDeleted: boolean,
+  page = 1,
+  limit = 15
+): Promise<PaginationProductSummaries> => {
+  const queryParams = new URLSearchParams();
+  queryParams.set("page", page.toString());
+  queryParams.set("limit", limit.toString());
+  queryParams.set("deleted", isDeleted.toString()); // true hoặc false
+
+  const res = await httpRequest.get(
+    `products/status-summaries?${queryParams.toString()}`
+  );
+  const data = res.data.data as PaginationProductSummaries;
+  return data;
+};
+export const deleteProduct = async (productId: number): Promise<void> => {
+  await httpRequest.delete(`products/${productId}/delete`);
+};

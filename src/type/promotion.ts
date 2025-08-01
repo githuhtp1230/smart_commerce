@@ -1,7 +1,8 @@
 export interface IPromotion {
   id: number;
   description: string;
-  discountValuePercent: 30;
+  discountValuePercent: number;
   startDate: string;
   endDate: string;
 }
+
