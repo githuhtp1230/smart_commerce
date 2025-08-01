@@ -70,6 +70,13 @@ const ProductTable = ({ products, onDeleted, readOnly }: Props) => {
         <span className="text-yellow-400">{row.original.averageRating}★</span>
       ),
     },
+    {
+      accessorKey: "date",
+      header: "Date",
+      cell: ({ row }) => (
+        <div>{new Date(row.original.createdAt).toLocaleString()}</div>
+      ),
+    },
   ];
 
   // Thêm cột hành động nếu không phải chế độ chỉ đọc
@@ -87,7 +94,11 @@ const ProductTable = ({ products, onDeleted, readOnly }: Props) => {
             disabled={deletingId === row.original.id}
             onClick={() => handleDelete(row.original.id)}
           >
-            <Trash2 className="text-icon-system-danger" />
+            {deletingId === row.original.id ? (
+              <span className="text-sm text-gray-400 italic">Đang xoá...</span>
+            ) : (
+              <Trash2 className="text-icon-system-danger" />
+            )}
           </Button>
         </div>
       ),

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import type { IProductSummary } from "@/type/products";
-import {fetchDeletedProductSummaries, fetchProductSummaries } from "@/services/products.service";
+import { fetchProductSummariesByStatus } from "@/services/products.service";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProductTable from "@/components/client/product/ProductTable";
 
@@ -17,17 +17,11 @@ const ManageProductPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (tabValue === "true") {
-          // Tab sản phẩm đã xóa
-          const data = await fetchDeletedProductSummaries(1, 1000);
+        const isDeleted = tabValue === "true";
+        const data = await fetchProductSummariesByStatus(isDeleted, 1, 1000);
+        if (isDeleted) {
           setDeletedProducts(data.data);
         } else {
-          // Tab sản phẩm đang hoạt động
-          const queryParams = new URLSearchParams();
-          queryParams.set("page", "1");
-          queryParams.set("limit", "1000");
-
-          const data = await fetchProductSummaries(queryParams);
           setActiveProducts(data.data);
         }
       } catch (error) {
@@ -58,11 +52,17 @@ const ManageProductPage = () => {
       </TabsList>
 
       <TabsContent value="false">
-        <ProductTable products={activeProducts} />
+        <ProductTable
+          products={activeProducts}
+          onDeleted={async () => {
+            const res = await fetchProductSummariesByStatus(false, 1, 1000);
+            setActiveProducts(res.data);
+          }}
+        />
       </TabsContent>
 
       <TabsContent value="true">
-        <ProductTable products={deletedProducts} readOnly  />
+        <ProductTable products={deletedProducts} readOnly />
       </TabsContent>
     </Tabs>
   );
