@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Pencil } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
@@ -12,7 +12,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { useAuthStore } from "@/store/auth-store";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { updateProfile } from "@/services/me.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -29,6 +29,7 @@ import {
 import { toastError } from "@/components/common/sonner";
 import { useAddress } from "./profile-helper/use-address";
 import HandleAddressDialog from "@/components/common/dialog/HandleAddressDialog";
+import { getMyAddresses } from "@/services/address.service";
 
 interface ContactInfo {
   address: string;

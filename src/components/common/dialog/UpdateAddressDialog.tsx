@@ -25,6 +25,7 @@ const UpdateAddressDialog = ({ isOpen, onOpenChange, address }: Props) => {
         return addr;
       });
       if (me && updatedAddress) {
+        console.log(updatedAddress);
         setMe({
           ...me,
           addresses: updatedAddress,

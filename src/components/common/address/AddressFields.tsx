@@ -117,6 +117,7 @@ const AddressField = ({
     onSelectedAddress({
       ...address,
       id: defaultValue?.id,
+      isDefault: defaultValue?.isDefault,
     });
   };
 

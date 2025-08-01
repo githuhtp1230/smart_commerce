@@ -3,16 +3,15 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   deleteAddress,
-  getMyAddresses,
   updateDefaultAddress,
 } from "@/services/address.service";
 import { useAuthStore } from "@/store/auth-store";
 import type { Address } from "@/type/auth";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Pen, Trash } from "lucide-react";
-import { useEffect, useState } from "react";
-import { toastSuccess } from "../sonner";
+import { useState } from "react";
 import UpdateAddressDialog from "../dialog/UpdateAddressDialog";
+import { toastSuccess } from "../sonner";
 
 const SelectAddress = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -26,11 +25,6 @@ const SelectAddress = () => {
     onSuccess: (_data, addressId) => {
       setDefaultAddress(addressId);
     },
-  });
-
-  const { data: fetchedAddress } = useQuery({
-    queryKey: ["myAddresses"],
-    queryFn: getMyAddresses,
   });
 
   const { mutate: deleteAddressMutation } = useMutation({
@@ -48,15 +42,6 @@ const SelectAddress = () => {
       toastSuccess("Delete address successfully");
     },
   });
-
-  useEffect(() => {
-    if (me) {
-      setMe({
-        ...me,
-        addresses: fetchedAddress,
-      });
-    }
-  }, [fetchedAddress]);
 
   return (
     <>
