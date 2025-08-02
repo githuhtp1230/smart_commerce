@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  ArrowLeftFromLine,
   BadgeCheck,
   Bell,
   ChevronsUpDown,
@@ -30,6 +31,8 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useAuthStore } from "@/store/auth-store"
+import { useNavigate } from "react-router-dom"
+import { PATH } from "@/constants/path"
 
 export function NavUser({
   user,
@@ -41,7 +44,8 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
-  const {me} = useAuthStore()
+  const { me, logout } = useAuthStore((state) => state);
+  const navigate = useNavigate();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -52,7 +56,7 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={me?.avatar}  />
+                <AvatarImage src={me?.avatar} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -103,7 +107,11 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate(PATH.HOME_PAGE)}>
+              <ArrowLeftFromLine />
+              Back to Home
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
               <LogOut />
               Log out
             </DropdownMenuItem>
