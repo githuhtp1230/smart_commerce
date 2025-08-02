@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
 export default function OrderProcessing() {
-  const [countdown, setCountdown] = useState(15);
+  const [countdown, setCountdown] = useState(5);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -38,10 +38,10 @@ export default function OrderProcessing() {
             <CheckCircle className="w-8 h-8 text-green-600" />
           </div>
           <CardTitle className="text-2xl font-bold text-gray-900">
-            Đơn hàng đang được xử lí
+            Đơn hàng sẽ được xử lí
           </CardTitle>
           <p className="text-gray-600 mt-2">
-            Cảm ơn bạn đã đặt hàng! Chúng tôi đang xử lý đơn hàng.
+            Cảm ơn bạn đã đặt hàng! Chúng tôi sẽ xử lý đơn hàng.
           </p>
         </CardHeader>
 
