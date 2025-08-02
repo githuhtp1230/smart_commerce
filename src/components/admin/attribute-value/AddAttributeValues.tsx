@@ -57,7 +57,7 @@ export default function AddAttributeValues({ onSuccess, currentTab }: Props) {
       queryClient.invalidateQueries({ queryKey: ["attributes"] });
     },
     onError: (error) => {
-      toastError("Lỗi khi thêm giá trị thuộc tính");
+      toastError("Thêm giá trị thuộc tính thất bại");
       console.error("API Error:", error);
     },
   });
@@ -75,18 +75,19 @@ export default function AddAttributeValues({ onSuccess, currentTab }: Props) {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold">Thêm giá trị thuộc tính</h2>
-      </div>
+    <div className="p-6 text-center">
+      <h2 className="text-2xl font-semibold mb-4">Thêm giá trị thuộc tính</h2>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        {/* Chọn thuộc tính */}
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-row justify-center md:flex-row items-center gap-4"
+      >
+        {/* Select thuộc tính */}
         <Select
           value={selectedAttributeId}
           onValueChange={(val) => setSelectedAttributeId(val)}
         >
-          <SelectTrigger>
+          <SelectTrigger className="w-full md:w-[200px]">
             <SelectValue placeholder="Chọn thuộc tính" />
           </SelectTrigger>
           <SelectContent>
@@ -98,15 +99,16 @@ export default function AddAttributeValues({ onSuccess, currentTab }: Props) {
           </SelectContent>
         </Select>
 
-        {/* Nhập tên giá trị thuộc tính */}
+        {/* Input giá trị thuộc tính */}
         <Input
-          placeholder="Nhập tên giá trị thuộc tính"
+          placeholder="Tên giá trị thuộc tính"
           value={attributeValueName}
           onChange={(e) => setAttributeValueName(e.target.value)}
           disabled={!selectedAttributeId}
+          className="w-full md:w-[250px]"
         />
 
-        {/* Nút submit */}
+        {/* Button submit */}
         <Button
           type="submit"
           disabled={
@@ -114,10 +116,10 @@ export default function AddAttributeValues({ onSuccess, currentTab }: Props) {
             !attributeValueName.trim() ||
             mutation.isPending
           }
-          className="bg-blue-500 hover:bg-blue-600"
+          className="bg-blue-500 hover:bg-blue-600 whitespace-nowrap"
         >
           <Plus className="w-4 h-4 mr-2" />
-          {mutation.isPending ? "Đang thêm..." : "Thêm giá trị"}
+          {mutation.isPending ? "Đang thêm..." : "Thêm"}
         </Button>
       </form>
     </div>

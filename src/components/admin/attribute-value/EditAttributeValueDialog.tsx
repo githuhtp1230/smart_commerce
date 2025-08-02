@@ -24,19 +24,17 @@ const EditAttributeValueDialog = ({
   initialValue,
   onSubmit,
 }: Props) => {
-  const [value, setValue] = useState(initialValue ?? "");
+  const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
     if (open) {
-      setValue(initialValue ?? "");
+      setValue(initialValue);
     }
   }, [open, initialValue]);
 
   const handleUpdate = () => {
     const trimmedName = value.trim();
-    const trimmedInitial = initialValue?.trim?.() ?? "";
-
-    if (trimmedName && trimmedName !== trimmedInitial) {
+    if (trimmedName && trimmedName !== initialValue.trim()) {
       onSubmit(trimmedName);
     }
     onOpenChange(false);
@@ -60,8 +58,7 @@ const EditAttributeValueDialog = ({
           <Button
             onClick={handleUpdate}
             disabled={
-              value.trim() === "" ||
-              value.trim() === (initialValue?.trim?.() ?? "")
+              value.trim() === "" || value.trim() === initialValue.trim()
             }
             className="bg-blue-500 text-white"
           >
