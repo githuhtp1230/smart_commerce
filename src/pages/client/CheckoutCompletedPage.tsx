@@ -1,7 +1,12 @@
 import React from "react";
+import OrderProcessing from "./product/OrderProcessing";
 
 const CheckoutCompletedPage = () => {
-  return <div>Chúng tôi đang xử lí đơn hàng của bạn</div>;
+  return (
+    <div>
+      <OrderProcessing />
+    </div>
+  );
 };
 
 export default CheckoutCompletedPage;

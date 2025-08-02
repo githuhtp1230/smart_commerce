@@ -51,6 +51,10 @@ function App() {
     <>
       <div className="h-screen">
         <Routes>
+          <Route
+            path={PATH.CHECKOUT_COMPLETED}
+            element={<CheckoutCompletedPage />}
+          />
           <Route element={<AuthLayout />}>
             <Route path={PATH.LOGIN} element={<Login />} />
             <Route path={PATH.REGISTER} element={<Register />} />
