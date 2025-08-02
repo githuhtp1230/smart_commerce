@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowLeftFromLine,
   BadgeCheck,
   Bell,
   ChevronsUpDown,
@@ -26,6 +27,8 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/store/auth-store";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "@/constants/path";
 
 export function NavUser({
   user,
@@ -37,7 +40,8 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
-  const { me } = useAuthStore();
+  const { me, logout } = useAuthStore((state) => state);
+  const navigate = useNavigate();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -99,7 +103,11 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate(PATH.HOME_PAGE)}>
+              <ArrowLeftFromLine />
+              Back to Home
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
               <LogOut />
               Log out
             </DropdownMenuItem>
