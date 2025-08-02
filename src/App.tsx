@@ -23,6 +23,8 @@ import { fetchMe } from "./services/me.service";
 import { useAuthStore } from "./store/auth-store";
 import CheckoutCompletedPage from "./pages/client/CheckoutCompletedPage";
 import ManageUsersPage from "./pages/admin/ManageUsersPage";
+import ManageAttributePage from "./pages/admin/ManageAttributePage";
+import ManageAttributeValuePage from "./pages/admin/ManageAttributeValuePage";
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
@@ -53,10 +55,6 @@ function App() {
             <Route path={PATH.LOGIN} element={<Login />} />
             <Route path={PATH.REGISTER} element={<Register />} />
             <Route path={PATH.FORGOT_PASSWORD} element={<ForgotPassword />} />
-            <Route
-              path={PATH.CHECKOUT_COMPLETED}
-              element={<CheckoutCompletedPage />}
-            />
           </Route>
 
           <Route element={<ClientLayout />}>
@@ -68,6 +66,10 @@ function App() {
               element={<ProductDetailPage />}
             />
             <Route element={<AuthRoute allowedRoles={["USER", "ADMIN"]} />}>
+              <Route
+                path={PATH.CHECKOUT_COMPLETED}
+                element={<CheckoutCompletedPage />}
+              />
               <Route path={PATH.PROFILE} element={<Profile />} />
             </Route>
           </Route>
@@ -84,6 +86,14 @@ function App() {
                 element={<ManageCategoryPage />}
               />
               <Route path={ADMIN_PATH.SUBCATEGORY} element={<SubCategory />} />
+              <Route
+                path={ADMIN_PATH.ATTRIBUTE}
+                element={<ManageAttributePage />}
+              />
+              <Route
+                path={ADMIN_PATH.ATTRIBUTEVALUE}
+                element={<ManageAttributeValuePage />}
+              />
               <Route
                 path={ADMIN_PATH.ADD_PRODUCT}
                 element={<AddProductPage />}
