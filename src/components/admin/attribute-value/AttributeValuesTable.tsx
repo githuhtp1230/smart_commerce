@@ -26,7 +26,7 @@ const AttributeValuesTable = ({ attributevalues, onSwitchTab }: Props) => {
     mutationFn: async (id: number) =>
       await attributeValueApi.deleteAttributeValue(id),
     onSuccess: () => {
-      toastSuccess("Xóa giá trị thuộc tính thành công");
+      toastSuccess("Delete attribute value successfully");
       onSwitchTab?.();
     },
     onSettled: () => {
@@ -38,7 +38,7 @@ const AttributeValuesTable = ({ attributevalues, onSwitchTab }: Props) => {
     mutationFn: async ({ id, value }: { id: number | string; value: string }) =>
       await attributeValueApi.updateAttributeValue(id, { value }),
     onSuccess: () => {
-      toastSuccess("Cập nhật gái trị thuộc tính thành công");
+      toastSuccess("Attribute value updated successfully");
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["attributeValues"] });
