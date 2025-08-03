@@ -1,11 +1,11 @@
 "use client";
 
 import {
-  ArrowLeftFromLine,
   BadgeCheck,
   Bell,
   ChevronsUpDown,
   CreditCard,
+  House,
   LogOut,
   Sparkles,
 } from "lucide-react";
@@ -104,7 +104,7 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate(PATH.HOME_PAGE)}>
-              <ArrowLeftFromLine />
+              <House />
               Back to Home
             </DropdownMenuItem>
             <DropdownMenuItem onClick={logout}>
