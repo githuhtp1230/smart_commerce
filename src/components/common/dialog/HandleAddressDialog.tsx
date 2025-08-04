@@ -55,8 +55,6 @@ const HandleAddressDialog = ({
         {view === "dashboard" ? (
           <div>
             <DialogTitle>{t("Select address")}</DialogTitle>
-            <SelectAddress />
-            <DialogTitle>Chọn địa chỉ</DialogTitle>
             <SelectAddress onSelectedDefaultAddress={onSelectedAddress} />
             <div className="flex justify-end">
               <Button
