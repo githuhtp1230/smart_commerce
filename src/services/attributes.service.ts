@@ -6,6 +6,7 @@ export interface AttributeParams {
 }
 export interface AttributeValueParams {
   isDeleted?: boolean;
+  attributeId?: number;
 }
 
 export const fetchAttributes = async (

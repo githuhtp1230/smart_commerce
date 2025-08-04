@@ -8,6 +8,7 @@ import { useState } from "react";
 import AddressField from "../address/AddressFields";
 import SelectAddress from "../address/SelectAddress";
 import { toastError, toastSuccess } from "../sonner";
+import { useTranslation } from "react-i18next";
 
 export type AddressView = "dashboard" | "select-address";
 
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const HandleAddressDialog = ({ isOpen, onOpenChange }: Props) => {
+  const { t } = useTranslation();
   const [view, setView] = useState<AddressView>("dashboard");
 
   const { mutate: createNewAddress } = useMutation({
@@ -35,7 +37,7 @@ const HandleAddressDialog = ({ isOpen, onOpenChange }: Props) => {
       <DialogContent className={cn("min-w-xl")}>
         {view === "dashboard" ? (
           <div>
-            <DialogTitle>Chọn địa chỉ</DialogTitle>
+            <DialogTitle>{t("Select address")}</DialogTitle>
             <SelectAddress />
             <div className="flex justify-end">
               <Button
@@ -46,7 +48,7 @@ const HandleAddressDialog = ({ isOpen, onOpenChange }: Props) => {
                 }}
               >
                 <Plus />
-                Thêm địa chỉ
+                {t("Add address")}
               </Button>
             </div>
           </div>
@@ -63,12 +65,12 @@ const HandleAddressDialog = ({ isOpen, onOpenChange }: Props) => {
               >
                 <ChevronLeft className="size-5" />
               </Button>
-              <p>Thêm địa chỉ</p>
+              <p>{t("Add address")}</p>
             </DialogTitle>
 
             <AddressField
               onSelectedAddress={createNewAddress}
-              saveButtonContent="Add"
+              saveButtonContent="Thêm"
             />
           </div>
         )}

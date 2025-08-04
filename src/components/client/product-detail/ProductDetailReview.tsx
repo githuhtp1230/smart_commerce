@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Reply, Star, ChevronDown, ChevronUp, Clock } from "lucide-react";
 import React, { useState } from "react";
 import type { IProductDetail } from "@/type/products";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import type { ReviewResponse, ReviewRequest } from "@/type/review";
 import {
   fetchReviewsByProduct,
@@ -12,15 +12,16 @@ import {
 } from "@/services/review.service";
 import ReviewModal from "./ReviewModal";
 import CircleAvatar from "@/components/common/avatar/CircleAvatar";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   productDetail?: IProductDetail;
 }
 
 const ProductDetailReview = ({ productDetail }: Props) => {
+  const { t } = useTranslation();
   const productId = productDetail?.id;
   const [isReviewModalOpen, setReviewModalOpen] = useState(false);
-  const queryClient = useQueryClient();
 
   const {
     data: reviews = [],
@@ -212,18 +213,18 @@ const ProductDetailReview = ({ productDetail }: Props) => {
           <span className="text-2xl text-border-primary">|</span>
           <div className="flex items-center gap-1">
             <p>{productDetail?.reviewCount ?? 0}</p>
-            <p className="text-muted-foreground">ratings</p>
+            <p className="text-muted-foreground">{t("ratings")}</p>
           </div>
           <div className="flex items-center gap-1">
             <p>{productDetail?.reviewCount ?? 0}</p>
-            <p className="text-muted-foreground">reviews</p>
+            <p className="text-muted-foreground">{t("reviews")}</p>
           </div>
         </div>
         <Button
           className="mt-4 md:mt-0 bg-txt-blue hover:bg-txt-primary-blue/90 text-white"
           onClick={() => setReviewModalOpen(true)}
         >
-          Write a Review
+          {t("Write a Review")}
         </Button>
       </div>
 

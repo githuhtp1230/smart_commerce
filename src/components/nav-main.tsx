@@ -18,7 +18,6 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
-import { ADMIN_PATH } from "@/constants/path";
 
 export function NavMain({
   items,

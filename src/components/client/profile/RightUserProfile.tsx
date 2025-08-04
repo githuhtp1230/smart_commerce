@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Pencil } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
@@ -12,7 +12,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { useAuthStore } from "@/store/auth-store";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { updateProfile } from "@/services/me.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -29,7 +29,7 @@ import {
 import { toastError } from "@/components/common/sonner";
 import { useAddress } from "./profile-helper/use-address";
 import HandleAddressDialog from "@/components/common/dialog/HandleAddressDialog";
-import { getMyAddresses } from "@/services/address.service";
+import { useTranslation } from "react-i18next";
 
 interface ContactInfo {
   address: string;
@@ -44,6 +44,7 @@ const formSchema = z.object({
 });
 
 const RightUserProfile: React.FC = () => {
+  const { t } = useTranslation();
   const { me, setMe } = useAuthStore((state) => state);
   const [isPhoneDialogOpen, setIsPhoneDialogOpen] = useState(false);
   const [contactInfo, setContactInfo] = useState<ContactInfo>({
@@ -86,7 +87,7 @@ const RightUserProfile: React.FC = () => {
       <Card className="p-6 rounded-md shadow bg-primary">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-secondary-foreground">
-            Contact Information
+            {t("Contact Information")}
           </h2>
           <button
             id="editContactBtn"
@@ -101,7 +102,7 @@ const RightUserProfile: React.FC = () => {
           <div className="flex items-start justify-between">
             <div>
               <p className="text-sm text-muted-foreground">
-                Địa chỉ đang sử dụng
+                {t("Address in use")}
               </p>
               {defaultAddr ? (
                 <p className="text-base font-medium mt-1">
@@ -109,13 +110,13 @@ const RightUserProfile: React.FC = () => {
                   {defaultAddr.district}, {defaultAddr.province}
                   {defaultAddr.isDefault && (
                     <span className="ml-2 text-xs text-green-600">
-                      (Mặc định)
+                      ({t("default")})
                     </span>
                   )}
                 </p>
               ) : (
                 <p className="text-base text-destructive mt-1">
-                  Chưa chọn địa chỉ
+                  {t("No address selected")}
                 </p>
               )}
             </div>
@@ -123,7 +124,7 @@ const RightUserProfile: React.FC = () => {
               variant="outline"
               onClick={() => setIsOpenAddressDialog(true)}
             >
-              Thay đổi
+              {t("Change")}
             </Button>
           </div>
           <Separator className="my-4" />
@@ -134,8 +135,10 @@ const RightUserProfile: React.FC = () => {
             </div>
           </div>
           <div>
-            <div className="flex items-center gap-50">
-              <h3 className="font-medium text-secondary-foreground">Phone</h3>
+            <div className="flex items-center gap-38">
+              <h3 className="font-medium text-secondary-foreground">
+                {t("Phone")}
+              </h3>
               <div className="flex items-center gap-2">
                 <p className="text-txt-brand">{me?.phone}</p>
                 <button
@@ -156,7 +159,7 @@ const RightUserProfile: React.FC = () => {
       <Dialog open={isPhoneDialogOpen} onOpenChange={setIsPhoneDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit phone number</DialogTitle>
+            <DialogTitle>{t("Edit phone number")}</DialogTitle>
           </DialogHeader>
           <Form {...form}>
             <form
@@ -168,7 +171,7 @@ const RightUserProfile: React.FC = () => {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Number phone</FormLabel>
+                    <FormLabel>{t("Number phone")}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -185,14 +188,14 @@ const RightUserProfile: React.FC = () => {
                   }}
                   type="button"
                 >
-                  Cancel
+                  {t("Cancel")}
                 </Button>
                 <Button
                   type="submit"
                   className="bg-blue-500 hover:bg-blue-700 text-white"
                   disabled={isPending}
                 >
-                  Save
+                  {t("Save")}
                 </Button>
               </DialogFooter>
             </form>
