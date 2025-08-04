@@ -1,8 +1,7 @@
-import { Facebook, Logo } from "@/assets/icons";
+import { Facebook } from "@/assets/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CreditCard, Instagram, Youtube } from "lucide-react";
-import React from "react";
 
 const Footer = () => {
   return (

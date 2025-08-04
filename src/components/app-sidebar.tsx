@@ -1,15 +1,11 @@
 import * as React from "react";
 import {
   AudioWaveform,
-  BookOpen,
   Bot,
   ClipboardList,
   Command,
-  Frame,
   GalleryVerticalEnd,
-  Map,
   MonitorSmartphone,
-  PieChart,
   Puzzle,
   Settings2,
   TicketPercent,
@@ -58,6 +54,13 @@ const data = {
     },
   ],
   navMain: [
+    {
+      title: "Dashboard",
+      url: "#",
+      icon: MonitorSmartphone,
+      isActive: true,
+      items: [],
+    },
     {
       title: "Manage Products",
       url: "#",

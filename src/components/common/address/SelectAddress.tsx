@@ -12,8 +12,10 @@ import { Pen, Trash } from "lucide-react";
 import { useState } from "react";
 import UpdateAddressDialog from "../dialog/UpdateAddressDialog";
 import { toastSuccess } from "../sonner";
+import { useTranslation } from "react-i18next";
 
 const SelectAddress = () => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { me, setMe } = useAuthStore((s) => s);
   const { selectedAddressId, setDefaultAddress } = useAddress(true);
@@ -67,7 +69,7 @@ const SelectAddress = () => {
                 {location}
                 {address.isDefault && (
                   <span className="ml-2 text-xs text-green-600">
-                    (Mặc định)
+                    ({t("default")})
                   </span>
                 )}
               </p>
@@ -81,7 +83,7 @@ const SelectAddress = () => {
                   }}
                 >
                   <Pen className="w-4 h-4" />
-                  Cập Nhật
+                  {t("Update")}
                 </Button>
                 <Button
                   variant="ghost"
@@ -89,7 +91,7 @@ const SelectAddress = () => {
                   onClick={() => deleteAddressMutation(address.id)}
                 >
                   <Trash className="w-4 h-4" />
-                  Xoá Địa Chỉ
+                  {t("Delete address")}
                 </Button>
               </div>
             </div>

@@ -20,12 +20,14 @@ import { addCartItem } from "@/services/cart.service";
 import { toastSuccess } from "@/components/common/sonner";
 import { useCartStore } from "@/store/cart-store";
 import { formatPrice } from "@/helper/format-price-vietnam";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   productDetail?: IProductDetail;
 }
 
 const ProductDetailInformation = ({ productDetail }: Props) => {
+  const { t } = useTranslation();
   const [quantity, setQuantity] = useState<number>(1);
   const [isError, setIsError] = useState<boolean>(false);
   const { addItemToCart } = useCartStore((s) => s);
@@ -106,15 +108,18 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
             <span className="text-2xl text-border-primary">|</span>
             <div className="flex items-center gap-1">
               <p>{productDetail?.reviewCount}</p>
-              <p className="text-muted-foreground">people rated and reviewed</p>
+              <p className="text-muted-foreground">
+                {t("people rated and reviewed")}
+              </p>
             </div>
           </div>
           <div className="mt-2 flex items-center gap-2">
             <AppBadge badgeColor="green" content="In stock" />
             <span className="text-txt-brand">
-              {`Release on ${productDetail?.createdAt &&
+              {`Release on ${
+                productDetail?.createdAt &&
                 formatUtcToVietnamDate(productDetail?.createdAt)
-                }`}
+              }`}
             </span>
           </div>
         </div>
@@ -135,8 +140,8 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
                 <span className="text-4xl font-bold text-foreground">
                   {formatPrice(
                     salePrice ??
-                    selectedProductVariation?.price ??
-                    productDetail?.price
+                      selectedProductVariation?.price ??
+                      productDetail?.price
                   )}{" "}
                   đ
                 </span>
@@ -158,7 +163,7 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
           </div>
           {productDetail?.promotion && (
             <p className="text-txt-system-danger font-medium mt-2">
-              Special offer ends in{" "}
+              {t("Special offer ends in")}{" "}
               {getTimeRemaining(productDetail?.promotion?.endDate)}
             </p>
           )}
@@ -202,11 +207,11 @@ const ProductDetailInformation = ({ productDetail }: Props) => {
             disabled={!isSelectedAttrVal}
           >
             <RefreshCcw className="text-txt-brand" />
-            <p className="text-txt-brand">Refresh</p>
+            <p className="text-txt-brand">{t("Refresh")}</p>
           </Button>
         </div>
         <div>
-          <h3 className="text-base text-txt-secondary">Quantity:</h3>
+          <h3 className="text-base text-txt-secondary">{t("Quantity")}:</h3>
           <div className="flex items-center mt-2 gap-4">
             <QuantityButton
               action={"decrease"}

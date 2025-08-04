@@ -11,8 +11,9 @@ import { fetchCategories } from "@/services/categories.service";
 import { useQuery } from "@tanstack/react-query";
 import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import { useTranslation } from "react-i18next";
 const MenuCategories = () => {
+  const { t } = useTranslation();
   const { data } = useQuery({
     queryKey: ["categories"],
     refetchOnMount: false,
@@ -27,7 +28,7 @@ const MenuCategories = () => {
           className="flex items-center gap-2 !px-0 hover:bg-transparent"
         >
           <Menu />
-          <p className="text-base">Category</p>
+          <p className="text-base">{t("Category")}</p>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

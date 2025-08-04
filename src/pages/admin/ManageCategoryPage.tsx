@@ -2,7 +2,7 @@
 
 import CategoriesTable from "@/components/admin/category/CategoriesTable";
 import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import { fetchCategories } from "@/services/categories.service";
 import type { ICategory } from "@/type/category";
 import { useEffect, useState } from "react";

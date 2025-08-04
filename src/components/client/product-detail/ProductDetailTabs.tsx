@@ -1,35 +1,29 @@
-
-
 import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import ProductDetailReview from "./ProductDetailReview";
 import ProductDetailAttributeList from "./ProductDetailAttributeList";
 import ProductDetailDescription from "./ProductDetailDescription";
 import type { IProductDetail } from "@/type/products";
 import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   productDetail?: IProductDetail;
 }
 
 const ProductDetailTabs = ({ productDetail }: Props) => {
+  const { t } = useTranslation();
   return (
     <div className="container">
       <Tabs defaultValue="description" className="w-full">
         <TabsList className="flex justify-start gap-2 bg-transparent">
-          <CustomTabsTrigger
-            value="description"
-          >
-            Description
+          <CustomTabsTrigger value="description">
+            {t("Description")}
           </CustomTabsTrigger>
-          <CustomTabsTrigger
-            value="specifications"
-          >
-            Specifications
+          <CustomTabsTrigger value="specifications">
+            {t("Specifications")}
           </CustomTabsTrigger>
-          <CustomTabsTrigger
-            value="reviews"
-          >
-            Ratings & reviews (1,283)
+          <CustomTabsTrigger value="reviews">
+            {t("Ratings & reviews")} (1,283)
           </CustomTabsTrigger>
         </TabsList>
 
