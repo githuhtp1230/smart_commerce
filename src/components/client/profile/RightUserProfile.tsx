@@ -192,7 +192,7 @@ const RightUserProfile: React.FC = () => {
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-blue-500 hover:bg-blue-700 text-white"
+                  className="!bg-blue-500 hover:bg-blue-400 text-white"
                   disabled={isPending}
                 >
                   {t("Save")}

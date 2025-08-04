@@ -106,7 +106,7 @@ const ChangePasswordButton = () => {
                 name="currentPassword"
                 render={({ field }) => (
                   <FormItem className="gap-1">
-                    <FormLabel className="text-txt-tertiary  text-base">
+                    <FormLabel className="text-txt-tertiary text-base font-normal">
                       Current Password
                     </FormLabel>
                     <FormControl>
@@ -131,7 +131,7 @@ const ChangePasswordButton = () => {
                 name="newPassword"
                 render={({ field }) => (
                   <FormItem className="gap-1">
-                    <FormLabel className="text-txt-tertiary  text-base">
+                    <FormLabel className="text-txt-tertiary text-base font-normal">
                       New Password
                     </FormLabel>
                     <FormControl>
@@ -156,7 +156,7 @@ const ChangePasswordButton = () => {
                 name="confirmNewPassword"
                 render={({ field }) => (
                   <FormItem className="gap-1">
-                    <FormLabel className="text-txt-tertiary  text-base">
+                    <FormLabel className="text-txt-tertiary text-base font-normal">
                       Confirm New Password
                     </FormLabel>
                     <FormControl>
@@ -194,7 +194,7 @@ const ChangePasswordButton = () => {
               <Button
                 variant="outline"
                 type="submit"
-                className=" bg-blue-500 hover:bg-blue-600 text-white hover:text-white"
+                className="!bg-blue-500 hover:bg-blue-400 text-white hover:text-white"
                 disabled={isPending}
               >
                 Save
