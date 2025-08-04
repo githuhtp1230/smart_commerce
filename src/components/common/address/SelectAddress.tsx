@@ -13,9 +13,13 @@ import { useState } from "react";
 import UpdateAddressDialog from "../dialog/UpdateAddressDialog";
 import { toastSuccess } from "../sonner";
 import { useTranslation } from "react-i18next";
+interface Props {
+  onSelectedDefaultAddress?: (value: number) => void;
+}
 
-const SelectAddress = () => {
+const SelectAddress = ({ onSelectedDefaultAddress }: Props) => {
   const { t } = useTranslation();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { me, setMe } = useAuthStore((s) => s);
   const { selectedAddressId, setDefaultAddress } = useAddress(true);
@@ -24,8 +28,9 @@ const SelectAddress = () => {
 
   const { mutate: setDefaultAddressMutation } = useMutation({
     mutationFn: updateDefaultAddress,
-    onSuccess: (_data, addressId) => {
+    onSuccess: (data, addressId) => {
       setDefaultAddress(addressId);
+      onSelectedDefaultAddress?.(addressId);
     },
   });
 

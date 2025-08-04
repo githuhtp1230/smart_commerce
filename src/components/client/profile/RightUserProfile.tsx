@@ -1,23 +1,25 @@
-import React, { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Pencil } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import { useAuthStore } from "@/store/auth-store";
-import { useMutation } from "@tanstack/react-query";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import { updateProfile } from "@/services/me.service";
+import { useAuthStore } from "@/store/auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { Pencil } from "lucide-react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import HandleAddressDialog from "@/components/common/dialog/HandleAddressDialog";
+import { toastError } from "@/components/common/sonner";
 import {
   Form,
   FormControl,
@@ -26,10 +28,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toastError } from "@/components/common/sonner";
 import { useAddress } from "./profile-helper/use-address";
-import HandleAddressDialog from "@/components/common/dialog/HandleAddressDialog";
-import { useTranslation } from "react-i18next";
 
 interface ContactInfo {
   address: string;
@@ -47,14 +46,14 @@ const RightUserProfile: React.FC = () => {
   const { t } = useTranslation();
   const { me, setMe } = useAuthStore((state) => state);
   const [isPhoneDialogOpen, setIsPhoneDialogOpen] = useState(false);
+  const [isOpenAddressDialog, setIsOpenAddressDialog] =
+    useState<boolean>(false);
   const [contactInfo, setContactInfo] = useState<ContactInfo>({
     address: "Vancouver, British Columbia\nCanada",
     email: me?.email || "",
     phone: me?.phone || "",
   });
   const { defaultAddr } = useAddress();
-  const [isOpenAddressDialog, setIsOpenAddressDialog] =
-    useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

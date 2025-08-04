@@ -2,30 +2,47 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { createAddress } from "@/services/address.service";
+import { useAuthStore } from "@/store/auth-store";
 import { useMutation } from "@tanstack/react-query";
 import { ChevronLeft, Plus } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import AddressField from "../address/AddressFields";
 import SelectAddress from "../address/SelectAddress";
 import { toastError, toastSuccess } from "../sonner";
-import { useTranslation } from "react-i18next";
 
 export type AddressView = "dashboard" | "select-address";
 
 interface Props {
   isOpen: boolean;
   onOpenChange: (value: boolean) => void;
+  onSelectedAddress?: (addressId: number) => void;
 }
 
-const HandleAddressDialog = ({ isOpen, onOpenChange }: Props) => {
+const HandleAddressDialog = ({
+  isOpen,
+  onOpenChange,
+  onSelectedAddress,
+}: Props) => {
   const { t } = useTranslation();
   const [view, setView] = useState<AddressView>("dashboard");
+  const { me, setMe } = useAuthStore((s) => s);
 
   const { mutate: createNewAddress } = useMutation({
     mutationFn: createAddress,
-    onSuccess: () => {
+    onSuccess: (data) => {
       setView("dashboard");
       toastSuccess("Add address successfully");
+      if (me) {
+        const oldAddresses = me.addresses;
+        if (!oldAddresses) {
+          return;
+        }
+        setMe({
+          ...me,
+          addresses: [...oldAddresses, data],
+        });
+      }
     },
     onError: () => {
       toastError("Failed to add address");
@@ -39,6 +56,8 @@ const HandleAddressDialog = ({ isOpen, onOpenChange }: Props) => {
           <div>
             <DialogTitle>{t("Select address")}</DialogTitle>
             <SelectAddress />
+            <DialogTitle>Chọn địa chỉ</DialogTitle>
+            <SelectAddress onSelectedDefaultAddress={onSelectedAddress} />
             <div className="flex justify-end">
               <Button
                 variant="ghost"

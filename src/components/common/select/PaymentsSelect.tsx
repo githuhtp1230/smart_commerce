@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Select,
   SelectContent,
@@ -6,23 +5,47 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useQuery } from "@tanstack/react-query";
+import { cn } from "@/lib/utils";
 import { fetchPayments } from "@/services/payment.service";
-import { Label } from "@radix-ui/react-select";
+import { useQuery } from "@tanstack/react-query";
+import type { ControllerRenderProps } from "react-hook-form";
 
-const PaymentsSelect = () => {
+interface Props {
+  field: ControllerRenderProps<
+    {
+      addressId: number;
+      paymentId: number;
+    },
+    "paymentId"
+  >;
+  hasError?: boolean;
+}
+
+const PaymentsSelect = ({ field, hasError }: Props) => {
   const { data } = useQuery({
     queryKey: ["payments"],
     queryFn: fetchPayments,
   });
+
   return (
-    <Select>
-      <SelectTrigger className="w-full !bg-transparent focus:!ring-0">
+    <Select
+      onValueChange={(value) => {
+        field?.onChange?.(Number(value));
+      }}
+    >
+      <SelectTrigger
+        className={cn(
+          "w-full !bg-transparent focus:!ring-0",
+          hasError && "border-system-danger-hard"
+        )}
+      >
         <SelectValue placeholder="Select a payment" />
       </SelectTrigger>
       <SelectContent className="bg-primary">
         {data?.map((payment) => (
-          <SelectItem value={payment.value}>{payment.name}</SelectItem>
+          <SelectItem key={payment.id} value={`${payment.id}`}>
+            {payment.name}
+          </SelectItem>
         ))}
       </SelectContent>
     </Select>
