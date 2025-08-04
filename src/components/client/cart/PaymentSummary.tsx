@@ -82,8 +82,8 @@ const PaymentSummary: React.FC = () => {
 
   return (
     <>
-      <Card className="bg-primary shadow-none gap-3">
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
+      <Card className="bg-primary shadow-none gap-3 rounded-sm">
+        <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-2xl font-bold ">Summary</CardTitle>
         </CardHeader>
         <CardContent className="gap-0 space-y-0">
