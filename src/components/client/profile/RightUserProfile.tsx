@@ -29,6 +29,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useAddress } from "./profile-helper/use-address";
+import { useTranslation } from "react-i18next";
 
 interface ContactInfo {
   address: string;
