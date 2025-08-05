@@ -15,6 +15,7 @@ import { NavUser } from "@/components/nav-user";
 import SwitchCustomizationDemo from "@/components/customized/switch/switch-07";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/components/theme-provider";
+import ToggleTheme from "@/components/common/ToggleTheme";
 
 const AdminHeader = () => {
   const { setTheme, theme } = useTheme();
@@ -52,10 +53,7 @@ const AdminHeader = () => {
       </div>
       <div className="flex items-center gap-4 mr-2">
         <div className={cn("flex justify-between items-center text-blue-600 ")}>
-          <SwitchCustomizationDemo
-            onCheckedChange={handleCheckedChange}
-            checked={theme === "dark"}
-          />
+          <ToggleTheme className="text-white bg-transparent hover:bg-transparent hover:text-white border border-border-primary" />
         </div>
         <div className="pl-4 border-l ">
           <NavUser />

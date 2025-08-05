@@ -14,10 +14,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-  SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router-dom";
+import { cn } from "@/lib/utils";
+import { Link, NavLink } from "react-router-dom";
 
 export function NavMain({
   items,
@@ -35,19 +35,17 @@ export function NavMain({
     }[];
   }[];
 }) {
-
   return (
     <SidebarGroup className="overflow-auto scrollbar-hide">
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
-      <SidebarMenu  >
+      <SidebarMenu>
         {items.map((item) => {
           if (item.type === "sidebar-tab") {
             return (
-              <SidebarMenuItem >
+              <SidebarMenuItem>
                 <SidebarMenuButton>
-                  <Link to={item.url} >
-                    {item.icon && <item.icon
-                    />}
+                  <Link to={item.url}>
+                    {item.icon && <item.icon />}
                     <span className="text-base ">{item.title}</span>
                   </Link>
                 </SidebarMenuButton>
@@ -59,12 +57,11 @@ export function NavMain({
                 key={item.title}
                 asChild
                 defaultOpen={item.isActive}
-                className="group /collapsible "
+                className="group/collapsible "
               >
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip={item.title}
-                      className=" hover:!text-white hover:!bg-[#3266F6] focus:!bg-[#3266F6] focus:!text-white">
+                    <SidebarMenuButton tooltip={item.title}>
                       {item.icon && <item.icon />}
                       <span className="text-base">{item.title}</span>
                       <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -74,29 +71,29 @@ export function NavMain({
                     <SidebarMenuSub>
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton
-                            asChild
-                            className="px-2 py-4 rounded                                         
-                                        hover:font-medium hover:[&>svg]:font-medium hover:!text-white hover:[&>svg]:!text-white
-                                        hover:bg-[#3266F6]
-                                        focus:font-medium focus:[&>svg]:font-medium focus:!text-white focus:[&>svg]:!text-white
-                                        focus:!bg-[#3266F6]
-                                        ">
-                            <Link to={subItem.url} className="flex items-center gap-2">
-                              {subItem.icon && <subItem.icon className="text-current" />}
-                              <span className="text-base">{subItem.title}</span>
-                            </Link>
-                          </SidebarMenuSubButton>
+                          <NavLink
+                            to={subItem.url}
+                            className={({ isActive }) =>
+                              cn(
+                                "flex rounded-sm px-2 gap-2 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground py-1",
+                                isActive && "!text-white !bg-[#3266F6]"
+                              )
+                            }
+                          >
+                            {subItem.icon && (
+                              <subItem.icon className="text-current w-4" />
+                            )}
+                            <span className="text-base">{subItem.title}</span>
+                          </NavLink>
                         </SidebarMenuSubItem>
                       ))}
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 </SidebarMenuItem>
-
               </Collapsible>
             );
         })}
-      </SidebarMenu >
-    </SidebarGroup >
+      </SidebarMenu>
+    </SidebarGroup>
   );
 }

@@ -2,8 +2,13 @@
 import { Button } from "../ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "../theme-provider";
+import { cn } from "@/lib/utils";
 
-const ToggleTheme = () => {
+interface Props {
+  className?: string;
+}
+
+const ToggleTheme = ({ className }: Props) => {
   const { theme, setTheme } = useTheme();
 
   const isDark = theme === "dark";
@@ -12,7 +17,10 @@ const ToggleTheme = () => {
     <Button
       variant="outline"
       size="icon"
-      className="rounded-full cursor-pointer border-border-primary"
+      className={cn(
+        "rounded-full cursor-pointer border-border-primary",
+        className
+      )}
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >
       {isDark ? (
