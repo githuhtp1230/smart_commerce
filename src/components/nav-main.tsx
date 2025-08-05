@@ -31,21 +31,24 @@ export function NavMain({
     items?: {
       title: string;
       url: string;
+      icon?: LucideIcon;
     }[];
   }[];
 }) {
+
   return (
-    <SidebarGroup>
+    <SidebarGroup className="overflow-auto scrollbar-hide">
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
-      <SidebarMenu>
+      <SidebarMenu  >
         {items.map((item) => {
           if (item.type === "sidebar-tab") {
             return (
-              <SidebarMenuItem>
+              <SidebarMenuItem >
                 <SidebarMenuButton>
-                  <Link to={item.url}>
-                    {item.icon && <item.icon />}
-                    <span className="text-base">{item.title}</span>
+                  <Link to={item.url} >
+                    {item.icon && <item.icon
+                    />}
+                    <span className="text-base ">{item.title}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -56,11 +59,12 @@ export function NavMain({
                 key={item.title}
                 asChild
                 defaultOpen={item.isActive}
-                className="group/collapsible"
+                className="group /collapsible "
               >
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip={item.title}>
+                    <SidebarMenuButton tooltip={item.title}
+                      className=" hover:!text-white hover:!bg-[#3266F6] focus:!bg-[#3266F6] focus:!text-white">
                       {item.icon && <item.icon />}
                       <span className="text-base">{item.title}</span>
                       <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -70,9 +74,17 @@ export function NavMain({
                     <SidebarMenuSub>
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
-                            <Link to={subItem.url}>
-                              <span className="text-sm">{subItem.title}</span>
+                          <SidebarMenuSubButton
+                            asChild
+                            className="px-2 py-4 rounded                                         
+                                        hover:font-medium hover:[&>svg]:font-medium hover:!text-white hover:[&>svg]:!text-white
+                                        hover:bg-[#3266F6]
+                                        focus:font-medium focus:[&>svg]:font-medium focus:!text-white focus:[&>svg]:!text-white
+                                        focus:!bg-[#3266F6]
+                                        ">
+                            <Link to={subItem.url} className="flex items-center gap-2">
+                              {subItem.icon && <subItem.icon className="text-current" />}
+                              <span className="text-base">{subItem.title}</span>
                             </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
@@ -80,10 +92,11 @@ export function NavMain({
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 </SidebarMenuItem>
+
               </Collapsible>
             );
         })}
-      </SidebarMenu>
-    </SidebarGroup>
+      </SidebarMenu >
+    </SidebarGroup >
   );
 }

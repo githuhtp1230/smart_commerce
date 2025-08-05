@@ -40,7 +40,7 @@ const ManageUsersPage = () => {
         defaultValue="false"
         value={tabValue}
         onValueChange={setTabValue}
-        className="w-full"
+        className="w-full px-4"
       >
         <TabsList className="w-full p-0 justify-start border-b rounded-none">
           {tabs.map((tab) => (

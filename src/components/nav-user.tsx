@@ -3,7 +3,6 @@
 import {
   BadgeCheck,
   Bell,
-  ChevronsUpDown,
   CreditCard,
   House,
   LogOut,
@@ -24,22 +23,12 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/store/auth-store";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
-  const { isMobile } = useSidebar();
+export function NavUser() {
   const { me, logout } = useAuthStore((state) => state);
   const navigate = useNavigate();
   return (
@@ -49,33 +38,34 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:text-sidebar-accent-foreground hover:bg-[#3266F6]"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={me?.avatar} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{me?.name}</span>
-                <span className="truncate text-xs">{me?.email}</span>
+              <div className="grid flex-1 text-left text-sm leading-tight ">
+                <span className="truncate font-medium text-white">
+                  {me?.name}
+                </span>
+                <span className="truncate text-xs text-white">{me?.role}</span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarImage src={me?.avatar} className="rounded-full" />
+                <AvatarFallback className="rounded-full">CN</AvatarFallback>
+              </Avatar>
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side="bottom"
             align="end"
             sideOffset={4}
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={me?.avatar} />
+                  <AvatarImage src={me?.avatar} alt={me?.avatar} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{me?.name}</span>
+                  <span className="truncate font-medium ">{me?.name}</span>
                   <span className="truncate text-xs">{me?.email}</span>
                 </div>
               </div>
