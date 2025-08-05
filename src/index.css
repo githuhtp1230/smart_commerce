@@ -236,4 +236,13 @@
     background-color: var(--color-blue-500) !important;
     color: white !important;
   }
+
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

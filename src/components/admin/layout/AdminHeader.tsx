@@ -9,29 +9,61 @@ import {
 } from "@/components/ui/breadcrumb";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@radix-ui/react-separator";
+import { NavUser } from "@/components/nav-user";
+import SwitchCustomizationDemo from "@/components/customized/switch/switch-07";
+import { cn } from "@/lib/utils";
+import { useTheme } from "@/components/theme-provider";
+
 
 const AdminHeader = () => {
+  const { setTheme, theme } = useTheme();
+
+  const handleCheckedChange = (checked: boolean) => {
+    if (checked) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-      <div className="flex items-center gap-2 px-4">
-        <SidebarTrigger className="-ml-1" />
+    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12  w-full d-flex justify-between mb-10 bg-[#3266F6]">
+      <div className="flex items-center justify-between gap-2 px-4">
+        <SidebarTrigger className="-ml-1 text-white" />
         <Separator
           orientation="vertical"
-          className="mr-2 data-[orientation=vertical]:h-4"
+          className="mr-2 data-[orientation=vertical]:h-4 "
         />
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbLink href="#">
+              <BreadcrumbLink href="#" className="text-white">
                 Building Your Application
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block" />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+            <BreadcrumbSeparator className="hidden md:block " />
+            <BreadcrumbItem >
+              <BreadcrumbPage className="text-white">Data Fetching</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+
+      </div>
+      <div className="flex items-center gap-4 mr-2" >
+        <div
+          className={cn(
+            "flex justify-between items-center text-blue-600 ",
+
+          )}
+        >
+          <SwitchCustomizationDemo
+            onCheckedChange={handleCheckedChange}
+            checked={theme === "dark"}
+
+          />
+        </div>
+        <div className="pl-4 border-l ">
+          <NavUser />
+        </div>
       </div>
     </header>
   );
