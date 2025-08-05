@@ -3,8 +3,8 @@
 import CategoriesTable from "@/components/admin/category/CategoriesTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchSubCategories } from "@/services/categories.service";
-import type { ICategory } from "@/type/category";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import AddSubCategory from "./AddSubCategories";
 
 const tabs = [
@@ -13,28 +13,19 @@ const tabs = [
 ];
 
 export default function SubCategory() {
-  const [categories, setCategories] = useState<ICategory[]>([]);
   const [tabValue, setTabValue] = useState("false");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const isChildren = tabValue === "true";
-        const data = await fetchSubCategories(isChildren);
-        setCategories(data);
-      } catch (error) {
-        console.error("Lỗi khi lấy danh mục con:", error);
-      }
-    };
-
-    fetchData();
-  }, [tabValue]);
+  const { data: categories = [], isLoading } = useQuery({
+    queryKey: ["categories", { deleted: tabValue === "true" }],
+    queryFn: () => fetchSubCategories(tabValue === "true"),
+  });
 
   return (
     <div>
       <div className="ml-70">
         <AddSubCategory />
       </div>
+
       <Tabs
         defaultValue="false"
         value={tabValue}
@@ -55,7 +46,14 @@ export default function SubCategory() {
 
         {tabs.map((tab) => (
           <TabsContent key={tab.value} value={tab.value}>
-            <CategoriesTable categories={categories} />
+            {isLoading ? (
+              <p>Đang tải...</p>
+            ) : (
+              <CategoriesTable
+                categories={categories}
+                onSwitchTab={() => setTabValue("true")}
+              />
+            )}
           </TabsContent>
         ))}
       </Tabs>

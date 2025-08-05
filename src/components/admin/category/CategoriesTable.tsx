@@ -29,6 +29,7 @@ const CategoriesTable = ({ categories, onSwitchTab }: Props) => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["subcategories"] });
     },
   });
 
@@ -40,6 +41,7 @@ const CategoriesTable = ({ categories, onSwitchTab }: Props) => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["subcategories"] });
     },
   });
 

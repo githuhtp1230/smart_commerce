@@ -27,7 +27,7 @@ export default function AddSubCategory() {
   const { data: parents = [], isLoading: isLoadingParents } = useQuery<
     ICategory[]
   >({
-    queryKey: ["categories", { isDeleted: false, onlyParents: true }],
+    queryKey: ["subcategories-parent"], // ✅ đổi key cho rõ ràng, tránh trùng key với danh sách subcategory
     queryFn: async () => {
       const data = await fetchCategories({ isDeleted: false });
       return data.filter((c) => c.parentId == null);
@@ -41,16 +41,17 @@ export default function AddSubCategory() {
   >({
     mutationFn: createSubCategory,
     onSuccess: () => {
-      toastSuccess(`Category added successfully`);
+      toastSuccess(`Thêm danh mục con thành công`);
       setSubName("");
       setParentId(null);
+
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
     onError: (error) => {
       if (error instanceof Error) {
-        toastError(`Error: ${error.message}`);
+        toastError(`Lỗi: ${error.message}`);
       } else {
-        toastError("Unknown error while adding subcategory");
+        toastError("Lỗi không xác định khi thêm danh mục con");
       }
       console.error("API Error:", error);
     },
@@ -109,6 +110,7 @@ export default function AddSubCategory() {
             onChange={(e) => setSubName(e.target.value)}
           />
         </div>
+
         <Button
           type="submit"
           disabled={!canSubmit}
