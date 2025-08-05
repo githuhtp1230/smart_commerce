@@ -86,10 +86,6 @@ const data = {
           url: ADMIN_PATH.SUBCATEGORY,
           icon: FileStack,
         },
-        {
-          title: "Quantum",
-          url: "#",
-        },
       ],
     },
     {
@@ -247,7 +243,6 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-
   return (
     <Sidebar
       className="[&_[data-sidebar='sidebar']]:bg-primary side"
@@ -258,11 +253,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* <TeamSwitcher teams={data.teams} /> */}
         <div className="flex gap-1 items-center leading-none mt-2 mb-2">
           <Logo className="size-8 " />
-
         </div>
       </SidebarHeader>
-      <SidebarContent >
-
+      <SidebarContent>
         <NavMain items={data.navMain} />
 
         <NavProjects projects={data.projects} />
