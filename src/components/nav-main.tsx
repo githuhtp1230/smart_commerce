@@ -17,7 +17,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 export function NavMain({
   items,
@@ -61,7 +61,7 @@ export function NavMain({
               >
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip={item.title}>
+                    <SidebarMenuButton tooltip={item.title} className="text-txt-secondary text-sm font-medium">
                       {item.icon && <item.icon />}
                       <span className="text-base">{item.title}</span>
                       <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -75,8 +75,10 @@ export function NavMain({
                             to={subItem.url}
                             className={({ isActive }) =>
                               cn(
-                                "flex rounded-sm px-2 gap-2 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground py-1",
-                                isActive && "!text-white !bg-[#3266F6]"
+                                "flex items-center gap-2 rounded-md px-3 py-1 text-sm font-medium text-txt-secondary transition-colors duration-200 ease-in-out",
+                                isActive
+                                  ? "bg-background-blue text-txt-primary-light shadow-md"
+                                  : "hover:text-txt-primary"
                               )
                             }
                           >

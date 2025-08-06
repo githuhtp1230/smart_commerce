@@ -25,6 +25,7 @@ import {
   SidebarContent,
   SidebarHeader,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { ADMIN_PATH } from "@/constants/path";
 import { Logo } from "@/assets/icons";
@@ -243,6 +244,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { open } = useSidebar();
   return (
     <Sidebar
       className="[&_[data-sidebar='sidebar']]:bg-primary side"
@@ -252,7 +254,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         {/* <TeamSwitcher teams={data.teams} /> */}
         <div className="flex gap-1 items-center leading-none mt-2 mb-2">
-          <Logo className="size-8 " />
+          <Logo className="size-8" />
+          {open && (
+            <p className="font-medium text-lg text-txt-blue">
+              MART COMMERCE
+            </p>
+          )}
         </div>
       </SidebarHeader>
       <SidebarContent>

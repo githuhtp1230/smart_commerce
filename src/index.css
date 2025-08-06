@@ -11,6 +11,7 @@
   --background-secondary: oklch(1 0 0);
   --background-lightgray-secondary: oklch(0.96 0.0063 255.48);
   --background-lightgray: oklch(0.96 0.0063 255.48);
+  --background-blue: oklch(0.5648 0.2228 264.83);
   --foreground: oklch(0.129 0.042 264.695);
   --foreground-system-danger: oklch(0.9356 0.0309 17.72);
   --foreground-system-danger-hard: oklch(0.9356 0.0309 17.72);
@@ -55,6 +56,8 @@
   --txt-brand: oklch(0.6187 0.2067 259.23);
   --txt-blue: oklch(0.6005 0.2165 263.58);
   --txt-primary-blue: oklch(48.814% 0.23413 263.223);
+  --txt-muted: oklch(0.8975 0 0);
+  --txt-primary-light: oklch(1 0 0);
   --txt-primary: oklch(0.2109 0.0246 269.98);
   --txt-system-danger: oklch(0.506 0.1899 27.66);
   --txt-system-success: oklch(0.4987 0.1168 157.07);
@@ -78,6 +81,7 @@
   --background-lightgray-secondary: oklch(25.948% 0.00637 258.426);
   --background-gray: oklch(0.2024 0.0183 274.9);
   --background-lightgray: oklch(23.889% 0.0207 264.084);
+  --background-blue: oklch(0.31 0.15 262.32);
   --foreground: oklch(0.984 0.003 247.858);
   --foreground-system-danger: oklch(0.35 0.0383 9.27);
   --foreground-system-danger-hard: oklch(0.2602 0.0383 9.27);
@@ -121,6 +125,8 @@
   --txt-brand: oklch(0.8071 0.100651 250.4462);
   --txt-blue: oklch(0.6005 0.2165 263.58);
   --txt-primary-blue: oklch(48.814% 0.23413 263.223);
+  --txt-muted: oklch(1 0 0);
+  --txt-primary-light: oklch(0.7753 0.0927 246.28);
   --txt-primary: oklch(1 0 0);
   --txt-system-danger: oklch(70.575% 0.17917 22.792);
   --txt-system-success: oklch(0.72 0.1168 157.07);
@@ -140,6 +146,7 @@
   --color-background-surface: var(--background-surface);
   --color-background-secondary: var(--background-secondary);
   --color-background-lightgray-secondary: var(--background-lightgray-secondary);
+  --color-background-blue: var(--background-blue);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -191,6 +198,8 @@
   --color-txt-brand: var(--txt-brand);
   --color-txt-blue: var(--txt-blue);
   --color-txt-primary-blue: var(--txt-primary-blue);
+  --color-txt-muted: var(--txt-muted);
+  --color-txt-primary-light: var(--txt-primary-light);
   --color-txt-primary: var(--txt-primary);
   --color-txt-system-danger: var(--txt-system-danger);
   --color-txt-system-success: var(--txt-system-success);

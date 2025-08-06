@@ -13,10 +13,13 @@ import { NavUser } from "@/components/nav-user";
 import SwitchCustomizationDemo from "@/components/customized/switch/switch-07";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/components/theme-provider";
-import ToggleTheme from "@/components/common/ToggleTheme";
+import { House } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "@/constants/path"
 
 const AdminHeader = () => {
   const { setTheme, theme } = useTheme();
+  const navigate = useNavigate();
 
   const handleCheckedChange = (checked: boolean) => {
     if (checked) {
@@ -25,10 +28,11 @@ const AdminHeader = () => {
       setTheme("light");
     }
   };
+
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12  w-full d-flex justify-between mb-10 bg-[#3266F6]">
+    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12  w-full d-flex justify-between mb-10 bg-background-blue">
       <div className="flex items-center justify-between gap-2 px-4">
-        <SidebarTrigger className="-ml-1 text-white" />
+        <SidebarTrigger className="-ml-1 text-txt-muted" />
         <Separator
           orientation="vertical"
           className="mr-2 data-[orientation=vertical]:h-4 "
@@ -36,13 +40,13 @@ const AdminHeader = () => {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbLink href="#" className="text-white">
+              <BreadcrumbLink href="#" className="text-txt-primary-light">
                 Building Your Application
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator className="hidden md:block " />
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-white">
+              <BreadcrumbPage className="text-txt-muted">
                 Data Fetching
               </BreadcrumbPage>
             </BreadcrumbItem>
@@ -50,9 +54,22 @@ const AdminHeader = () => {
         </Breadcrumb>
       </div>
       <div className="flex items-center gap-4 mr-2">
-        <div className={cn("flex justify-between items-center text-blue-600 ")}>
-          <ToggleTheme className="text-white bg-transparent hover:bg-transparent hover:text-white border border-border-primary" />
+        <div
+          className={cn(
+            "flex justify-between items-center text-background-blue",
+          )}
+        >
+          <SwitchCustomizationDemo
+            onCheckedChange={handleCheckedChange}
+            checked={theme === "dark"}
+          />
+
         </div>
+        <button
+          onClick={() => navigate(PATH.HOME_PAGE)}
+        >
+          <House className="w-5 h-5 text-txt-muted" />
+        </button>
         <div className="pl-4 border-l ">
           <NavUser />
         </div>

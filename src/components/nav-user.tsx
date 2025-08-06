@@ -44,11 +44,11 @@ export function NavUser() {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:text-sidebar-accent-foreground hover:bg-[#3266F6]"
+              className="data-[state=open]:text-sidebar-accent-foreground hover:bg-transparent active:bg-transparent"
             >
               <div className="grid flex-1 text-left text-sm leading-tight ">
-                <span className="truncate font-medium text-white">{me?.name}</span>
-                <span className="truncate text-xs text-white">{me?.role}</span>
+                <span className="truncate font-medium text-txt-primary-light">{me?.name}</span>
+                <span className="truncate text-xs text-txt-muted">{me?.role}</span>
               </div>
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={me?.avatar} className="rounded-full" />
