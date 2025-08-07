@@ -16,6 +16,7 @@ import { useTheme } from "@/components/theme-provider";
 import { House } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path"
+import ToggleTheme from "@/components/common/ToggleTheme";
 
 const AdminHeader = () => {
   const { setTheme, theme } = useTheme();
@@ -30,7 +31,7 @@ const AdminHeader = () => {
   };
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12  w-full d-flex justify-between mb-10 bg-background-blue">
+    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12  w-full d-flex justify-between mb-10 bg-gradient-to-l from-[#1382de] via-[#1D8FE1] to-[#625EB1]">
       <div className="flex items-center justify-between gap-2 px-4">
         <SidebarTrigger className="-ml-1 text-txt-muted" />
         <Separator
@@ -59,10 +60,7 @@ const AdminHeader = () => {
             "flex justify-between items-center text-background-blue",
           )}
         >
-          <SwitchCustomizationDemo
-            onCheckedChange={handleCheckedChange}
-            checked={theme === "dark"}
-          />
+          <ToggleTheme className="text-white bg-transparent hover:bg-transparent hover:text-white border border-border-primary" />
 
         </div>
         <button
