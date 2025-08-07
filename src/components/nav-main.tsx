@@ -75,10 +75,10 @@ export function NavMain({
                             to={subItem.url}
                             className={({ isActive }) =>
                               cn(
-                                "flex items-center gap-2 rounded-md px-3 py-1 text-sm font-medium text-txt-secondary transition-colors duration-200 ease-in-out",
+                                "flex items-center gap-2 rounded-md px-3 py-1 text-sm font-medium text-txt-secondary transition-colors duration-200 ease-in-out ",
                                 isActive
-                                  ? "bg-background-blue text-txt-primary-light shadow-md"
-                                  : "hover:text-txt-primary"
+                                  ? "bg-background-blue text-white shadow-md"
+                                  : "hover:bg-[#2B7FFF] hover:text-white "
                               )
                             }
                           >
