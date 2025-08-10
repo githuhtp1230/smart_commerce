@@ -19,4 +19,5 @@ export const ADMIN_PATH = {
   ATTRIBUTE: "admin/attribute",
   ATTRIBUTEVALUE: "admin/attribute-values",
   USER: "admin/users",
+  PROMOTION: "admin/promotion",
 };

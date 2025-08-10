@@ -39,7 +39,6 @@ const AdminHeader = () => {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-
       {/* Bên phải: Language switcher */}
       <div className="flex items-center">
         <LanguageSwitcher />
