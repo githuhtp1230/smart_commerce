@@ -12,5 +12,8 @@ export const useAuthStore = create<AuthState>((set) => ({
   me: undefined,
   isAuthenticated: false,
   setMe: (me) => set({ me, isAuthenticated: !!me }),
-  logout: () => set({ me: null, isAuthenticated: false }),
+  logout: () => {
+    document.cookie = "access_token=;expires=0;"
+    set({ me: null, isAuthenticated: false })
+  },
 }));
