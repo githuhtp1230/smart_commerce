@@ -3,6 +3,7 @@
 import {
   BadgeCheck,
   Bell,
+  ChevronDown,
   CreditCard,
   House,
   LogOut,
@@ -46,10 +47,11 @@ export function NavUser() {
                 </span>
                 <span className="truncate text-xs text-white">{me?.role}</span>
               </div>
-              <Avatar className="h-8 w-8 rounded-lg">
+              <Avatar className="h-9 w-9 rounded-lg">
                 <AvatarImage src={me?.avatar} className="rounded-full" />
                 <AvatarFallback className="rounded-full">CN</AvatarFallback>
               </Avatar>
+              <ChevronDown className="!w-5 !h-5 text-white" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent

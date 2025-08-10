@@ -12,7 +12,6 @@ import {
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@radix-ui/react-separator";
 import { NavUser } from "@/components/nav-user";
-import SwitchCustomizationDemo from "@/components/customized/switch/switch-07";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/components/theme-provider";
 import ToggleTheme from "@/components/common/ToggleTheme";
@@ -51,19 +50,20 @@ const AdminHeader = () => {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div className="flex items-center gap-4 mr-2">
-        <div className={cn("flex justify-between items-center text-blue-600 ")}>
+
+
+
+      <div className="flex items-center gap-2 mr-2">
+        <div className={cn("flex justify-between items-center text-white gap-2")}>
           <ToggleTheme className="text-white bg-transparent hover:bg-transparent hover:text-white border border-border-primary" />
+          <LanguageSwitcher />
         </div>
-        <div className="pl-4 border-l ">
+        <div className="pl-4 border-l border-white">
           <NavUser />
         </div>
       </div>
 
-      {/* Bên phải: Language switcher */}
-      <div className="flex items-center">
-        <LanguageSwitcher />
-      </div>
+
     </header>
   );
 };
