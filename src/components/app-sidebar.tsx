@@ -138,7 +138,7 @@ export const data = {
       items: [
         {
           title: "promotion",
-          url: "#",
+          url: ADMIN_PATH.PROMOTION,
         },
         {
           title: "vouchers",
