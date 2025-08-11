@@ -47,5 +47,15 @@
   "Select address": "Chọn địa chỉ",
   "Add address": "Thêm địa chỉ",
   "Building Your Application": "Xây dựng ứng dụng của bạn",
-  "Data Fetching": "Lấy dữ liệu"
+  "Data Fetching": "Lấy dữ liệu",
+  "My orders": "Đơn hàng của tôi",
+  "Single code": "Mã đơn hàng",
+  "Order date": "Ngày đặt hàng",
+  "Order status": "Trạng thái đơn hàng",
+  "Total amount": "Tổng số tiền",
+  "Confirmed": "Đã xác nhận",
+  "Shipped": "Đã vẫn chuyển",
+  "Cancelled": "Đã hủy",
+  "Shipping": "Vận chuyển",
+  "No orders": "Không có đơn hàng"
 }
