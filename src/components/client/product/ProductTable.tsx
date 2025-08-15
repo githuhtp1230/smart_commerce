@@ -106,7 +106,7 @@ const ProductTable = ({ products, onDeleted, readOnly }: Props) => {
   }
 
   return (
-    <div className="bg-primary rounded-xl p-3">
+    <div className="bg-primary rounded-xl ">
       <DataTable columns={columns} data={products} />
     </div>
   );

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import type { IProductSummary } from "@/type/products";
 import { fetchProductSummariesByStatus } from "@/services/products.service";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import ProductTable from "@/components/client/product/ProductTable";
+import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
 
 const tabs = [
   { name: "Danh mục đang hoạt động", value: "false" },
@@ -37,21 +38,22 @@ const ManageProductPage = () => {
       defaultValue="false"
       value={tabValue}
       onValueChange={setTabValue}
-      className="w-full"
+      className="w-full gap-0 px-4"
     >
-      <TabsList className="w-full p-0 justify-start border-b rounded-none">
+      <TabsList className="p-0 justify-start">
         {tabs.map((tab) => (
-          <TabsTrigger
+          <CustomTabsTrigger
             key={tab.value}
             value={tab.value}
-            className="bg-background h-full"
+
           >
             <p className="text-[15px]">{tab.name}</p>
-          </TabsTrigger>
+          </CustomTabsTrigger>
         ))}
       </TabsList>
+      <div className="border border-b-border-primary mt-[3px] !h-[1px]"></div>
 
-      <TabsContent value="false">
+      <TabsContent value="false" className="mt-4" >
         <ProductTable
           products={activeProducts}
           onDeleted={async () => {
@@ -61,7 +63,7 @@ const ManageProductPage = () => {
         />
       </TabsContent>
 
-      <TabsContent value="true">
+      <TabsContent value="true" className="mt-4" >
         <ProductTable products={deletedProducts} readOnly />
       </TabsContent>
     </Tabs>

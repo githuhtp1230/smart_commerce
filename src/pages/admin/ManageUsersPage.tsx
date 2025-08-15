@@ -10,9 +10,9 @@ import UsersTable from "../../components/admin/users/UsersTable";
 import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
 
 const tabs = [
-  { label: "Tất cả", key: "all" },
-  { label: "Khách hàng", key: "customer" },
-  { label: "Thành viên", key: "membership" },
+  { label: "All", key: "all" },
+  { label: "Customer", key: "customer" },
+  { label: "Member", key: "membership" },
 ];
 
 const ManageUsersPage = () => {
@@ -40,19 +40,22 @@ const ManageUsersPage = () => {
         defaultValue="false"
         value={tabValue}
         onValueChange={setTabValue}
-        className="w-full px-4"
+        className="w-full px-4 gap-0"
       >
-        <TabsList className="w-full p-0 justify-start border-b rounded-none">
+        <TabsList className="p-0 justify-start">
           {tabs.map((tab) => (
-            <CustomTabsTrigger key={tab.key} value={tab.key} className="">
+            <CustomTabsTrigger key={tab.key} value={tab.key}>
               <p className="text-[15px]">{tab.label}</p>
             </CustomTabsTrigger>
           ))}
         </TabsList>
 
+        <div className="border border-b-border-primary mt-[3px] !h-[1px]"></div>
+
         {tabs.map((tab) => (
-          <TabsContent key={tab.key} value={tab.key}>
+          <TabsContent key={tab.key} value={tab.key} className="mt-4" >
             <UsersTable users={users} />
+
           </TabsContent>
         ))}
       </Tabs>

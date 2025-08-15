@@ -35,22 +35,23 @@ export default function TabsUnderlinedDemo() {
       defaultValue="false"
       value={tabValue}
       onValueChange={setTabValue}
-      className="w-full"
+      className="w-full px-4 gap-0"
     >
-      <TabsList className="w-full p-0 justify-start border-b rounded-none">
+      <TabsList className="p-0 justify-start">
         {tabs.map((tab) => (
           <CustomTabsTrigger
             key={tab.value}
             value={tab.value}
-            className=" bg-background h-full"
+
           >
             <p className="text-[15px]">{tab.name}</p>
           </CustomTabsTrigger>
         ))}
       </TabsList>
+      <div className="border border-b-border-primary mt-[3px] !h-[1px]"></div>
 
       {tabs.map((tab) => (
-        <TabsContent key={tab.value} value={tab.value}>
+        <TabsContent key={tab.value} value={tab.value} className="mt-4">
           <CategoriesTable categories={categories} />
         </TabsContent>
       ))}

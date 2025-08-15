@@ -2,9 +2,10 @@ import { DataTable } from '@/components/common/table/DataTable';
 import type { IUser } from '@/type/auth';
 import type { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
-import { SquarePen } from 'lucide-react';
+import { EllipsisVertical } from 'lucide-react';
 import { AppBadge } from '@/components/common/badge/AppBadge';
 import RoleBadge from '@/components/common/badge/RoleBadge';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 interface Props {
     users: IUser[];
@@ -56,7 +57,7 @@ const UsersTable = ({ users }: Props) => {
         },
         {
             accessorKey: "isActive",
-            header: () => <div>isActive</div>,
+            header: () => <div>User Status</div>,
             cell: ({ row }) => {
                 const isActive = row.original.isActive;
                 return (
@@ -72,19 +73,33 @@ const UsersTable = ({ users }: Props) => {
             header: () => <div>Action</div>,
             cell: () => {
                 return (
-                    <Button
-                        variant="ghost"
-                    >
-                        <SquarePen className="text-icon-brand-primary" />
-                    </Button>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                                <EllipsisVertical />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuItem
+                            >
+                                Update
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                className="text-red-600 focus:text-red-600"
+                            >
+                                Delete
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 );
             },
         },
     ];
 
     return (
-        <div className="bg-primary rounded-xl p-3 ">
+        <div className="bg-primary rounded-xl ">
             <DataTable columns={columns} data={users} />
+
         </div>
     );
 };
