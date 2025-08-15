@@ -1,10 +1,9 @@
+import { useState } from "react";
 import { DataTable } from "@/components/common/table/DataTable";
 import type { IUser } from "@/type/auth";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { Ellipsis, Pencil, PencilLineIcon, Trash2 } from "lucide-react";
-import { AppBadge } from "@/components/common/badge/AppBadge";
-import RoleBadge from "@/components/common/badge/RoleBadge";
+import { PencilLineIcon, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,39 +11,39 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Eye, PencilIcon } from "@/assets/icons";
+import { Ellipsis } from "lucide-react";
+import { AppBadge } from "@/components/common/badge/AppBadge";
+import RoleBadge from "@/components/common/badge/RoleBadge";
+import EmployeePermissionsDialog from "@/components/client/home/ProductList";
 
 interface Props {
   users: IUser[];
 }
+
 const UsersTable = ({ users }: Props) => {
+  const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const columns: ColumnDef<IUser>[] = [
     {
       accessorKey: "id",
       header: () => <div>Id</div>,
-      cell: ({ row }) => {
-        return <div>{row.index + 1}</div>;
-      },
+      cell: ({ row }) => <div>{row.index + 1}</div>,
     },
     {
       accessorKey: "email",
       header: () => <div>Email</div>,
-      cell: ({ row }) => {
-        return <div>{row.original.email}</div>;
-      },
+      cell: ({ row }) => <div>{row.original.email}</div>,
     },
     {
       accessorKey: "name",
       header: () => <div>Name</div>,
-      cell: ({ row }) => {
-        return <div>{row.original.name}</div>;
-      },
+      cell: ({ row }) => <div>{row.original.name}</div>,
     },
     {
       accessorKey: "phone",
       header: () => <div>Phone</div>,
-      cell: ({ row }) => {
-        return <div>{row.original.phone}</div>;
-      },
+      cell: ({ row }) => <div>{row.original.phone}</div>,
     },
     {
       accessorKey: "role",
@@ -52,7 +51,6 @@ const UsersTable = ({ users }: Props) => {
       cell: ({ row }) => {
         type roleKey = "admin" | "manage" | "user";
         const role = (row.original.role ?? "user").toLowerCase() as roleKey;
-
         return <RoleBadge badgeColor={role} content={row.original.role} />;
       },
     },
@@ -86,7 +84,14 @@ const UsersTable = ({ users }: Props) => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="font-bold">
-                <DropdownMenuItem className="cursor-pointer">
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => {
+                    // setSelectedUser();
+                    console.log("hello");
+                    setDialogOpen(true);
+                  }}
+                >
                   <Eye className="size-3.5" />
                   Preview
                 </DropdownMenuItem>
@@ -107,8 +112,15 @@ const UsersTable = ({ users }: Props) => {
   ];
 
   return (
-    <div className="bg-primary rounded-xl ">
+    <div className="bg-primary rounded-xl p-3">
       <DataTable columns={columns} data={users} />
+
+      {/* Dialog hiển thị chi tiết người dùng */}
+      <EmployeePermissionsDialog
+        user={selectedUser}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+      />
     </div>
   );
 };
