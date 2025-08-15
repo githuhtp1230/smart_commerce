@@ -3,10 +3,17 @@ import { DataTable } from "@/components/common/table/DataTable";
 import { Button } from "@/components/ui/button";
 import type { IProductSummary } from "@/type/products";
 import type { ColumnDef } from "@tanstack/react-table";
-import { SquarePen, Trash2 } from "lucide-react";
+import { Ellipsis, PencilLineIcon, SquarePen, Trash2 } from "lucide-react";
 
 import { toast } from "sonner"; // hoặc react-hot-toast nếu bạn dùng cái khác
 import { deleteProduct } from "@/services/products.service";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Eye } from "@/assets/icons";
 
 interface Props {
   products: IProductSummary[];
@@ -83,25 +90,34 @@ const ProductTable = ({ products, onDeleted, readOnly }: Props) => {
   if (!readOnly) {
     columns.push({
       id: "actions",
-      header: "Actions",
-      cell: ({ row }) => (
-        <div className="flex items-center gap-2">
-          <Button variant="ghost">
-            <SquarePen className="text-icon-brand-primary" />
-          </Button>
-          <Button
-            variant="ghost"
-            disabled={deletingId === row.original.id}
-            onClick={() => handleDelete(row.original.id)}
-          >
-            {deletingId === row.original.id ? (
-              <span className="text-sm text-gray-400 italic">Đang xoá...</span>
-            ) : (
-              <Trash2 className="text-icon-system-danger" />
-            )}
-          </Button>
-        </div>
-      ),
+      header: "",
+      cell: () => {
+        return (
+          <div className="w-full">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Ellipsis />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="font-bold">
+                <DropdownMenuItem className="cursor-pointer">
+                  <Eye className="size-3.5" />
+                  Preview
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
+                  <PencilLineIcon className="size-3.5" />
+                  Edit
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
+                  <Trash2 className="size-3.5 text-red-600 focus:text-red-600 " />
+                  Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        );
+      },
     });
   }
 

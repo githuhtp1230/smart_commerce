@@ -6,8 +6,8 @@ import ProductTable from "@/components/client/product/ProductTable";
 import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
 
 const tabs = [
-  { name: "Danh mục đang hoạt động", value: "false" },
-  { name: "Danh mục đã xoá", value: "true" },
+  { name: "Sản phẩm đang hoạt động", value: "false" },
+  { name: "Sản phẩm đã xoá", value: "true" },
 ];
 
 const ManageProductPage = () => {
@@ -42,18 +42,14 @@ const ManageProductPage = () => {
     >
       <TabsList className="p-0 justify-start">
         {tabs.map((tab) => (
-          <CustomTabsTrigger
-            key={tab.value}
-            value={tab.value}
-
-          >
+          <CustomTabsTrigger key={tab.value} value={tab.value}>
             <p className="text-[15px]">{tab.name}</p>
           </CustomTabsTrigger>
         ))}
       </TabsList>
       <div className="border border-b-border-primary mt-[3px] !h-[1px]"></div>
 
-      <TabsContent value="false" className="mt-4" >
+      <TabsContent value="false" className="mt-4">
         <ProductTable
           products={activeProducts}
           onDeleted={async () => {
@@ -63,7 +59,7 @@ const ManageProductPage = () => {
         />
       </TabsContent>
 
-      <TabsContent value="true" className="mt-4" >
+      <TabsContent value="true" className="mt-4">
         <ProductTable products={deletedProducts} readOnly />
       </TabsContent>
     </Tabs>
