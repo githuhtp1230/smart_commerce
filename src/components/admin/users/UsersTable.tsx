@@ -2,7 +2,7 @@ import { DataTable } from '@/components/common/table/DataTable';
 import type { IUser } from '@/type/auth';
 import type { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
-import { EllipsisVertical } from 'lucide-react';
+import { Ellipsis } from 'lucide-react';
 import { AppBadge } from '@/components/common/badge/AppBadge';
 import RoleBadge from '@/components/common/badge/RoleBadge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -70,27 +70,29 @@ const UsersTable = ({ users }: Props) => {
 
         {
             id: "updateAction",
-            header: () => <div>Action</div>,
+            header: () => <div ></div>,
             cell: () => {
                 return (
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                                <EllipsisVertical />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuItem
-                            >
-                                Update
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                                className="text-red-600 focus:text-red-600"
-                            >
-                                Delete
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className='w-full'>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon">
+                                    <Ellipsis />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem
+                                >
+                                    Update
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    className="text-red-600 focus:text-red-600"
+                                >
+                                    Delete
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
                 );
             },
         },
