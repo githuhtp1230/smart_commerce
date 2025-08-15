@@ -55,7 +55,7 @@ const CategoriesTable = ({ categories }: Props) => {
     ];
 
     return (
-        <div className="bg-primary rounded-xl p-3">
+        <div className="bg-primary rounded-xl ">
             <DataTable columns={columns} data={categories} />
         </div>
     );

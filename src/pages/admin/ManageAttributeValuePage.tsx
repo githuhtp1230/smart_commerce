@@ -2,11 +2,12 @@
 
 import AddAttributeValues from "@/components/admin/attribute-value/AddAttributeValues";
 import AttributeValuesTable from "@/components/admin/attribute-value/AttributeValuesTable";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import { fetchAttributeValues } from "@/services/attributes.service";
 import type { IAttributeValue } from "@/type/attribute";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
 
 const tabs = [
   { name: "AttributeValue đang hoạt động", value: "false" },
@@ -36,22 +37,23 @@ export default function ManageAttributePage() {
         defaultValue="false"
         value={tabValue}
         onValueChange={setTabValue}
-        className="w-full"
+        className="w-full px-4 gap-0"
       >
-        <TabsList className="w-full p-0 justify-start border-b rounded-none">
+        <TabsList className="p-0 justify-start">
           {tabs.map((tab) => (
-            <TabsTrigger
+            <CustomTabsTrigger
               key={tab.value}
               value={tab.value}
               className="bg-background h-full"
             >
               <p className="text-[15px]">{tab.name}</p>
-            </TabsTrigger>
+            </CustomTabsTrigger>
           ))}
         </TabsList>
+        <div className="border border-b-border-primary mt-[3px] !h-[1px]"></div>
 
         {tabs.map((tab) => (
-          <TabsContent key={tab.value} value={tab.value}>
+          <TabsContent key={tab.value} value={tab.value} className="mt-4" >
             {isLoading ? (
               <div className="text-gray-500 px-4 py-6">
                 Loading attributes...
