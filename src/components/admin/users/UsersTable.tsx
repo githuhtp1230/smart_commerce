@@ -69,40 +69,35 @@ const UsersTable = ({ users }: Props) => {
     {
       id: "updateAction",
       header: () => <div></div>,
-      cell: () => {
-        return (
-          <div className="w-full">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Ellipsis />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="font-bold">
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  onClick={() => {
-                    // setSelectedUser();
-                    console.log("hello");
-                    setDialogOpen(true);
-                  }}
-                >
-                  <Eye className="size-3.5" />
-                  Preview
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <PencilLineIcon className="size-3.5" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
-                  <Trash2 className="size-3.5 text-red-600 focus:text-red-600 " />
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        );
-      },
+      cell: ({ row }) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Ellipsis />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="font-bold">
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => {
+                setSelectedUser(row.original);
+                setDialogOpen(true);
+              }}
+            >
+              <Eye className="size-3.5" />
+              Preview
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
+              <PencilLineIcon className="size-3.5" />
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
+              <Trash2 className="size-3.5 text-red-600 focus:text-red-600" />
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
     },
   ];
 

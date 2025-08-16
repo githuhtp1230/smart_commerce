@@ -1,24 +1,9 @@
-import { Mail, Phone, CheckCircle, Lock } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import type { IUser } from "@/type/auth";
+import { AppBadge } from "@/components/common/badge/AppBadge";
 
 interface ProfileInfoProps {
   user: IUser;
-}
-
-function StatusBadge({ isActive }: { isActive: boolean }) {
-  const baseClass =
-    "inline-flex items-center px-3 py-1 rounded-full text-sm font-medium";
-  return isActive ? (
-    <div className={`${baseClass} bg-green-50 text-green-900`}>
-      <CheckCircle className="h-4 w-4 text-green-600 mr-1" />
-      Hoạt động
-    </div>
-  ) : (
-    <div className={`${baseClass} bg-red-300 text-red-900`}>
-      <Lock className="h-4 w-4 text-red-600 mr-1" />
-      Đã khóa
-    </div>
-  );
 }
 
 export default function ProfileUser({ user }: ProfileInfoProps) {
@@ -30,7 +15,7 @@ export default function ProfileUser({ user }: ProfileInfoProps) {
           <img
             src={user.avatar || "https://i.pravatar.cc/80"}
             alt="avatar"
-            className="w-20 h-20 rounded-full border-4  object-cover shadow-md transition-transform duration-300 hover:scale-105"
+            className="w-20 h-20 rounded-full border-4 object-cover shadow-md transition-transform duration-300 hover:scale-105"
           />
         </div>
 
@@ -61,7 +46,11 @@ export default function ProfileUser({ user }: ProfileInfoProps) {
           <span className="text-sm text-txt-primary mb-2 font-semibold tracking-wide">
             Trạng thái
           </span>
-          <StatusBadge isActive={user.isActive} />
+          <AppBadge
+            badgeColor={user.isActive ? "emerald" : "red"}
+            content={user.isActive ? "Hoạt động" : "Đã khóa"}
+          />
+          q
         </div>
       </div>
     </div>
