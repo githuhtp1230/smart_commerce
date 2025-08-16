@@ -26,17 +26,12 @@ interface Props {
 const addressSchema = z.object({
   streetAddress: z.string().min(1, "streetAddress is required"),
   ward: z.string().min(1, "Ward is required"),
-  district: z.string().min(1, "District is required"),
   province: z.string().min(1, "Province is required"),
 });
 
-const fieldLabels: Record<
-  "streetAddress" | "ward" | "district" | "province",
-  string
-> = {
+const fieldLabels: Record<"streetAddress" | "ward" | "province", string> = {
   streetAddress: "Số nhà, tên đường",
   ward: "Phường/Xã",
-  district: "Quận/Huyện",
   province: "Tỉnh/Thành phố",
 };
 
@@ -45,69 +40,43 @@ const AddressField = ({
   saveButtonContent,
   defaultValue,
 }: Props) => {
-  const {
-    provinces,
-    districts,
-    wards,
-    handleProvinceChange,
-    handleDistrictChange,
-    findProvince,
-    findDistrict,
-  } = useAddress(true);
+  const { provinces, wards, handleProvinceChange, findProvince } = useAddress(true);
 
   const formAddress = useForm<z.infer<typeof addressSchema>>({
     resolver: zodResolver(addressSchema),
     defaultValues: {
       streetAddress: "",
       ward: "",
-      district: "",
       province: "",
     },
   });
 
   const province = formAddress.watch("province");
-  const district = formAddress.watch("district");
 
   useEffect(() => {
-    formAddress.resetField("district");
     formAddress.resetField("ward");
   }, [province]);
-
-  useEffect(() => {
-    formAddress.resetField("ward");
-  }, [district]);
 
   const initDefaultValue = async () => {
     if (defaultValue && provinces.length > 0) {
       const { province } = defaultValue;
       const findedProvince = findProvince(province);
       if (findedProvince) {
-        await handleProvinceChange(findedProvince?.code);
-      }
-    }
-  };
-
-  const initDistricts = async () => {
-    if (defaultValue && districts.length > 0) {
-      const findedDistrict = findDistrict(district);
-      if (findedDistrict) {
-        await handleDistrictChange(findedDistrict.code);
+        await handleProvinceChange(findedProvince.code);
       }
     }
   };
 
   useEffect(() => {
-    initDistricts();
     if (defaultValue) {
-      const { streetAddress, province, district, ward } = defaultValue;
+      const { streetAddress, province, ward } = defaultValue;
       formAddress.reset({
         streetAddress,
         province,
-        district,
         ward,
       });
     }
-  }, [defaultValue, districts]);
+  }, [defaultValue]);
 
   useEffect(() => {
     initDefaultValue();
@@ -176,32 +145,6 @@ const AddressField = ({
 
             <FormField
               control={formAddress.control}
-              name="district"
-              render={({ field, formState }) => (
-                <FormItem className="flex-1">
-                  <FormLabel>{fieldLabels.district}</FormLabel>
-                  <Combobox
-                    className="w-full"
-                    field={field}
-                    value={field.value}
-                    onChange={(value) => {
-                      field.onChange(value.name);
-                      handleDistrictChange(value.value);
-                    }}
-                    options={districts.map((d) => ({
-                      value: d.code,
-                      name: d.name,
-                    }))}
-                    disabled={!(districts.length > 0)}
-                    hasError={!!formState.errors.district}
-                  />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={formAddress.control}
               name="ward"
               render={({ field, formState }) => (
                 <FormItem className="flex-1">
@@ -226,12 +169,6 @@ const AddressField = ({
             />
           </div>
           <div className="flex gap-1 justify-end">
-            {/* <Button
-              variant="outline"
-              type="button"
-            >
-              Cancel
-            </Button> */}
             <Button
               type="submit"
               className="bg-blue-500 hover:bg-blue-400 text-white"

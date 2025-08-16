@@ -7,7 +7,9 @@ export const getMyAddresses = async () => {
 };
 
 export const createAddress = async (payload: Partial<Address>) => {
+  console.log(payload);
   const res = await httpRequest.post("/addresses", payload);
+
   return res.data.data;
 };
 
@@ -28,22 +30,20 @@ export const deleteAddress = async (id: number) => {
 };
 
 export const fetchProvinces = async () => {
-  const res = await fetch("https://provinces.open-api.vn/api/p/");
+  const res = await fetch("https://provinces.open-api.vn/api/v2/p");
+  const data = await res.json();
+  return data;
+};
+export const fetchProvinceByCode = async (provinceCode: number) => {
+  const res = await fetch(`https://provinces.open-api.vn/api/v2/p/${provinceCode}?depth=2`);
   const data = await res.json();
   return data;
 };
 
-export const fetchDistricts = async (provinceCode: number) => {
-  const res = await fetch(
-    `https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`
-  );
-  const data = await res.json();
-  return data;
-};
 
-export const fetchWards = async (districtCode: number) => {
+export const fetchWards = async (provinceCode: number) => {
   const res = await fetch(
-    `https://provinces.open-api.vn/api/d/${districtCode}?depth=2`
+    `https://provinces.open-api.vn/api/v2/d/${provinceCode}?depth=2`
   );
   const data = await res.json();
   return data;
