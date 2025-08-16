@@ -30,7 +30,7 @@ import {
 import { ADMIN_PATH } from "@/constants/path";
 import { Logo } from "@/assets/icons";
 
-const data = {
+export const data = {
   // user: {
   //   name: "shadcn",
   //   email: "m@example.com",
