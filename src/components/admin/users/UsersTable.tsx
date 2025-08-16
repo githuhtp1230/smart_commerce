@@ -10,11 +10,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Eye, PencilIcon } from "@/assets/icons";
+import { Eye } from "@/assets/icons";
 import { Ellipsis } from "lucide-react";
 import { AppBadge } from "@/components/common/badge/AppBadge";
 import RoleBadge from "@/components/common/badge/RoleBadge";
-import EmployeePermissionsDialog from "@/components/client/home/ProductList";
+import EmployeePermissionsDialog from "./EmployeePermissionsDialog"; // chắc chắn file này export default
 
 interface Props {
   users: IUser[];
@@ -60,52 +60,45 @@ const UsersTable = ({ users }: Props) => {
       cell: ({ row }) => {
         const isActive = row.original.isActive;
         return (
-          <div>
-            {isActive ? (
-              <AppBadge badgeColor="green" content={"Hoạt động"} />
-            ) : (
-              <AppBadge badgeColor="red" content={"Đã khóa"} />
-            )}
-          </div>
+          <AppBadge
+            badgeColor={isActive ? "green" : "red"}
+            content={isActive ? "Hoạt động" : "Đã khóa"}
+          />
         );
       },
     },
-
     {
       id: "updateAction",
       header: () => <div></div>,
-      cell: () => {
+      cell: ({ row }) => {
         return (
-          <div className="w-full">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Ellipsis />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="font-bold">
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  onClick={() => {
-                    // setSelectedUser();
-                    console.log("hello");
-                    setDialogOpen(true);
-                  }}
-                >
-                  <Eye className="size-3.5" />
-                  Preview
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <PencilLineIcon className="size-3.5" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
-                  <Trash2 className="size-3.5 text-red-600 focus:text-red-600 " />
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Ellipsis />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="font-bold">
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => {
+                  setSelectedUser(row.original); // chọn user
+                  setDialogOpen(true); // mở dialog
+                }}
+              >
+                <Eye className="size-3.5" />
+                Preview
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                <PencilLineIcon className="size-3.5" />
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
+                <Trash2 className="size-3.5 text-red-600 focus:text-red-600" />
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         );
       },
     },
@@ -116,11 +109,16 @@ const UsersTable = ({ users }: Props) => {
       <DataTable columns={columns} data={users} />
 
       {/* Dialog hiển thị chi tiết người dùng */}
-      <EmployeePermissionsDialog
-        user={selectedUser}
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-      />
+      {selectedUser && (
+        <EmployeePermissionsDialog
+          user={selectedUser}
+          open={dialogOpen}
+          onOpenChange={(open) => {
+            setDialogOpen(open);
+            if (!open) setSelectedUser(null); // reset user khi đóng
+          }}
+        />
+      )}
     </div>
   );
 };
