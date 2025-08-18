@@ -4,6 +4,8 @@ import ChangePasswordButton from "@/components/common/button/ChangePasswordButto
 import LeftUserProfile from "./LeftUserProfile";
 import RightUserProfile from "./RightUserProfile";
 import { useTranslation } from "react-i18next";
+import UserOrderPage from "@/components/user/UserOrderPage";
+
 const Profile: React.FC = () => {
   const { t } = useTranslation();
   return (
@@ -18,6 +20,10 @@ const Profile: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <LeftUserProfile />
           <RightUserProfile />
+        </div>
+        <div className="mt-10">
+          <h2 className="text-xl font-semibold mb-4">{t("My orders")}</h2>
+          <UserOrderPage />
         </div>
       </main>
     </div>
