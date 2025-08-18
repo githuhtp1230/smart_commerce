@@ -16,7 +16,6 @@ import { formatPrice } from "@/helper/format-price-vietnam";
 import { checkout } from "@/services/checkout.service";
 import { useAuthStore } from "@/store/auth-store";
 import { useCartStore } from "@/store/cart-store";
-import type { Address } from "@/type/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";

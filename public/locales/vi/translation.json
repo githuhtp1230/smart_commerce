@@ -54,8 +54,15 @@
   "Order status": "Trạng thái đơn hàng",
   "Total amount": "Tổng số tiền",
   "Confirmed": "Đã xác nhận",
-  "Shipped": "Đã vẫn chuyển",
+  "Delivered": "Đã giao hàng",
   "Cancelled": "Đã hủy",
-  "Shipping": "Vận chuyển",
-  "No orders": "Không có đơn hàng"
+  "Shipping": "Đang Vận chuyển",
+  "No orders": "Không có đơn hàng",
+  "Order no": "Đơn hàng",
+  "Buy back": "Mua lại",
+  "OrderDetail": "Chi tiết đơn hàng",
+  "Total Money": "Tổng tiền",
+  "Product": "Sản phẩm",
+  "Next": "Tiếp theo",
+  "Previous": "Trước"
 }
