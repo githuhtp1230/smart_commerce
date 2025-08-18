@@ -107,7 +107,7 @@ const RightUserProfile: React.FC = () => {
               {defaultAddr ? (
                 <p className="text-base font-medium mt-1">
                   {defaultAddr.streetAddress}, {defaultAddr.ward},{" "}
-                  {defaultAddr.district}, {defaultAddr.province}
+                  {defaultAddr.province}
                   {defaultAddr.isDefault && (
                     <span className="ml-2 text-xs text-green-600">
                       ({t("default")})
