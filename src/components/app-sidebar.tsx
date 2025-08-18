@@ -125,10 +125,6 @@ export const data = {
           title: "Attribute value detail",
           url: "#",
         },
-        {
-          title: "Changelog",
-          url: "#",
-        },
       ],
     },
     {
@@ -138,19 +134,7 @@ export const data = {
       items: [
         {
           title: "promotion",
-          url: "#",
-        },
-        {
-          title: "vouchers",
-          url: "#",
-        },
-        {
-          title: "Attribute value detail",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          url: ADMIN_PATH.PROMOTION,
         },
       ],
     },
@@ -263,9 +247,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <div className="flex gap-1 items-center leading-none mt-2 mb-2">
           <Logo className="size-8 " />
           {open && (
-            <p className="font-medium text-lg text-txt-blue">
-              MART COMMERCE
-            </p>
+            <p className="font-medium text-lg text-txt-blue">MART COMMERCE</p>
           )}
         </div>
       </SidebarHeader>

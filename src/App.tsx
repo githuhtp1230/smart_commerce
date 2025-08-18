@@ -25,6 +25,7 @@ import CheckoutCompletedPage from "./pages/client/CheckoutCompletedPage";
 import ManageUsersPage from "./pages/admin/ManageUsersPage";
 import ManageAttributePage from "./pages/admin/ManageAttributePage";
 import ManageAttributeValuePage from "./pages/admin/ManageAttributeValuePage";
+import ManagePromotionPage from "./pages/admin/ManagePromotionPage";
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
@@ -97,6 +98,10 @@ function App() {
               <Route
                 path={ADMIN_PATH.ATTRIBUTEVALUE}
                 element={<ManageAttributeValuePage />}
+              />
+              <Route
+                path={ADMIN_PATH.PROMOTION}
+                element={<ManagePromotionPage />}
               />
               <Route
                 path={ADMIN_PATH.ADD_PRODUCT}

@@ -1,5 +1,7 @@
+// src/services/order.service.ts
 import httpRequest from "@/utils/http-request";
 
+/** Generic paging response */
 export interface PageResponse<T> {
   currentPage: number;
   totalPages: number;
@@ -9,19 +11,32 @@ export interface PageResponse<T> {
   data: T[];
 }
 
+/** Voucher */
 export interface IVoucher {
   id: number;
   code: string;
-  discountAmount: number;  
+  discountAmount: number;
 }
 
+/** Payment method */
 export interface IPayment {
   id: number;
-  value: string; 
-  name: string;  
-  code: string;  
+  value: string;
+  name: string;
+  code: string;
 }
 
+/** Order detail */
+export interface IOrderDetail {
+  id: number;
+  product: { id: number; name: string };
+  productVariation?: { id: number; name: string; image?: string };
+  image?: string;
+  quantity: number;
+  price: number;
+}
+
+/** Order summary */
 export interface IOrderSummary {
   id: number;
   orderDetails: IOrderDetail[];
@@ -31,18 +46,23 @@ export interface IOrderSummary {
   status: string;
   createdAt: string;
   productImage: string;
-  address: string; 
+  address: string;
 }
 
-export interface IOrderDetail {
-  id: number;
-  product: { id: number; name: string }; 
-  productVariation?: { id: number; name: string; image?: string };
-  image?: string;
-  quantity: number;
-  price: number;
+/** Simple order item (for lists) */
+export interface IOrderItem {
+  id: string;
+  date: string;
+  total: string;
+  status: string;
 }
 
+/**
+ * Lấy danh sách đơn hàng của user hiện tại
+ * @param status lọc theo trạng thái
+ * @param page trang hiện tại
+ * @param limit số lượng item/trang
+ */
 export const getMyOrders = async (
   status?: string,
   page = 1,
@@ -52,4 +72,20 @@ export const getMyOrders = async (
     params: { status, page, limit },
   });
   return res.data.data;
+};
+
+/**
+ * Lấy danh sách đơn hàng của 1 user theo userId
+ * @param userId id user
+ */
+export const fetchOrdersByUser = async (
+  userId: number
+): Promise<IOrderItem[]> => {
+  try {
+    const res = await httpRequest.get(`/users/${userId}/orders`);
+    return Array.isArray(res.data?.data) ? res.data.data : [];
+  } catch (error) {
+    console.error("Failed to fetch orders:", error);
+    return [];
+  }
 };
