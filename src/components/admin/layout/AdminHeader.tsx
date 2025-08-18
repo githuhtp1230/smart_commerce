@@ -72,11 +72,10 @@ const AdminHeader = () => {
         </Breadcrumb>
       </div>
 
-
-
-
       <div className="flex items-center gap-2 mr-2">
-        <div className={cn("flex justify-between items-center text-white gap-2")}>
+        <div
+          className={cn("flex justify-between items-center text-white gap-2")}
+        >
           <ToggleTheme className="text-white bg-transparent hover:bg-transparent hover:text-white border border-border-primary" />
           <LanguageSwitcher />
         </div>
@@ -84,8 +83,6 @@ const AdminHeader = () => {
           <NavUser />
         </div>
       </div>
-
-
     </header>
   );
 };

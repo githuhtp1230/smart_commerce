@@ -2,7 +2,7 @@ import { DataTable } from "@/components/common/table/DataTable";
 import type { IUser } from "@/type/auth";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { Ellipsis, Pencil, PencilLineIcon, Trash2 } from "lucide-react";
+import { Ellipsis, PencilLineIcon, Trash2 } from "lucide-react";
 import { AppBadge } from "@/components/common/badge/AppBadge";
 import RoleBadge from "@/components/common/badge/RoleBadge";
 import {
@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Eye, PencilIcon } from "@/assets/icons";
+import { Eye } from "@/assets/icons";
 
 interface Props {
   users: IUser[];

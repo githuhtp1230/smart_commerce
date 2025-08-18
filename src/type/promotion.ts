@@ -4,5 +4,5 @@ export interface IPromotion {
   discountValuePercent: number;
   startDate: string;
   endDate: string;
+  isActive: boolean;
 }
-
