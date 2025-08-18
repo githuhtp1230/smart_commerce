@@ -3,7 +3,9 @@ import { DataTable } from "@/components/common/table/DataTable";
 import type { IUser } from "@/type/auth";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { PencilLineIcon, Trash2 } from "lucide-react";
+import { Ellipsis, PencilLineIcon, Trash2 } from "lucide-react";
+import { AppBadge } from "@/components/common/badge/AppBadge";
+import RoleBadge from "@/components/common/badge/RoleBadge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,10 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Eye } from "@/assets/icons";
-import { Ellipsis } from "lucide-react";
-import { AppBadge } from "@/components/common/badge/AppBadge";
-import RoleBadge from "@/components/common/badge/RoleBadge";
-import EmployeePermissionsDialog from "./EmployeePermissionsDialog"; // chắc chắn file này export default
+import EmployeePermissionsDialog from "./EmployeePermissionsDialog";
 
 interface Props {
   users: IUser[];

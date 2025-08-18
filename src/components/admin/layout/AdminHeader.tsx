@@ -72,9 +72,6 @@ const AdminHeader = () => {
         </Breadcrumb>
       </div>
 
-
-
-
       <div className="flex items-center gap-2 mr-2">
         <div
           className={cn("flex justify-between items-center text-white gap-2")}
