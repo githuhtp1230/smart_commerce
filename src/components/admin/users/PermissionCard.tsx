@@ -31,9 +31,9 @@ export default function PermissionCard({
           {permissions.map((perm, index) => (
             <div
               key={perm.name}
-              className="flex items-center justify-between p-3 rounded-xl border bg-white hover:bg-blue-50 transition-all duration-300"
+              className="flex items-center justify-between p-3 rounded-xl border bg-background-primary hover:bg-blue-50 transition-all duration-300"
             >
-              <span className="text-sm font-medium text-gray-700">
+              <span className="text-sm font-medium text-white">
                 {perm.name}
               </span>
               <Switch
