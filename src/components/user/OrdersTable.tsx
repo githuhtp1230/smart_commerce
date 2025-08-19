@@ -2,7 +2,24 @@ import { t } from "i18next";
 import OrderStepper from "./OrderStepper";
 import steps, { statusToIndex } from "@/utils/order-steps";
 import type { IOrderSummary, PageResponse } from "@/services/order.service";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "../ui/pagination";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "../ui/pagination";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "../ui/dialog";
+import { Button } from "../ui/button";
 
 interface OrdersTableProps {
   orders: IOrderSummary[];
@@ -15,6 +32,14 @@ const OrdersTable = ({
   pagination,
   onPageChange,
 }: OrdersTableProps) => {
+  const [open, setOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<IOrderSummary | null>(null);
+
+  const handleOpenDetail = (order: IOrderSummary) => {
+    setSelectedOrder(order);
+    setOpen(true);
+  };
+
   return (
     <div className="space-y-4">
       {orders.map((order) => (
@@ -38,7 +63,7 @@ const OrdersTable = ({
                   .slice(0, 3)
                   .map((order) => order.product.name)
                   .join(", ")}
-                  {order.orderDetails.length > 3 && ", ..."}
+                {order.orderDetails.length > 3 && ", ..."}
               </p>
               <div className="flex items-center gap-2 mb-2">
                 <p className="flex text-secondary-foreground font-medium">
@@ -54,7 +79,10 @@ const OrdersTable = ({
               <button className="px-4 py-1 rounded-full bg-green-500 text-white hover:bg-green-600 transition">
                 {t("Buy back")}
               </button>
-              <button className="px-4 py-1 rounded-full text-red-500 hover:bg-red-50 transition">
+              <button
+                className="px-4 py-1 rounded-full text-red-500 hover:bg-red-50 transition"
+                onClick={() => handleOpenDetail(order)}
+              >
                 {t("OrderDetail")}
               </button>
             </div>
@@ -78,7 +106,59 @@ const OrdersTable = ({
           </div>
         </div>
       ))}
+ 
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent
+          className="sm:max-w-lg 
+          data-[state=open]:animate-in data-[state=open]:fade-in-90 data-[state=open]:zoom-in-95 
+          data-[state=closed]:animate-out data-[state=closed]:fade-out-90 data-[state=closed]:zoom-out-95"
+        >
+          {selectedOrder && (
+            <>
+              <DialogHeader>
+                <DialogTitle>
+                  {t("Order no")} #{selectedOrder.id}
+                </DialogTitle>
+                <DialogDescription>
+                  {t("Created at")}:{" "}
+                  {new Date(selectedOrder.createdAt).toLocaleDateString("vi-VN")}
+                </DialogDescription>
+              </DialogHeader>
 
+              {/* Nội dung hiển thị sản phẩm */}
+              <div className="space-y-2">
+                {selectedOrder.orderDetails.map((detail: any) => (
+                  <div
+                    key={detail.id}
+                    className="flex items-center gap-3 border-b pb-2"
+                  >
+                    <img
+                      src={detail.image}
+                      alt={detail.product.name}
+                      className="w-16 h-16 object-cover rounded"
+                    />
+                    <div>
+                      <p className="font-medium">{detail.product.name}</p>
+                      <p className="text-sm text-gray-500">
+                        {t("Quantity")}: {detail.quantity}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {t("Price")}:{" "}
+                        {detail.price.toLocaleString("vi-VN")} ₫
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <DialogFooter>
+                <Button  variant="outline" onClick={() => setOpen(false)}>{t("Close")}</Button>
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+ 
       {pagination && onPageChange && (
         <Pagination>
           <PaginationContent>
