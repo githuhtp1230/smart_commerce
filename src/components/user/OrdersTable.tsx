@@ -51,7 +51,7 @@ const OrdersTable = ({
         >
           <div className="flex justify-between items-start gap-6">
             <img
-              className="w-52 h-44 object-cover rounded-lg shadow-md border border-gray-200 flex-shrink-0"
+              className="w-52 h-44 object-containt rounded-lg shadow-md border border-gray-200 flex-shrink-0"
               src={order.productImage}
             />
 
@@ -139,6 +139,10 @@ const OrdersTable = ({
                     <span className="font-medium">{t("Phone")}:</span>{" "}
                     {selectedOrder.userId.phone}
                   </p>
+                  <p className="text-sm">
+                  <span className="font-medium">{t("Address")}:</span>{" "}
+                  {selectedOrder.address}
+                </p>
                 </div>
               )}
               <div className="space-y-2">
@@ -166,11 +170,6 @@ const OrdersTable = ({
               </div>
 
               <div className="mt-4 space-y-1 flex flex-col gap-y-4">
-                <p className="text-sm">
-                  <span className="font-medium">{t("Address")}:</span>{" "}
-                  {selectedOrder.address}
-                </p>
-                 <hr />
                 <p className="text-sm gap-2 flex items-center">
                   <span className="font-medium">{t("Total Money")}:</span>{" "}
                   <span className="text-red-500">
