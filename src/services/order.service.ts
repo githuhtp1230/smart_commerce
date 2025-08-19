@@ -1,14 +1,20 @@
-// src/services/order.service.ts
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import httpRequest from "@/utils/http-request";
 
 /** Generic paging response */
 export interface PageResponse<T> {
-  currentPage: number;
-  totalPages: number;
-  limit: number;
+  content: T[];
+  page: number;
+  size: number;
   totalElements: number;
-  isLast: boolean;
-  data: T[];
+  totalPages: number;
+}
+
+/** User */
+export interface IUser {
+  id: number;
+  name: string;
+  phone: string;
 }
 
 /** Voucher */
@@ -51,17 +57,14 @@ export interface IOrderSummary {
   receiver: string;
 }
 
-export interface IUser {
-  id: number;
-  name: string;
-  phone: string;
-}
 /** Simple order item (for lists) */
 export interface IOrderItem {
-  id: string;
+  id: number;
   date: string;
-  total: string;
+  total: number;
   status: string;
+  deliveryMethod: string;
+  products: string; // danh sách tên sản phẩm nối lại
 }
 
 /**
@@ -70,29 +73,115 @@ export interface IOrderItem {
  * @param page trang hiện tại
  * @param limit số lượng item/trang
  */
-export const getMyOrders = async (
-  status?: string,
+export const fetchOrdersByUser = async (
   page = 1,
-  limit = 5
-): Promise<PageResponse<IOrderSummary>> => {
-  const res = await httpRequest.get("/me/orders", {
-    params: { status, page, limit },
-  });
-  return res.data.data;
+  limit = 10,
+  status?: string
+): Promise<PageResponse<IOrderItem>> => {
+  try {
+    const res = await httpRequest.get("/me/orders", {
+      params: { page, limit, status },
+    });
+
+    const data = res.data?.data;
+
+    const orders: IOrderItem[] = ((data?.data as IOrderSummary[]) || []).map(
+      (o) => {
+        const products =
+          o.orderDetails
+            ?.map((d) => `${d.product?.name} (x${d.quantity})`)
+            .join(", ") ?? "";
+
+        return {
+          id: o.id,
+          date: o.createdAt,
+          total: o.total, // Giữ nguyên number
+          status: o.status,
+          deliveryMethod: o.payment?.value ?? "",
+          products,
+        };
+      }
+    );
+
+    return {
+      content: orders,
+      page: data?.currentPage ?? 1,
+      size: data?.limit ?? limit,
+      totalElements: data?.totalElements ?? 0,
+      totalPages: data?.totalPages ?? 1,
+    };
+  } catch (error) {
+    console.error("Failed to fetch orders:", error);
+    return {
+      content: [],
+      page: 1,
+      size: limit,
+      totalElements: 0,
+      totalPages: 1,
+    };
+  }
 };
 
 /**
- * Lấy danh sách đơn hàng của 1 user theo userId
- * @param userId id user
+ * API: Lấy chi tiết đơn hàng theo orderId
  */
-export const fetchOrdersByUser = async (
-  userId: number
-): Promise<IOrderItem[]> => {
-  try {
-    const res = await httpRequest.get(`/users/${userId}/orders`);
-    return Array.isArray(res.data?.data) ? res.data.data : [];
-  } catch (error) {
-    console.error("Failed to fetch orders:", error);
-    return [];
-  }
+export interface OrderDetailResponse {
+  id: number;
+  orderId: number;
+  product: { id: number; name: string; price: number };
+  quantity: number;
+  price: number;
+  productVariantId?: number;
+}
+
+export const fetchOrderDetails = async (
+  orderId: number
+): Promise<OrderDetailResponse[]> => {
+  const res = await httpRequest.get(`/order-details/${orderId}`);
+  return res.data?.data || [];
+};
+
+/** Request khi thêm chi tiết đơn hàng */
+export interface AddOrderDetailRequest {
+  orderId: number;
+  productId: number;
+  quantity: number;
+  price: number;
+  productVariantId?: number;
+}
+
+/**
+ * API: Thêm chi tiết đơn hàng
+ */
+export const addOrderDetail = async (
+  request: AddOrderDetailRequest
+): Promise<OrderDetailResponse> => {
+  const res = await httpRequest.post("/order-details", request);
+  return res.data?.data;
+};
+
+/**
+ * Hook: lấy danh sách chi tiết đơn hàng
+ */
+export const useOrderDetails = (orderId: number) =>
+  useQuery({
+    queryKey: ["order-details", orderId],
+    queryFn: () => fetchOrderDetails(orderId),
+    enabled: !!orderId,
+  });
+
+/**
+ * Hook: thêm chi tiết đơn hàng
+ */
+export const useAddOrderDetail = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: addOrderDetail,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["order-details", data.orderId],
+      });
+    },
+  });
 };

@@ -6,6 +6,8 @@ interface ProfileInfoProps {
   user: IUser;
 }
 
+
+
 export default function ProfileUser({ user }: ProfileInfoProps) {
   return (
     <div className="p-6 bg-background-primary rounded-2xl shadow-md border border-gray-100 transition-all duration-300 hover:shadow-lg">
