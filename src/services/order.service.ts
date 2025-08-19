@@ -40,6 +40,7 @@ export interface IOrderDetail {
 export interface IOrderSummary {
   id: number;
   orderDetails: IOrderDetail[];
+  userId: IUser;
   voucher?: IVoucher;
   payment?: IPayment;
   total: number;
@@ -47,8 +48,14 @@ export interface IOrderSummary {
   createdAt: string;
   productImage: string;
   address: string;
+  receiver: string;
 }
 
+export interface IUser {
+  id: number;
+  name: string;
+  phone: string;
+}
 /** Simple order item (for lists) */
 export interface IOrderItem {
   id: string;

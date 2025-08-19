@@ -10,7 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../ui/pagination";
-import { useState } from "react";
+import { use, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -33,7 +33,9 @@ const OrdersTable = ({
   onPageChange,
 }: OrdersTableProps) => {
   const [open, setOpen] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState<IOrderSummary | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<IOrderSummary | null>(
+    null
+  );
 
   const handleOpenDetail = (order: IOrderSummary) => {
     setSelectedOrder(order);
@@ -106,7 +108,7 @@ const OrdersTable = ({
           </div>
         </div>
       ))}
- 
+
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
           className="sm:max-w-lg 
@@ -121,11 +123,24 @@ const OrdersTable = ({
                 </DialogTitle>
                 <DialogDescription>
                   {t("Created at")}:{" "}
-                  {new Date(selectedOrder.createdAt).toLocaleDateString("vi-VN")}
+                  {new Date(selectedOrder.createdAt).toLocaleDateString(
+                    "vi-VN"
+                  )}
                 </DialogDescription>
               </DialogHeader>
 
-              {/* Nội dung hiển thị sản phẩm */}
+              {selectedOrder.userId && (
+                <div className="mb-4 p-3 rounded-lg border ">
+                  <p className="text-sm gap-2 flex items-center">
+                    <span className="font-medium">{t("Customer")}:</span>{" "}
+                    {selectedOrder.userId.name}
+                  </p>
+                  <p className="text-sm gap-2 flex items-center">
+                    <span className="font-medium">{t("Phone")}:</span>{" "}
+                    {selectedOrder.userId.phone}
+                  </p>
+                </div>
+              )}
               <div className="space-y-2">
                 {selectedOrder.orderDetails.map((detail: any) => (
                   <div
@@ -143,22 +158,36 @@ const OrdersTable = ({
                         {t("Quantity")}: {detail.quantity}
                       </p>
                       <p className="text-sm text-gray-500">
-                        {t("Price")}:{" "}
-                        {detail.price.toLocaleString("vi-VN")} ₫
+                        {t("Price")}: {detail.price.toLocaleString("vi-VN")} ₫
                       </p>
                     </div>
                   </div>
                 ))}
               </div>
 
+              <div className="mt-4 space-y-1 flex flex-col gap-y-4">
+                <p className="text-sm">
+                  <span className="font-medium">{t("Address")}:</span>{" "}
+                  {selectedOrder.address}
+                </p>
+                 <hr />
+                <p className="text-sm gap-2 flex items-center">
+                  <span className="font-medium">{t("Total Money")}:</span>{" "}
+                  <span className="text-red-500">
+                    {selectedOrder.total.toLocaleString("vi-VN")} ₫
+                  </span>
+                </p>
+              </div>
               <DialogFooter>
-                <Button  variant="outline" onClick={() => setOpen(false)}>{t("Close")}</Button>
+                <Button variant="outline" onClick={() => setOpen(false)}>
+                  {t("Close")}
+                </Button>
               </DialogFooter>
             </>
           )}
         </DialogContent>
       </Dialog>
- 
+
       {pagination && onPageChange && (
         <Pagination>
           <PaginationContent>
