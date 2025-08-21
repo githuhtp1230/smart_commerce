@@ -9,6 +9,7 @@ export interface IProduct {
   price?: number;
   category: ICategory;
   promotion?: IPromotion;
+  is_deleted: number;
 }
 
 export interface IProductSummary {
@@ -22,6 +23,7 @@ export interface IProductSummary {
   promotion?: IPromotion;
   category?: ICategory;
   createdAt: string;
+  is_deleted: number;
 }
 
 export interface IProductVariation {

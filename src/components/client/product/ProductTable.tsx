@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DataTable } from "@/components/common/table/DataTable";
 import { Button } from "@/components/ui/button";
 import type { IProductSummary } from "@/type/products";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Ellipsis, PencilLineIcon, SquarePen, Trash2 } from "lucide-react";
+import { Ellipsis, PencilLineIcon, RefreshCcw } from "lucide-react";
 
-import { toast } from "sonner"; // hoặc react-hot-toast nếu bạn dùng cái khác
-import { deleteProduct } from "@/services/products.service";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,32 +13,52 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Eye } from "@/assets/icons";
+import { toastError, toastSuccess } from "@/components/common/sonner";
+import { toggleProduct } from "@/services/products.service";
+import PreviewProductDialog from "./PreviewProductDialog";
+
 
 interface Props {
   products: IProductSummary[];
-  onDeleted?: () => void; // callback sau khi xoá thành công
-  readOnly?: boolean;
+  onChange?: () => void;
+  readonly?: boolean;
+
 }
 
-const ProductTable = ({ products, onDeleted, readOnly }: Props) => {
-  const [deletingId, setDeletingId] = useState<number | null>(null);
+const ProductTable = ({ products, onChange, readonly }: Props) => {
+  const [productList, setProductList] = useState<IProductSummary[]>([]);
+  const [loadingIds, setLoadingIds] = useState<number[]>([]);
+  const [previewProduct, setPreviewProduct] = useState<IProductSummary | null>(null);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  useEffect(() => {
+    setProductList([...products].sort((a, b) => a.id - b.id));
+  }, [products]);
 
-  const handleDelete = async (productId: number) => {
-    if (!window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?"))
-      return;
 
+  const handleToggle = async (id: number) => {
     try {
-      setDeletingId(productId);
-      await deleteProduct(productId);
-      toast.success("Xóa sản phẩm thành công");
-      onDeleted?.();
-    } catch (error) {
-      toast.error("Xóa sản phẩm thất bại");
-      console.error(error);
+      setLoadingIds((ids) => [...ids, id]);
+      await toggleProduct(id);
+
+      toastSuccess("Cập nhật trạng thái thành công!");
+      setProductList((prev) =>
+        prev.map((p) =>
+          p.id === id ? { ...p, is_deleted: Number(p.is_deleted) === 1 ? 0 : 1 } : p
+        )
+      );
+      onChange?.();
+    } catch {
+      toastError("Thao tác thất bại. Vui lòng thử lại.");
     } finally {
-      setDeletingId(null);
+      setLoadingIds((ids) => ids.filter((x) => x !== id));
     }
   };
+
+  const openPreviewDialog = (product: IProductSummary) => {
+    setPreviewProduct(product);
+    setPreviewOpen(true);
+  }
+
 
   const columns: ColumnDef<IProductSummary>[] = [
     {
@@ -84,14 +103,35 @@ const ProductTable = ({ products, onDeleted, readOnly }: Props) => {
         <div>{new Date(row.original.createdAt).toLocaleString()}</div>
       ),
     },
+    {
+      accessorKey: "is_deleted",
+      header: "Status",
+      cell: ({ row }) => {
+        const isDeleted = row.original.is_deleted;
+
+        return (
+          <span
+            className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${isDeleted === 1 ? "bg-red-100 text-red-600" : "bg-green-100 text-green-600"
+              }`}
+          >
+            <span
+              className={`w-2 h-2 rounded-full ${isDeleted === 1 ? "bg-red-600" : "bg-green-600"}`}
+            />
+            {isDeleted === 1 ? "Inactive" : "Active"}
+          </span>
+        );
+      },
+    },
   ];
 
   // Thêm cột hành động nếu không phải chế độ chỉ đọc
-  if (!readOnly) {
+  if (!readonly) {
     columns.push({
       id: "actions",
       header: "",
-      cell: () => {
+      cell: ({ row }) => {
+        const product = row.original;
+        const isLoading = loadingIds.includes(product.id);
         return (
           <div className="w-full">
             <DropdownMenu>
@@ -100,18 +140,33 @@ const ProductTable = ({ products, onDeleted, readOnly }: Props) => {
                   <Ellipsis />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="font-bold">
-                <DropdownMenuItem className="cursor-pointer">
-                  <Eye className="size-3.5" />
-                  Preview
+              <DropdownMenuContent
+
+                align="end"
+                sideOffset={5}
+                className="w-44 rounded-lg shadow-md border bg-white dark:bg-neutral-900 dark:border-neutral-700 font-bold"
+              >
+                <DropdownMenuItem
+                  onClick={() => openPreviewDialog(product)}
+                  className="flex items-center gap-2 px-3 py-2 cursor-pointer rounded-md "
+                >
+                  <Eye className="w-4 h-4 text-black" />
+                  <span className="text-sm">Preview</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <PencilLineIcon className="size-3.5" />
-                  Edit
+                <DropdownMenuItem
+
+                  className="flex items-center gap-2 px-3 py-2 cursor-pointer rounded-md "
+                >
+                  <PencilLineIcon className="w-4 h-4 text-black" />
+                  <span className="text-sm">Edit</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
-                  <Trash2 className="size-3.5 text-red-600 focus:text-red-600 " />
-                  Delete
+                <DropdownMenuItem
+                  onClick={() => handleToggle(product.id)}
+                  disabled={isLoading}
+                  className="flex items-center gap-2 px-3 py-2 cursor-pointer rounded-md "
+                >
+                  <RefreshCcw className="text-black" />
+                  {product.is_deleted ? "Deactivate" : "Activate"}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -122,9 +177,21 @@ const ProductTable = ({ products, onDeleted, readOnly }: Props) => {
   }
 
   return (
-    <div className="bg-primary rounded-xl ">
-      <DataTable columns={columns} data={products} />
-    </div>
+    <>
+      <div className="bg-primary rounded-xl ">
+        <DataTable columns={columns} data={productList} />
+      </div>
+      {
+        previewProduct && (
+          <PreviewProductDialog
+            open={previewOpen}
+            onOpenChange={setPreviewOpen}
+            product={previewProduct}
+          />
+        )
+      }
+    </>
+
   );
 };
 
