@@ -8,6 +8,7 @@ export const PATH = {
   PROFILE: "/profile",
   CHECKOUT_COMPLETED: "/checkout-completed",
   NOT_FOUND: "/404",
+  CONTACT: "/contact",
 };
 
 export const ADMIN_PATH = {
