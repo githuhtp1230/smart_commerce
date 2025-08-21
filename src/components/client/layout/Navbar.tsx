@@ -15,6 +15,9 @@ const Navbar = () => {
           <NavLink className="text-base" to={PATH.PRODUCTS}>
             {t("Products")}
           </NavLink>
+          <NavLink className="text-base" to={PATH.CONTACT}>
+            {t("Contact")}
+          </NavLink>
         </ul>
       </div>
     </div>

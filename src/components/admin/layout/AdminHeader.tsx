@@ -9,7 +9,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { Separator } from "@radix-ui/react-separator";
 import { NavUser } from "@/components/nav-user";
 import { cn } from "@/lib/utils";
@@ -20,6 +20,7 @@ import { Link, useLocation } from "react-router-dom";
 const AdminHeader = () => {
   const location = useLocation();
   const pathname = location.pathname;
+  const { state } = useSidebar();
 
   const normalize = (url: string) => (url.startsWith("/") ? url : `/${url}`);
 
@@ -40,7 +41,13 @@ const AdminHeader = () => {
 
   const crumbs = findBreadcrumb();
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12  w-full d-flex justify-between mb-10 bg-[#3266F6]">
+    <header className={cn("fixed top-0 right-0 z-50 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12  w-full d-flex justify-between mb-10 bg-[#3266F6]",
+      "w-[calc(100%-var(--sidebar-width))] group-data-[collapsible=icon]/sidebar-wrapper:w-[calc(100%-var(--sidebar-width-icon))]",
+      state === "collapsed"
+        ? "w-[calc(100%-var(--sidebar-width-icon))]"
+        : "w-[calc(100%-var(--sidebar-width))]"
+    )}
+    >
       <div className="flex items-center justify-between gap-2 px-4">
         <SidebarTrigger className="-ml-1 text-white" />
         <Separator
