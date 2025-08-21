@@ -52,7 +52,6 @@ export default function ProfileUser({ user }: ProfileInfoProps) {
             badgeColor={user.isActive ? "emerald" : "red"}
             content={user.isActive ? "Hoạt động" : "Đã khóa"}
           />
-          q
         </div>
       </div>
     </div>

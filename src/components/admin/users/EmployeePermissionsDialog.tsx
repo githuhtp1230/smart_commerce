@@ -1,16 +1,42 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import type { IUser } from "@/type/auth";
-import OrdersTable from "./OrdersTable";
 import ProfileUser from "./ProfileUser";
-import { DialogDescription } from "@radix-ui/react-dialog";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { fetchOrdersByUser, type OrderItem } from "@/services/order.service";
+import { Loader2, Eye } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog as DialogDetail,
+  DialogContent as DialogContentDetail,
+  DialogHeader as DialogHeaderDetail,
+  DialogTitle as DialogTitleDetail,
+  DialogDescription as DialogDescriptionDetail,
+} from "@/components/ui/dialog";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationNext,
+} from "@/components/ui/pagination";
 
 interface EmployeePermissionsDialogProps {
   user: IUser | null;
@@ -23,7 +49,7 @@ interface PermissionItem {
   enabled: boolean;
 }
 
-function EmployeePermissionsDialog({
+export default function EmployeePermissionsDialog({
   user,
   open,
   onOpenChange,
@@ -46,8 +72,48 @@ function EmployeePermissionsDialog({
     );
   };
 
+  /** Orders state */
+  const [orders, setOrders] = useState<OrderItem[]>([]);
+  const [loadingOrders, setLoadingOrders] = useState(true);
+  const [selectedOrder, setSelectedOrder] = useState<OrderItem | null>(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const pageSize = 5;
+
+  useEffect(() => {
+    if (!user) return;
+
+    const loadOrders = async (currentPage: number) => {
+      setLoadingOrders(true);
+      try {
+        const res = await fetchOrdersByUser(user.id, currentPage, pageSize);
+
+        if (
+          res.data.length === 0 &&
+          res.totalElements > 0 &&
+          currentPage !== 1
+        ) {
+          setPage(1);
+          return;
+        }
+
+        setOrders(res.data);
+        setTotalPages(res.totalPages || 1);
+      } catch (err) {
+        console.error("Failed to load orders:", err);
+        setOrders([]);
+        setTotalPages(1);
+      } finally {
+        setLoadingOrders(false);
+      }
+    };
+
+    loadOrders(page);
+  }, [user, page]);
+
   useEffect(() => {
     setActiveTab("Permissions");
+    setPage(1);
   }, [user]);
 
   return (
@@ -55,7 +121,7 @@ function EmployeePermissionsDialog({
       <DialogContent
         className={cn(
           "!w-[65vw] !h-[75vh] !max-w-none !max-h-none",
-          "overflow-y-auto p-6 bg-background-primary rounded-xl shadow-xl"
+          "overflow-auto scrollbar-hide p-6 bg-background-primary rounded-xl shadow-xl"
         )}
       >
         <DialogHeader className="mb-4">
@@ -69,12 +135,10 @@ function EmployeePermissionsDialog({
 
         {user ? (
           <>
-            {/* Profile */}
             <div className="mb-4">
               <ProfileUser user={user} />
             </div>
 
-            {/* Tabs */}
             <div className="flex border-b border-gray-200 mb-4">
               {["History Orders", "Permissions"].map((tab) => (
                 <button
@@ -94,9 +158,191 @@ function EmployeePermissionsDialog({
               ))}
             </div>
 
-            {/* Tab Content */}
             <div className="min-h-[250px]">
-              {activeTab === "History Orders" && <OrdersTable />}
+              {activeTab === "History Orders" && (
+                <Card className="shadow-md">
+                  <CardContent className="p-4">
+                    {loadingOrders ? (
+                      <div className="flex items-center justify-center py-10">
+                        <Loader2 className="h-6 w-6 animate-spin text-gray-500 dark:text-gray-300" />
+                      </div>
+                    ) : orders.length === 0 ? (
+                      <p className="text-center text-gray-700 dark:text-gray-300">
+                        Bạn chưa có đơn hàng nào.
+                      </p>
+                    ) : (
+                      <>
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead>ID</TableHead>
+                              <TableHead>Sản phẩm</TableHead>
+                              <TableHead>Hình ảnh</TableHead>
+                              <TableHead>Tổng tiền</TableHead>
+                              <TableHead>Ngày đặt</TableHead>
+                              <TableHead>Phương thức giao</TableHead>
+                              <TableHead>Trạng thái</TableHead>
+                              <TableHead>Chi tiết</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {orders.map((order) => (
+                              <TableRow key={order.id}>
+                                <TableCell>{order.id}</TableCell>
+                                <TableCell>
+                                  {order.orderDetails
+                                    .map((d) => d.product.name)
+                                    .join(", ")}
+                                </TableCell>
+                                <TableCell className="flex gap-2">
+                                  {order.orderDetails.map((d, idx) => (
+                                    <img
+                                      key={idx}
+                                      src={d.image ?? "/default-product.png"}
+                                      alt={d.product.name}
+                                      className="h-10 w-10 object-cover rounded border"
+                                    />
+                                  ))}
+                                </TableCell>
+                                <TableCell>
+                                  {order.total.toLocaleString("vi-VN")} đ
+                                </TableCell>
+                                <TableCell>
+                                  {new Date(order.date).toLocaleString("vi-VN")}
+                                </TableCell>
+                                <TableCell>{order.deliveryMethod}</TableCell>
+                                <TableCell>{order.status}</TableCell>
+                                <TableCell>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setSelectedOrder(order)}
+                                  >
+                                    <Eye className="h-4 w-4" /> Xem
+                                  </Button>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+
+                        {/* Pagination */}
+                        <div className="mt-4 flex justify-center">
+                          <Pagination>
+                            <PaginationContent>
+                              <PaginationItem>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  disabled={page === 1}
+                                  onClick={() =>
+                                    setPage((prev) => Math.max(prev - 1, 1))
+                                  }
+                                >
+                                  <PaginationPrevious />
+                                </Button>
+                              </PaginationItem>
+                              {[...Array(totalPages)].map((_, idx) => {
+                                const pageNum = idx + 1;
+                                return (
+                                  <PaginationItem key={pageNum}>
+                                    <Button
+                                      variant={
+                                        page === pageNum ? "default" : "outline"
+                                      }
+                                      size="sm"
+                                      onClick={() => setPage(pageNum)}
+                                    >
+                                      {pageNum}
+                                    </Button>
+                                  </PaginationItem>
+                                );
+                              })}
+                              <PaginationItem>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  disabled={page === totalPages}
+                                  onClick={() =>
+                                    setPage((prev) =>
+                                      Math.min(prev + 1, totalPages)
+                                    )
+                                  }
+                                >
+                                  <PaginationNext />
+                                </Button>
+                              </PaginationItem>
+                            </PaginationContent>
+                          </Pagination>
+                        </div>
+
+                        {/* Dialog chi tiết */}
+                        <DialogDetail
+                          open={!!selectedOrder}
+                          onOpenChange={() => setSelectedOrder(null)}
+                        >
+                          <DialogContentDetail className="max-w-lg">
+                            <DialogHeaderDetail>
+                              <DialogTitleDetail>
+                                Chi tiết đơn hàng #{selectedOrder?.id}
+                              </DialogTitleDetail>
+                              <DialogDescriptionDetail>
+                                Thông tin chi tiết đơn hàng đã đặt.
+                              </DialogDescriptionDetail>
+                            </DialogHeaderDetail>
+
+                            {selectedOrder && (
+                              <div className="space-y-3 text-gray-800 dark:text-gray-100">
+                                <p>
+                                  <strong>Ngày đặt:</strong>{" "}
+                                  {new Date(selectedOrder.date).toLocaleString(
+                                    "vi-VN"
+                                  )}
+                                </p>
+                                <p>
+                                  <strong>Tổng tiền:</strong>{" "}
+                                  {selectedOrder.total.toLocaleString("vi-VN")} đ
+                                </p>
+                                <p>
+                                  <strong>Phương thức giao:</strong>{" "}
+                                  {selectedOrder.deliveryMethod}
+                                </p>
+                                <p>
+                                  <strong>Trạng thái:</strong>{" "}
+                                  {selectedOrder.status}
+                                </p>
+                                <div>
+                                  <strong>Sản phẩm:</strong>
+                                  <ul className="list-disc pl-5 mt-1">
+                                    {selectedOrder.orderDetails.map(
+                                      (d, idx) => (
+                                        <li key={idx}>
+                                          {d.product.name} x{d.quantity}
+                                        </li>
+                                      )
+                                    )}
+                                  </ul>
+                                </div>
+                                <div className="flex gap-2 items-center">
+                                  <strong>Hình ảnh:</strong>
+                                  {selectedOrder.orderDetails.map((d, idx) => (
+                                    <img
+                                      key={idx}
+                                      src={d.image ?? "/default-product.png"}
+                                      alt={d.product.name}
+                                      className="h-12 w-12 object-cover rounded border"
+                                    />
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </DialogContentDetail>
+                        </DialogDetail>
+                      </>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
 
               {activeTab === "Permissions" && (
                 <div className="grid grid-cols-2 gap-3">
@@ -133,5 +379,3 @@ function EmployeePermissionsDialog({
     </Dialog>
   );
 }
-
-export default EmployeePermissionsDialog;
