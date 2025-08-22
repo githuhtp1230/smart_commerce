@@ -25,10 +25,9 @@ import CheckoutCompletedPage from "./pages/client/CheckoutCompletedPage";
 import ManageUsersPage from "./pages/admin/ManageUsersPage";
 import ManageAttributePage from "./pages/admin/ManageAttributePage";
 import ManageAttributeValuePage from "./pages/admin/ManageAttributeValuePage";
-import ManagePromotionPage from "./pages/admin/ManagePromotionPage";s
+import ManagePromotionPage from "./pages/admin/ManagePromotionPage";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);

@@ -17,6 +17,8 @@ import {
   FileStack,
   UserCog,
   Users,
+  BadgePercent,
+  LayoutDashboard,
 } from "lucide-react";
 import { NavMain } from "@/components/nav-main";
 import { NavProjects } from "@/components/nav-projects";
@@ -57,7 +59,7 @@ export const data = {
     {
       title: "Dashboard",
       url: "#",
-      icon: MonitorSmartphone,
+      icon: LayoutDashboard,
       isActive: true,
       items: [],
     },
@@ -121,10 +123,6 @@ export const data = {
           title: "Attribute value",
           url: ADMIN_PATH.ATTRIBUTEVALUE,
         },
-        {
-          title: "Attribute value detail",
-          url: "#",
-        },
       ],
     },
     {
@@ -135,6 +133,7 @@ export const data = {
         {
           title: "promotion",
           url: ADMIN_PATH.PROMOTION,
+          icon: BadgePercent,
         },
       ],
     },
@@ -142,70 +141,16 @@ export const data = {
       title: "Manage order",
       url: "#",
       icon: Truck,
-      items: [
-        {
-          title: "Attribute",
-          url: "#",
-        },
-        {
-          title: "Attribute value",
-          url: "#",
-        },
-        {
-          title: "Attribute value detail",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
     },
     {
       title: "Manage review",
       url: "#",
       icon: ClipboardList,
-      items: [
-        {
-          title: "Attribute",
-          url: "#",
-        },
-        {
-          title: "Attribute value",
-          url: "#",
-        },
-        {
-          title: "Attribute value detail",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
     },
     {
       title: "Manage permission",
       url: "#",
       icon: UserLock,
-      items: [
-        {
-          title: "Attribute",
-          url: "#",
-        },
-        {
-          title: "Attribute value",
-          url: "#",
-        },
-        {
-          title: "Attribute value detail",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
     },
     {
       title: "Settings",
