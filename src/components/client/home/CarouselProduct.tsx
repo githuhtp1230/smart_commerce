@@ -14,10 +14,11 @@ export default function CarouselWithPagination() {
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const images = [
-    "https://sdmntprpolandcentral.oaiusercontent.com/files/00000000-4ba4-620a-9b7a-cc999892b9e9/raw?se=2025-08-22T17%3A27%3A34Z&sp=r&sv=2024-08-04&sr=b&scid=753efadd-4500-50f2-9e19-16f93b9884d6&skoid=5c72dd08-68ae-4091-b4e1-40ccec0693ae&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-08-22T12%3A31%3A19Z&ske=2025-08-23T12%3A31%3A19Z&sks=b&skv=2024-08-04&sig=L75b2s9q/cUN65gVL1HE%2BPnvlmKUyohBLKQsKWf/qqI%3D",
-    "https://sdmntprnorthcentralus.oaiusercontent.com/files/00000000-a568-622f-a8a8-6bbe2ac2d720/raw?se=2025-08-22T17%3A32%3A05Z&sp=r&sv=2024-08-04&sr=b&scid=026d51d8-7c51-51f8-b694-17442e64837e&skoid=5c72dd08-68ae-4091-b4e1-40ccec0693ae&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-08-22T15%3A47%3A11Z&ske=2025-08-23T15%3A47%3A11Z&sks=b&skv=2024-08-04&sig=oto436jqYrSp%2B/hC5A7M9tGvHjrNhILXm4OWiVgoMYk%3D"
-
-
+    "https://www.cnet.com/a/img/resize/15fef67176bef6c5179128b6f877d7d96338b9c3/hub/2024/09/18/f4dfbd54-08f9-42cc-9309-1c3923a06558/iphone-16-plus-pro-pro-max-family-4559.jpg?auto=webp&fit=crop&height=900&width=1200",
+    "https://www.cnet.com/a/img/resize/15fef67176bef6c5179128b6f877d7d96338b9c3/hub/2024/09/18/f4dfbd54-08f9-42cc-9309-1c3923a06558/iphone-16-plus-pro-pro-max-family-4559.jpg?auto=webp&fit=crop&height=900&width=1200",
+    "https://www.cnet.com/a/img/resize/15fef67176bef6c5179128b6f877d7d96338b9c3/hub/2024/09/18/f4dfbd54-08f9-42cc-9309-1c3923a06558/iphone-16-plus-pro-pro-max-family-4559.jpg?auto=webp&fit=crop&height=900&width=1200",
+    "https://www.cnet.com/a/img/resize/15fef67176bef6c5179128b6f877d7d96338b9c3/hub/2024/09/18/f4dfbd54-08f9-42cc-9309-1c3923a06558/iphone-16-plus-pro-pro-max-family-4559.jpg?auto=webp&fit=crop&height=900&width=1200",
+    "https://www.cnet.com/a/img/resize/15fef67176bef6c5179128b6f877d7d96338b9c3/hub/2024/09/18/f4dfbd54-08f9-42cc-9309-1c3923a06558/iphone-16-plus-pro-pro-max-family-4559.jpg?auto=webp&fit=crop&height=900&width=1200"
   ];
 
   React.useEffect(() => {

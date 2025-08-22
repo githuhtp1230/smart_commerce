@@ -9,7 +9,7 @@ const HomePage = () => {
   return (
     <div className="w-full">
       <div className="grid grid-cols-2 grid-rows-2 gap-4">
-        <div className="row-span-2">
+        <div className="row-span-2 h-full">
           <CarouselProduct />
         </div>
         <div className="row-span-1 cursor-pointer"><img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/smart-commerce-banner-4-xyEefWT3pd51nfUkE438DCKDjfgdpz.png" alt="" className="rounded-lg h-full" /></div>
