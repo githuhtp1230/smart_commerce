@@ -1,23 +1,21 @@
-import React, { useRef, useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import DropZone from "../dropzone/DropZone";
 import setCanvasPreview from "@/helper/set-canvas-preview";
+import React, { useRef, useState } from "react";
 import ReactCrop, {
   centerCrop,
   convertToPixelCrop,
   makeAspectCrop,
   type Crop,
 } from "react-image-crop";
+import DropZone from "../dropzone/DropZone";
 
-import "react-image-crop/dist/ReactCrop.css";
 import { Button } from "@/components/ui/button";
+import "react-image-crop/dist/ReactCrop.css";
 import { toastError } from "../sonner";
 
 interface Props {

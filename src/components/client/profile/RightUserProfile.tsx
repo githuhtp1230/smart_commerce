@@ -1,23 +1,25 @@
-import React, { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Pencil } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import { useAuthStore } from "@/store/auth-store";
-import { useMutation } from "@tanstack/react-query";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import { updateProfile } from "@/services/me.service";
+import { useAuthStore } from "@/store/auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { Pencil } from "lucide-react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import HandleAddressDialog from "@/components/common/dialog/HandleAddressDialog";
+import { toastError } from "@/components/common/sonner";
 import {
   Form,
   FormControl,
@@ -26,7 +28,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toastError } from "@/components/common/sonner";
+import { useAddress } from "./profile-helper/use-address";
+import { useTranslation } from "react-i18next";
 
 interface ContactInfo {
   address: string;
@@ -41,13 +44,17 @@ const formSchema = z.object({
 });
 
 const RightUserProfile: React.FC = () => {
+  const { t } = useTranslation();
   const { me, setMe } = useAuthStore((state) => state);
   const [isPhoneDialogOpen, setIsPhoneDialogOpen] = useState(false);
+  const [isOpenAddressDialog, setIsOpenAddressDialog] =
+    useState<boolean>(false);
   const [contactInfo, setContactInfo] = useState<ContactInfo>({
     address: "Vancouver, British Columbia\nCanada",
     email: me?.email || "",
     phone: me?.phone || "",
   });
+  const { defaultAddr } = useAddress();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -80,7 +87,7 @@ const RightUserProfile: React.FC = () => {
       <Card className="p-6 rounded-md shadow bg-primary">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-secondary-foreground">
-            Contact Information
+            {t("Contact Information")}
           </h2>
           <button
             id="editContactBtn"
@@ -92,13 +99,33 @@ const RightUserProfile: React.FC = () => {
         <Separator className="my-4" />
         {/* Contact Info Display */}
         <div className="space-y-2 mt-0">
-          <div>
-            <div className="flex gap-20 mb-20">
-              <h3 className="font-medium text-secondary-foreground">Address</h3>
-              <p className="text-popover-foreground whitespace-pre-line">
-                {contactInfo.address}
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-sm text-muted-foreground">
+                {t("Address in use")}
               </p>
+              {defaultAddr ? (
+                <p className="text-base font-medium mt-1">
+                  {defaultAddr.streetAddress}, {defaultAddr.ward},{" "}
+                  {defaultAddr.province}
+                  {defaultAddr.isDefault && (
+                    <span className="ml-2 text-xs text-green-600">
+                      ({t("default")})
+                    </span>
+                  )}
+                </p>
+              ) : (
+                <p className="text-base text-destructive mt-1">
+                  {t("No address selected")}
+                </p>
+              )}
             </div>
+            <Button
+              variant="outline"
+              onClick={() => setIsOpenAddressDialog(true)}
+            >
+              {t("Change")}
+            </Button>
           </div>
           <Separator className="my-4" />
           <div>
@@ -108,8 +135,10 @@ const RightUserProfile: React.FC = () => {
             </div>
           </div>
           <div>
-            <div className="flex items-center gap-50">
-              <h3 className="font-medium text-secondary-foreground">Phone</h3>
+            <div className="flex items-center gap-38">
+              <h3 className="font-medium text-secondary-foreground">
+                {t("Phone")}
+              </h3>
               <div className="flex items-center gap-2">
                 <p className="text-txt-brand">{me?.phone}</p>
                 <button
@@ -130,7 +159,7 @@ const RightUserProfile: React.FC = () => {
       <Dialog open={isPhoneDialogOpen} onOpenChange={setIsPhoneDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit phone number</DialogTitle>
+            <DialogTitle>{t("Edit phone number")}</DialogTitle>
           </DialogHeader>
           <Form {...form}>
             <form
@@ -142,7 +171,7 @@ const RightUserProfile: React.FC = () => {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Number phone</FormLabel>
+                    <FormLabel>{t("Number phone")}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -158,22 +187,26 @@ const RightUserProfile: React.FC = () => {
                     setIsPhoneDialogOpen(false);
                   }}
                   type="button"
-                  className="border-border-primary"
                 >
-                  Cancel
+                  {t("Cancel")}
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-blue-500 hover:bg-blue-700 text-white"
+                  className="!bg-blue-500 hover:bg-blue-400 text-white"
                   disabled={isPending}
                 >
-                  Save
+                  {t("Save")}
                 </Button>
               </DialogFooter>
             </form>
           </Form>
         </DialogContent>
       </Dialog>
+
+      <HandleAddressDialog
+        isOpen={isOpenAddressDialog}
+        onOpenChange={setIsOpenAddressDialog}
+      />
     </>
   );
 };

@@ -127,6 +127,7 @@ const CategoriesTable = ({ categories, onSwitchTab }: Props) => {
       )}
     </>
   );
+
 };
 
 export default CategoriesTable;

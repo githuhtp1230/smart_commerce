@@ -6,7 +6,9 @@ export const PATH = {
   REGISTER: "/register",
   FORGOT_PASSWORD: "/forgot-password",
   PROFILE: "/profile",
+  CHECKOUT_COMPLETED: "/checkout-completed",
   NOT_FOUND: "/404",
+  CONTACT: "/contact",
 };
 
 export const ADMIN_PATH = {
@@ -15,5 +17,8 @@ export const ADMIN_PATH = {
   CUSTOMER: "admin/customer",
   CATEGORY: "admin/category",
   SUBCATEGORY: "admin/subcategory",
+  ATTRIBUTE: "admin/attribute",
+  ATTRIBUTEVALUE: "admin/attribute-values",
   USER: "admin/users",
+  PROMOTION: "admin/promotion",
 };

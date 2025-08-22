@@ -1,38 +1,30 @@
-import React from "react";
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import ProductDetailReview from "./ProductDetailReview";
 import ProductDetailAttributeList from "./ProductDetailAttributeList";
 import ProductDetailDescription from "./ProductDetailDescription";
 import type { IProductDetail } from "@/type/products";
+import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   productDetail?: IProductDetail;
 }
 
 const ProductDetailTabs = ({ productDetail }: Props) => {
+  const { t } = useTranslation();
   return (
     <div className="container">
       <Tabs defaultValue="description" className="w-full">
         <TabsList className="flex justify-start gap-2 bg-transparent">
-          <TabsTrigger
-            value="description"
-            className="!bg-transparent text-[17px] pb-1 box-content border-t-0 border-x-0 border-b-2 border-b-transparent rounded-none hover:text-blue-500 hover:border-b-blue-500 data-[state=active]:text-blue-500 data-[state=active]:border-b-blue-500  dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 dark:data-[state=active]:border-b-blue-500 "
-          >
-            Description
-          </TabsTrigger>
-          <TabsTrigger
-            value="specifications"
-            className="!bg-transparent text-[17px] pb-1 box-content border-t-0 border-x-0 border-b-2 border-b-transparent rounded-none hover:text-blue-500 hover:border-b-blue-500  data-[state=active]:text-blue-500 data-[state=active]:border-b-blue-500  dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 dark:data-[state=active]:border-b-blue-500 "
-          >
-            Specifications
-          </TabsTrigger>
-          <TabsTrigger
-            value="reviews"
-            className="!bg-transparent text-[17px] pb-1 box-content border-t-0 border-x-0 border-b-2 border-b-transparent rounded-none hover:text-blue-500 hover:border-b-blue-500  data-[state=active]:text-blue-500 data-[state=active]:border-b-blue-500   dark:hover:text-blue-500 dark:data-[state=active]:text-blue-500 dark:data-[state=active]:border-b-blue-500 "
-          >
-            Ratings & reviews (1,283)
-          </TabsTrigger>
+          <CustomTabsTrigger value="description">
+            {t("Description")}
+          </CustomTabsTrigger>
+          <CustomTabsTrigger value="specifications">
+            {t("Specifications")}
+          </CustomTabsTrigger>
+          <CustomTabsTrigger value="reviews">
+            {t("Ratings & reviews")} (1,283)
+          </CustomTabsTrigger>
         </TabsList>
 
         <TabsContent

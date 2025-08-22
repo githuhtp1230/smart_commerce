@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+import LanguageSwitcher from "@/components/common/language/LanguageSwitcher";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,31 +9,94 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { Separator } from "@radix-ui/react-separator";
+import { NavUser } from "@/components/nav-user";
+import { cn } from "@/lib/utils";
+import ToggleTheme from "@/components/common/ToggleTheme";
+import { data } from "@/components/app-sidebar";
+import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const AdminHeader = () => {
+  const { t } = useTranslation();
+  const location = useLocation();
+  const pathname = location.pathname;
+  const { state } = useSidebar();
+
+  const normalize = (url: string) => (url.startsWith("/") ? url : `/${url}`);
+
+  const findBreadcrumb = () => {
+    for (const main of data.navMain) {
+      if (pathname === normalize(main.url)) {
+        return [main.title];
+      }
+      if (main.items) {
+        const found = main.items.find(
+          (item) => pathname === normalize(item.url)
+        );
+        if (found) {
+          return [main.title, found.title];
+        }
+      }
+    }
+    return [];
+  };
+
+  const crumbs = findBreadcrumb();
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-      <div className="flex items-center gap-2 px-4">
-        <SidebarTrigger className="-ml-1" />
+    <header
+      className={cn(
+        "fixed top-0 right-0 z-50 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12  w-full d-flex justify-between mb-10 bg-[#3266F6]",
+        "w-[calc(100%-var(--sidebar-width))] group-data-[collapsible=icon]/sidebar-wrapper:w-[calc(100%-var(--sidebar-width-icon))]",
+        state === "collapsed"
+          ? "w-[calc(100%-var(--sidebar-width-icon))]"
+          : "w-[calc(100%-var(--sidebar-width))]"
+      )}
+    >
+      <div className="flex items-center justify-between gap-2 px-4">
+        <SidebarTrigger className="-ml-1 text-white" />
         <Separator
           orientation="vertical"
-          className="mr-2 data-[orientation=vertical]:h-4"
+          className="mr-2 data-[orientation=vertical]:h-4 "
         />
+
         <Breadcrumb>
           <BreadcrumbList>
-            <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbLink href="#">
-                Building Your Application
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block" />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-            </BreadcrumbItem>
+            {crumbs.map((c, idx) => (
+              <React.Fragment key={idx}>
+                <BreadcrumbItem className="hidden md:block">
+                  {idx === crumbs.length - 1 ? (
+                    <BreadcrumbPage className="text-white">
+                      {t(c)}
+                    </BreadcrumbPage>
+                  ) : (
+                    <BreadcrumbLink asChild>
+                      <Link to="#" className="text-white">
+                        {t(c)}
+                      </Link>
+                    </BreadcrumbLink>
+                  )}
+                </BreadcrumbItem>
+                {idx < crumbs.length - 1 && (
+                  <BreadcrumbSeparator className="hidden md:block" />
+                )}
+              </React.Fragment>
+            ))}
           </BreadcrumbList>
         </Breadcrumb>
+      </div>
+
+      <div className="flex items-center gap-2 mr-2">
+        <div
+          className={cn("flex justify-between items-center text-white gap-2")}
+        >
+          <ToggleTheme className="text-white bg-transparent hover:bg-transparent hover:text-white border border-border-primary" />
+          <LanguageSwitcher />
+        </div>
+        <div className="pl-4 border-l border-white">
+          <NavUser />
+        </div>
       </div>
     </header>
   );

@@ -1,12 +1,8 @@
-import { Facebook } from "@/assets/icons";
 import ProductDetailInformation from "@/components/client/product-detail/ProductDetailInformation";
 import ProductDetailTabs from "@/components/client/product-detail/ProductDetailTabs";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { fetchProductDetail } from "@/services/products.service";
 import type { IProductDetail } from "@/type/products";
 import { useQuery } from "@tanstack/react-query";
-import { CreditCard, Instagram, Youtube } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 

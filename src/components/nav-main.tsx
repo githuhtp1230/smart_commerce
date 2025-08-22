@@ -14,11 +14,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-  SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router-dom";
-import { ADMIN_PATH } from "@/constants/path";
+import { cn } from "@/lib/utils";
+import { Link, NavLink } from "react-router-dom";
 
 export function NavMain({
   items,
@@ -32,11 +31,12 @@ export function NavMain({
     items?: {
       title: string;
       url: string;
+      icon?: LucideIcon;
     }[];
   }[];
 }) {
   return (
-    <SidebarGroup>
+    <SidebarGroup className="overflow-auto scrollbar-hide">
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
@@ -46,7 +46,7 @@ export function NavMain({
                 <SidebarMenuButton>
                   <Link to={item.url}>
                     {item.icon && <item.icon />}
-                    <span className="text-base">{item.title}</span>
+                    <span className="text-base ">{item.title}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -57,7 +57,7 @@ export function NavMain({
                 key={item.title}
                 asChild
                 defaultOpen={item.isActive}
-                className="group/collapsible"
+                className="group/collapsible "
               >
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
@@ -71,11 +71,20 @@ export function NavMain({
                     <SidebarMenuSub>
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
-                            <Link to={subItem.url}>
-                              <span className="text-sm">{subItem.title}</span>
-                            </Link>
-                          </SidebarMenuSubButton>
+                          <NavLink
+                            to={subItem.url}
+                            className={({ isActive }) =>
+                              cn(
+                                "flex rounded-sm px-2 gap-2 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground py-1",
+                                isActive && "!text-white !bg-[#3266F6]"
+                              )
+                            }
+                          >
+                            {subItem.icon && (
+                              <subItem.icon className="text-current w-4" />
+                            )}
+                            <span className="text-base">{subItem.title}</span>
+                          </NavLink>
                         </SidebarMenuSubItem>
                       ))}
                     </SidebarMenuSub>

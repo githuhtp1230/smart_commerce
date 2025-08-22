@@ -223,7 +223,7 @@ const CartItemList = () => {
   ];
 
   return (
-    <div className="bg-primary rounded-xl p-3">
+    <div className="bg-primary rounded-sm border px-3 py-1">
       <DataTable columns={columns} data={cartItems} />
     </div>
   );

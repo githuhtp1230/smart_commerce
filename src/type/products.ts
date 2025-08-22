@@ -16,9 +16,12 @@ export interface IProductSummary {
   name: string;
   averageRating: number;
   reviewCount: number;
-  price: number;
+  price: number | null;
+  maxPrice: number | null;
   image: string;
   promotion?: IPromotion;
+  category?: ICategory;
+  createdAt: string;
 }
 
 export interface IProductVariation {

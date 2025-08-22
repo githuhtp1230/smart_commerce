@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -29,12 +28,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import CircleAvatar from "@/components/common/avatar/CircleAvatar";
+import { useTranslation } from "react-i18next";
 
 const formSchema = z.object({
   username: z.string().min(3, "User must be longer than 3 characters"),
 });
 
 const LeftUserProfile: React.FC = () => {
+  const { t } = useTranslation();
   const { me, setMe } = useAuthStore((state) => state);
   const [isNameDialogOpen, setIsNameDialogOpen] = useState(false);
 
@@ -85,14 +86,14 @@ const LeftUserProfile: React.FC = () => {
                 <Pencil className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-muted-foreground">Joined 3 months ago</p>
+            <p className="text-muted-foreground">{t("Joined 3 months ago")}</p>
           </div>
         </div>
         <Separator className="w-full my-6 mb-0 mt-13" />
         <div className="grid grid-cols-3 gap-12 mt-0">
           <div className="space-y-2">
             <h6 className="text-sm font-medium text-muted-foreground">
-              Total Spent
+              {t("Total Spent")}
             </h6>
             <h4 className="text-xl font-semibold text-secondary-foreground">
               18,800,000 VNĐ
@@ -100,15 +101,15 @@ const LeftUserProfile: React.FC = () => {
           </div>
           <div className="space-y-2">
             <h6 className="text-sm font-medium text-muted-foreground">
-              Last Order
+              {t("Last Order")}
             </h6>
             <p className="text-xl font-semibold text-secondary-foreground">
               1 week ago
             </p>
           </div>
-          <div className="space-y-2 ml-30">
+          <div className="space-y-2 ml-28">
             <h6 className="text-sm font-medium text-muted-foreground">
-              Total Orders
+              {t("Total Orders")}
             </h6>
             <p className="text-xl font-semibold text-secondary-foreground">
               97
@@ -120,7 +121,7 @@ const LeftUserProfile: React.FC = () => {
       <Dialog open={isNameDialogOpen} onOpenChange={setIsNameDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit name</DialogTitle>
+            <DialogTitle>{t("Edit name")}</DialogTitle>
           </DialogHeader>
 
           <Form {...form}>
@@ -150,14 +151,14 @@ const LeftUserProfile: React.FC = () => {
                   }}
                   type="button"
                 >
-                  Cancel
+                  {t("Cancel")}
                 </Button>
                 <Button
                   type="submit"
                   className="bg-blue-500 hover:bg-blue-700 text-white"
                   disabled={isPending}
                 >
-                  Save
+                  {t("Save")}
                 </Button>
               </DialogFooter>
             </form>

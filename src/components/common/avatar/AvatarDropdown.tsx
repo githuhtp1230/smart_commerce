@@ -17,9 +17,12 @@ export default function AvatarDropdown() {
   const { me, logout } = useAuthStore((state) => state);
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center">
-        <CircleAvatar isMe />
+      <DropdownMenuTrigger asChild>
+        <div className="flex items-center cursor-pointer">
+          <CircleAvatar isMe />
+        </div>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent
         className="mt-2 w-72 bg-primary"
         align="end"

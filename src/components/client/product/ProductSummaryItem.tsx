@@ -25,7 +25,7 @@ const ProductSummaryItem = ({ product }: Props) => {
           className="h-60 rounded-lg object-contain object-center"
         />
         <div className="mt-3 px-2">
-          <h1 className="text-base group-hover:text-blue-400">
+          <h1 className="text-lg font-bold group-hover:text-blue-400">
             {product.name}
           </h1>
           <div className="flex items-center gap-2 text-muted-foreground mt-2">
