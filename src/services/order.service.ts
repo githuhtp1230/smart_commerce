@@ -1,3 +1,4 @@
+
 import httpRequest from "@/utils/http-request";
 
 /** User */
@@ -32,6 +33,7 @@ export interface IOrderDetail {
 }
 
 /** Order summary (chi tiết) */
+
 export interface IOrderSummary {
   id: number;
   orderDetails: IOrderDetail[];
@@ -91,6 +93,7 @@ interface ApiResponseData {
 }
 
 /** Lấy đơn hàng của chính user */
+
 export const getMyOrders = async (
   status?: string,
   page = 1,
@@ -168,5 +171,6 @@ export const fetchOrdersByUser = async (
       isLast: true,
       data: [],
     };
+
   }
 };

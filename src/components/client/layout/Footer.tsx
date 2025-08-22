@@ -1,6 +1,7 @@
 import { Facebook } from "@/assets/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PATH } from "@/constants/path";
 import { CreditCard, Instagram, Youtube } from "lucide-react";
 
 const Footer = () => {
@@ -10,7 +11,7 @@ const Footer = () => {
         <div className="container justify-between max-w-screen-xl w-full">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h3 className="font-bold text-foreground mb-4">About Phoenix</h3>
+              <h3 className="font-bold text-foreground mb-4">About Mart Commerce</h3>
               <ul className="space-y-2">
                 {[
                   "About Us",
@@ -21,7 +22,7 @@ const Footer = () => {
                 ].map((item) => (
                   <li key={item}>
                     <a
-                      href="#"
+                      href={PATH.CONTACT}
                       className="text-sm text-muted-foreground hover:text-primary"
                     >
                       {item}

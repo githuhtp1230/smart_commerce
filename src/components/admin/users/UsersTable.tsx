@@ -6,6 +6,8 @@ import type { IUser } from "@/type/auth";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { PencilLineIcon, Ellipsis, Lock, Unlock, User } from "lucide-react";
+
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +22,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toastSuccess, toastError } from "@/components/common/sonner";
 import { toggleIsActiveUser } from "@/services/users.service";
 import EmployeePermissionsDialog from "./EmployeePermissionsDialog";
+
 
 interface Props {
   users: IUser[];

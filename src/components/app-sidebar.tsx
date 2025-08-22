@@ -238,7 +238,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open } = useSidebar();
   return (
     <Sidebar
-      className="[&_[data-sidebar='sidebar']]:bg-primary side"
+      className="[&_[data-sidebar='sidebar']]:bg-primary side "
       collapsible="icon"
       {...props}
     >

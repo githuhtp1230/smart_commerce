@@ -25,7 +25,10 @@ import CheckoutCompletedPage from "./pages/client/CheckoutCompletedPage";
 import ManageUsersPage from "./pages/admin/ManageUsersPage";
 import ManageAttributePage from "./pages/admin/ManageAttributePage";
 import ManageAttributeValuePage from "./pages/admin/ManageAttributeValuePage";
-import ManagePromotionPage from "./pages/admin/ManagePromotionPage";
+import ManagePromotionPage from "./pages/admin/ManagePromotionPage";s
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
+
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
@@ -76,6 +79,11 @@ function App() {
                 element={<CheckoutCompletedPage />}
               />
               <Route path={PATH.PROFILE} element={<Profile />} />
+            </Route>
+            <Route path={PATH.CONTACT} element={<Contact />} />
+            <Route>
+              <Route path={PATH.NOT_FOUND} element={<NotFound />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
           </Route>
 
