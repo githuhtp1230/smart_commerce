@@ -3,7 +3,7 @@ import { DataTable } from "@/components/common/table/DataTable";
 import { Button } from "@/components/ui/button";
 import type { IProductSummary } from "@/type/products";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Ellipsis, PencilLineIcon, SquarePen, Trash2 } from "lucide-react";
+import { Ellipsis, PencilLineIcon, Trash2 } from "lucide-react";
 
 import { toast } from "sonner"; // hoặc react-hot-toast nếu bạn dùng cái khác
 import { deleteProduct } from "@/services/products.service";
@@ -17,7 +17,7 @@ import { Eye } from "@/assets/icons";
 
 interface Props {
   products: IProductSummary[];
-  onDeleted?: () => void; // callback sau khi xoá thành công
+  onDeleted?: () => void;
   readOnly?: boolean;
 }
 
