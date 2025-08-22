@@ -142,7 +142,6 @@
   "Employee Details": "Chi tiết nhân viên",
   "View and manage employee permissions and order history": "Xem và quản lý quyền của nhân viên và lịch sử đơn hàng",
   "You have no orders yet.": "Bạn chưa có đơn hàng nào.",
-  "Product": "Sản phẩm",
   "Image": "Hình ảnh",
   "Total": "Tổng",
   "Date": "Ngày",
@@ -166,9 +165,19 @@
   "Phone Number *": "Số điện thoại *",
   "Role *": "Vai trò *",
   "Status *": "Trạng thái *",
-  "Avatar": "Ảnh đại diện",
   "Name *": "Tên *",
   "Password *": "Mật khẩu *",
   "Phone  *": "Số điện thoại *",
-  "Select role": "Chọn vai trò"
+  "Select role": "Chọn vai trò",
+  "ServiceFeature": {
+    "express_delivery": "VẬN CHUYỂN HỎA TỐC",
+    "best_warranty": "BẢO HÀNH TỐT NHẤT",
+    "genuine_commitment": "CAM KẾT CHÍNH HÃNG",
+    "lifetime_support": "HỖ TRỢ TRỌN ĐỜI",
+    "ship_cod": "Ship COD toàn quốc",
+    "best_quality": "Theo tiêu chuẩn nhà sản xuất",
+    "international_version": "Phiên bản quốc tế",
+    "free_support": "Tư vấn hỗ trợ miễn phí"
+  },
+  "contact": "Liên hệ"
 }

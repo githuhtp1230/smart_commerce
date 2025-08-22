@@ -15,7 +15,7 @@ const Header = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex justify-center w-full items-center py-3 px-10">
+    <div className="fixed z-10 flex justify-center w-full items-center py-3 px-10 bg-background">
       <div className="max-w-screen-xl flex justify-between w-full items-center">
         {/* Logo */}
         <div className="flex gap-1 items-center leading-none">
