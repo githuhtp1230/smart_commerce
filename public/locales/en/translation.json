@@ -23,5 +23,16 @@
   "specifications": "Specifications",
   "rating": "Rating",
   "reviews": "Reviews",
-  "reply": "Reply"
+  "reply": "Reply",
+  "ServiceFeature": {
+    "express_delivery": "EXPRESS DELIVERY",
+    "best_warranty": "BEST WARRANTY",
+    "genuine_commitment": "GENUINE COMMITMENT",
+    "lifetime_support": "LIFETIME SUPPORT",
+    "ship_cod": "Ship COD nationwide",
+    "best_quality": "According to manufacturer standards",
+    "international_version": "International version",
+    "free_support": "Free support consultation"
+  },
+  "contact": "Contact"
 }

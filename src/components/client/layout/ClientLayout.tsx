@@ -25,7 +25,7 @@ const ClientLayout = () => {
     <div className="flex flex-col items-center">
       <Header />
       <Navbar />
-      <div className=" w-full px-10 flex justify-center">
+      <div className=" w-full px-10 flex justify-center pt-[110px]">
         <div className="py-6 w-full max-w-screen-xl">
           <Outlet />
         </div>
