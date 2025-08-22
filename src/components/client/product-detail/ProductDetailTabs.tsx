@@ -31,14 +31,14 @@ const ProductDetailTabs = ({ productDetail }: Props) => {
           value="description"
           className="bg-background p-6 rounded-lg shadow-sm"
         >
-          <ProductDetailDescription />
+          <ProductDetailDescription description={productDetail?.description} />
         </TabsContent>
 
         <TabsContent
           value="specifications"
           className="bg-background rounded-lg shadow-sm mt-3"
         >
-          <ProductDetailAttributeList productDetail={productDetail} />
+          <ProductDetailAttributeList attributeValues={productDetail?.attributeValues} />
         </TabsContent>
 
         <TabsContent

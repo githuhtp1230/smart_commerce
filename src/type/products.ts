@@ -34,6 +34,7 @@ export interface IProductVariation {
 }
 
 export interface IProductDetail extends IProductSummary {
+  description: string;
   images: string[];
   attributeValues: IAttributeValue[];
   variations: IProductVariation[];
@@ -47,12 +48,6 @@ export interface IProductVariation {
   stock: 32;
   image: string;
   attributeValues: IAttributeValue[];
-}
-
-export interface IProductDetail extends IProductSummary {
-  attributeValues: IAttributeValue[];
-  variations: IProductVariation[];
-  createdAt: string;
 }
 export interface PaginationProductSummaries {
   data: IProductSummary[];
