@@ -29,7 +29,9 @@ const CustomInput = ({
     <div
       className={cn(
         "px-4 py-0.5 flex items-center gap-2 rounded-lg border",
-        hasError ? "border-system-danger-hard" : "border-border-primary",
+        hasError
+          ? "border-icon-system-danger"
+          : "border-border-primary focus-within:border-blue-400",
         disabled && "bg-background-secondary",
         containerClassName
       )}

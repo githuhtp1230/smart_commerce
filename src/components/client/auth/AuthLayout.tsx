@@ -51,7 +51,8 @@ const AuthLayout = () => {
                 Welcome to Smart Commerce
               </h1>
               <AuthTabs />
-            </>)}
+            </>
+          )}
 
           <div className="mt-3">
             <Outlet />

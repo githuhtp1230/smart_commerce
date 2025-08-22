@@ -149,7 +149,7 @@ const CropImageDialog = ({
             <div className="flex gap-2 justify-center mt-4">
               <Button
                 variant="outline"
-                className="font-mono text-xs py-2 px-4 rounded-2xl border-border-primary"
+                className="font-mono text-xs py-2 px-4 rounded-2xl border-primary"
                 onClick={() => setIsOpen(false)}
               >
                 Cancel
@@ -172,7 +172,7 @@ const CropImageDialog = ({
             </div>
           </div>
         ) : (
-          <DropZone onSelectedFile={onSelectFile} />
+          <DropZone onSelectedFile={onSelectFile} className="h-400" />
         )}
 
         <canvas

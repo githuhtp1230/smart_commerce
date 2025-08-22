@@ -56,3 +56,15 @@ export const fetchProductSummariesByStatus = async (
 export const deleteProduct = async (productId: number): Promise<void> => {
   await httpRequest.delete(`products/${productId}/delete`);
 };
+
+export const createProduct = async (productData: {
+  categoryId: number;
+  title: string;
+  description: string;
+  price: number;
+  stock: number;
+  images: string[];
+}) => {
+  const res = await httpRequest.post("/products", productData);
+  return res.data.data;
+};
