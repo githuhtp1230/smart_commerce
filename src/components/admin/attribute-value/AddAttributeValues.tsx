@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { toastError, toastSuccess } from "@/components/common/sonner";
 import type { IAttribute } from "@/type/attribute";
 
@@ -20,6 +19,8 @@ import {
   fetchAttributes,
 } from "@/services/attributes.service";
 import { Plus } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import CustomInput from "@/components/common/input/CustomInput";
 
 interface Props {
   onSuccess?: () => void;
@@ -27,6 +28,7 @@ interface Props {
 }
 
 export default function AddAttributeValues({ onSuccess, currentTab }: Props) {
+  const { t } = useTranslation();
   const [attributeValueName, setAttributeValueName] = useState("");
   const [selectedAttributeId, setSelectedAttributeId] = useState<string>("");
 
@@ -46,7 +48,7 @@ export default function AddAttributeValues({ onSuccess, currentTab }: Props) {
       attributeId: number;
     }) => attributeValueApi.createAttributeValue({ value, attributeId }),
     onSuccess: () => {
-      toastSuccess("Thêm giá trị thuộc tính thành công");
+      toastSuccess(t("Add attribute value successfully"));
       setAttributeValueName("");
       setSelectedAttributeId("");
 
@@ -57,7 +59,7 @@ export default function AddAttributeValues({ onSuccess, currentTab }: Props) {
       queryClient.invalidateQueries({ queryKey: ["attributes"] });
     },
     onError: (error) => {
-      toastError("Thêm giá trị thuộc tính thất bại");
+      toastError(t("Add attribute value failed"));
       console.error("API Error:", error);
     },
   });
@@ -76,7 +78,9 @@ export default function AddAttributeValues({ onSuccess, currentTab }: Props) {
 
   return (
     <div className="p-6 text-center">
-      <h2 className="text-2xl font-semibold mb-4">Thêm giá trị thuộc tính</h2>
+      <h2 className="text-3xl font-semibold mb-4">
+        {t("Add attribute value")}
+      </h2>
 
       <form
         onSubmit={handleSubmit}
@@ -88,7 +92,7 @@ export default function AddAttributeValues({ onSuccess, currentTab }: Props) {
           onValueChange={(val) => setSelectedAttributeId(val)}
         >
           <SelectTrigger className="w-full md:w-[200px]">
-            <SelectValue placeholder="Chọn thuộc tính" />
+            <SelectValue placeholder={t("Select Attribute")} />
           </SelectTrigger>
           <SelectContent>
             {attributes.map((attr) => (
@@ -100,8 +104,8 @@ export default function AddAttributeValues({ onSuccess, currentTab }: Props) {
         </Select>
 
         {/* Input giá trị thuộc tính */}
-        <Input
-          placeholder="Tên giá trị thuộc tính"
+        <CustomInput
+          placeholder={t("Name Attribute Value")}
           value={attributeValueName}
           onChange={(e) => setAttributeValueName(e.target.value)}
           disabled={!selectedAttributeId}
@@ -119,7 +123,7 @@ export default function AddAttributeValues({ onSuccess, currentTab }: Props) {
           className="bg-blue-500 hover:bg-blue-600 whitespace-nowrap"
         >
           <Plus className="w-4 h-4 mr-2" />
-          {mutation.isPending ? "Đang thêm..." : "Thêm"}
+          {mutation.isPending ? t("Adding...") : t("Add")}
         </Button>
       </form>
     </div>

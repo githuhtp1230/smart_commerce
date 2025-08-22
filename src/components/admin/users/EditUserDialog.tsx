@@ -29,7 +29,7 @@ import CropImageDialog from "@/components/common/dialog/CropImageDialog";
 import { toastError, toastSuccess } from "@/components/common/sonner";
 import type { IUser } from "@/type/auth";
 import { updateUser } from "@/services/users.service";
-
+import { useTranslation } from "react-i18next";
 
 /** Schema validate */
 const userSchema = z.object({
@@ -72,6 +72,7 @@ export default function EditUserDialog({
   setIsOpen,
   onUserUpdated,
 }: EditUserDialogProps) {
+  const { t } = useTranslation();
   const [avatarPreview, setAvatarPreview] = useState<string>(user.avatar ?? "");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
@@ -119,12 +120,12 @@ export default function EditUserDialog({
       };
 
       const updatedUser: IUser = await updateUser(payload);
-      toastSuccess("Cập nhật người dùng thành công!");
+      toastSuccess(t("User updated successfully!"));
       onUserUpdated?.(updatedUser);
       setIsOpen(false);
     } catch (err) {
       console.error(err);
-      toastError("Cập nhật người dùng thất bại!");
+      toastError(t("User update failed!"));
     } finally {
       setLoading(false);
     }
@@ -159,10 +160,10 @@ export default function EditUserDialog({
             </svg>
           </div>
           <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-            Chỉnh sửa người dùng
+            {t("Edit User")}
           </h2>
           <p className="text-gray-500 dark:text-gray-400 mt-2">
-            Cập nhật thông tin tài khoản
+            {t("Update account information")}
           </p>
         </div>
 
@@ -208,7 +209,7 @@ export default function EditUserDialog({
                   render={({ field }) => (
                     <FormItem className="space-y-2">
                       <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                        Tên đầy đủ *
+                        {t("Full Name *")}
                       </FormLabel>
                       <FormControl>
                         <CustomInput
@@ -229,7 +230,7 @@ export default function EditUserDialog({
                   render={({ field }) => (
                     <FormItem className="space-y-2">
                       <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                        Vai trò
+                        {t("Role *")}
                       </FormLabel>
                       <FormControl>
                         <Select
@@ -240,9 +241,9 @@ export default function EditUserDialog({
                             <SelectValue placeholder="Chọn vai trò" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="1">Admin</SelectItem>
-                            <SelectItem value="2">User</SelectItem>
-                            <SelectItem value="3">Staff</SelectItem>
+                            <SelectItem value="1">{t("Admin")}</SelectItem>
+                            <SelectItem value="2">{t("User")}</SelectItem>
+                            <SelectItem value="3">{t("Staff")}</SelectItem>
                           </SelectContent>
                         </Select>
                       </FormControl>
@@ -281,7 +282,7 @@ export default function EditUserDialog({
                 render={({ field }) => (
                   <FormItem className="space-y-2">
                     <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                      Số điện thoại *
+                      {t("Phone Number *")}
                     </FormLabel>
                     <FormControl>
                       <CustomInput
@@ -302,7 +303,7 @@ export default function EditUserDialog({
                 render={({ field }) => (
                   <FormItem className="space-y-2">
                     <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                      Trạng thái
+                      {t("Status *")}
                     </FormLabel>
                     <FormControl>
                       <Select
@@ -331,10 +332,14 @@ export default function EditUserDialog({
                 variant="outline"
                 onClick={() => setIsOpen(false)}
               >
-                Hủy bỏ
+                {t("Cancel")}
               </Button>
-              <Button type="submit" disabled={loading}>
-                {loading ? "Đang cập nhật..." : "Cập nhật thông tin"}
+              <Button
+                type="submit"
+                disabled={loading}
+                className="bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? t("Updating...") : t("Update Information")}
               </Button>
             </div>
           </form>

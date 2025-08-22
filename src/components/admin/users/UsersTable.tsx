@@ -7,7 +7,6 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { PencilLineIcon, Ellipsis, Lock, Unlock, User } from "lucide-react";
 
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +21,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toastSuccess, toastError } from "@/components/common/sonner";
 import { toggleIsActiveUser } from "@/services/users.service";
 import EmployeePermissionsDialog from "./EmployeePermissionsDialog";
-
+import { useTranslation } from "react-i18next";
 
 interface Props {
   users: IUser[];
@@ -31,6 +30,7 @@ interface Props {
 }
 
 const UsersTable = ({ users, onUserUpdated }: Props) => {
+  const { t } = useTranslation();
   const [userList, setUserList] = useState<IUser[]>([]);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
   const [editingUser, setEditingUser] = useState<IUser | null>(null);
@@ -44,7 +44,7 @@ const UsersTable = ({ users, onUserUpdated }: Props) => {
   const { mutate: toggleUser } = useMutation<IUser, Error, number>({
     mutationFn: (userId: number) => toggleIsActiveUser(userId),
     onSuccess: (updatedUser) => {
-      toastSuccess("Cập nhật trạng thái thành công");
+      toastSuccess(t("Update status successfully"));
       setUserList((prev) =>
         prev.map((u) => (u.id === updatedUser.id ? updatedUser : u))
       );
@@ -59,7 +59,7 @@ const UsersTable = ({ users, onUserUpdated }: Props) => {
     { accessorKey: "id", header: "Id", cell: ({ row }) => row.index + 1 },
     {
       accessorKey: "avatar",
-      header: "Avatar",
+      header: t("Avatar"),
       cell: ({ row }) => {
         const avatarUrl = row.original.avatar?.trim();
         return avatarUrl ? (
@@ -82,17 +82,17 @@ const UsersTable = ({ users, onUserUpdated }: Props) => {
     },
     {
       accessorKey: "name",
-      header: "Name",
+      header: t("Name"),
       cell: ({ row }) => row.original.name,
     },
     {
       accessorKey: "phone",
-      header: "Phone",
+      header: t("Phone"),
       cell: ({ row }) => row.original.phone,
     },
     {
       accessorKey: "role",
-      header: "Role",
+      header: t("Role"),
       cell: ({ row }) => {
         type RoleKey = "admin" | "manage" | "user";
         const role = (row.original.role ?? "user").toLowerCase() as RoleKey;
@@ -101,11 +101,11 @@ const UsersTable = ({ users, onUserUpdated }: Props) => {
     },
     {
       accessorKey: "isActive",
-      header: "User Status",
+      header: t("User Status"),
       cell: ({ row }) => (
         <AppBadge
           badgeColor={row.original.isActive ? "green" : "red"}
-          content={row.original.isActive ? "Hoạt động" : "Đã khóa"}
+          content={row.original.isActive ? t("Active") : t("Locked")}
         />
       ),
     },
@@ -128,7 +128,7 @@ const UsersTable = ({ users, onUserUpdated }: Props) => {
                   setDialogOpen(true);
                 }}
               >
-                <Eye className="size-3.5" /> Preview
+                <Eye className="size-3.5" /> {t("Preview")}
               </DropdownMenuItem>
 
               <DropdownMenuItem
@@ -137,7 +137,7 @@ const UsersTable = ({ users, onUserUpdated }: Props) => {
                   setEditDialogOpen(true);
                 }}
               >
-                <PencilLineIcon className="size-3.5" /> Edit
+                <PencilLineIcon className="size-3.5" /> {t("Edit")}
               </DropdownMenuItem>
 
               <DropdownMenuItem
@@ -148,14 +148,14 @@ const UsersTable = ({ users, onUserUpdated }: Props) => {
                   <>
                     <Lock className="w-4 h-4 text-red-500" />
                     <span className="text-red-600 font-medium">
-                      lock account
+                      {t("Lock account")}
                     </span>
                   </>
                 ) : (
                   <>
                     <Unlock className="w-4 h-4 text-green-500" />
                     <span className="text-green-600 font-medium">
-                      unlock account
+                      {t("Unlock account")}
                     </span>
                   </>
                 )}

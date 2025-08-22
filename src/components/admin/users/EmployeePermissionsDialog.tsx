@@ -37,6 +37,7 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
+import { useTranslation } from "react-i18next";
 
 interface EmployeePermissionsDialogProps {
   user: IUser | null;
@@ -54,16 +55,17 @@ export default function EmployeePermissionsDialog({
   open,
   onOpenChange,
 }: EmployeePermissionsDialogProps) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<"History Orders" | "Permissions">(
     "Permissions"
   );
 
   const [permissions, setPermissions] = useState<PermissionItem[]>([
-    { name: "Xem danh sách người dùng", enabled: true },
-    { name: "Thêm mới người dùng", enabled: false },
-    { name: "Cập nhật người dùng", enabled: false },
-    { name: "Xóa người dùng", enabled: true },
-    { name: "Xem thống kê", enabled: false },
+    { name: t("View user list"), enabled: true },
+    { name: t("Add new user"), enabled: false },
+    { name: t("Update user"), enabled: false },
+    { name: t("Delete user"), enabled: true },
+    { name: t("View statistics"), enabled: false },
   ]);
 
   const togglePermission = (index: number) => {
@@ -126,10 +128,10 @@ export default function EmployeePermissionsDialog({
       >
         <DialogHeader className="mb-4">
           <DialogTitle className="text-xl font-bold text-txt-primary">
-            Employee Details
+            {t("Employee Details")}
           </DialogTitle>
           <DialogDescription className="text-sm text-txt-primary mt-1">
-            View and manage employee permissions and order history
+            {t("View and manage employee permissions and order history")}
           </DialogDescription>
         </DialogHeader>
 
@@ -168,21 +170,21 @@ export default function EmployeePermissionsDialog({
                       </div>
                     ) : orders.length === 0 ? (
                       <p className="text-center text-gray-700 dark:text-gray-300">
-                        Bạn chưa có đơn hàng nào.
+                        {t("You have no orders yet.")}
                       </p>
                     ) : (
                       <>
                         <Table>
                           <TableHeader>
                             <TableRow>
-                              <TableHead>ID</TableHead>
-                              <TableHead>Sản phẩm</TableHead>
-                              <TableHead>Hình ảnh</TableHead>
-                              <TableHead>Tổng tiền</TableHead>
-                              <TableHead>Ngày đặt</TableHead>
-                              <TableHead>Phương thức giao</TableHead>
-                              <TableHead>Trạng thái</TableHead>
-                              <TableHead>Chi tiết</TableHead>
+                              <TableHead>{t("ID")}</TableHead>
+                              <TableHead>{t("Product")}</TableHead>
+                              <TableHead>{t("Image")}</TableHead>
+                              <TableHead>{t("Total")}</TableHead>
+                              <TableHead>{t("Date")}</TableHead>
+                              <TableHead>{t("Delivery Method")}</TableHead>
+                              <TableHead>{t("Status")}</TableHead>
+                              <TableHead>{t("Details")}</TableHead>
                             </TableRow>
                           </TableHeader>
                           <TableBody>
@@ -284,35 +286,36 @@ export default function EmployeePermissionsDialog({
                           <DialogContentDetail className="max-w-lg">
                             <DialogHeaderDetail>
                               <DialogTitleDetail>
-                                Chi tiết đơn hàng #{selectedOrder?.id}
+                                {t("Order details #{selectedOrder?.id}")}
                               </DialogTitleDetail>
                               <DialogDescriptionDetail>
-                                Thông tin chi tiết đơn hàng đã đặt.
+                                {t("Order details placed.")}
                               </DialogDescriptionDetail>
                             </DialogHeaderDetail>
 
                             {selectedOrder && (
                               <div className="space-y-3 text-gray-800 dark:text-gray-100">
                                 <p>
-                                  <strong>Ngày đặt:</strong>{" "}
+                                  <strong>{t("Order date:")}</strong>{" "}
                                   {new Date(selectedOrder.date).toLocaleString(
                                     "vi-VN"
                                   )}
                                 </p>
                                 <p>
-                                  <strong>Tổng tiền:</strong>{" "}
-                                  {selectedOrder.total.toLocaleString("vi-VN")} đ
+                                  <strong>{t("Total amount:")}</strong>{" "}
+                                  {selectedOrder.total.toLocaleString("vi-VN")}{" "}
+                                  đ
                                 </p>
                                 <p>
-                                  <strong>Phương thức giao:</strong>{" "}
+                                  <strong>{t("Delivery method:")}</strong>{" "}
                                   {selectedOrder.deliveryMethod}
                                 </p>
                                 <p>
-                                  <strong>Trạng thái:</strong>{" "}
+                                  <strong>{t("Status:")}</strong>{" "}
                                   {selectedOrder.status}
                                 </p>
                                 <div>
-                                  <strong>Sản phẩm:</strong>
+                                  <strong>{t("Products:")}</strong>
                                   <ul className="list-disc pl-5 mt-1">
                                     {selectedOrder.orderDetails.map(
                                       (d, idx) => (
@@ -324,7 +327,7 @@ export default function EmployeePermissionsDialog({
                                   </ul>
                                 </div>
                                 <div className="flex gap-2 items-center">
-                                  <strong>Hình ảnh:</strong>
+                                  <strong>{t("Image:")}</strong>
                                   {selectedOrder.orderDetails.map((d, idx) => (
                                     <img
                                       key={idx}
@@ -373,7 +376,7 @@ export default function EmployeePermissionsDialog({
             </div>
           </>
         ) : (
-          <p className="text-gray-500">No user selected</p>
+          <p className="text-gray-500">{t("No user selected")}</p>
         )}
       </DialogContent>
     </Dialog>

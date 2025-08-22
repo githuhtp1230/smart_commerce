@@ -27,6 +27,7 @@ import { PencilIcon } from "@/assets/icons";
 import { cn } from "@/lib/utils";
 import CropImageDialog from "@/components/common/dialog/CropImageDialog";
 import type { IUser } from "@/type/auth";
+import { useTranslation } from "react-i18next";
 
 /** Schema validate */
 const userSchema = z.object({
@@ -60,6 +61,7 @@ interface AddUserFormProps {
 }
 
 export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
+  const { t } = useTranslation();
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState<string | undefined>();
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
@@ -95,14 +97,14 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
       };
 
       const newUser: IUser = await createUser(payload);
-      toastSuccess("Thêm người dùng thành công!");
+      toastSuccess(t("User added successfully!"));
       form.reset();
       setAvatarPreview(undefined);
       setAvatarFile(null);
       onUserAdded?.(newUser);
     } catch (err) {
       console.error(err);
-      toastError("Thêm người dùng thất bại!");
+      toastError(t("Add user failed!"));
     } finally {
       setLoading(false);
     }
@@ -124,8 +126,8 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
 
   return (
     <div className="max-w-6xl mx-auto bg-white dark:bg-neutral-900 shadow-lg rounded-2xl p-2 mb-4">
-      <h2 className="text-2xl font-semibold mb-4 text-center">
-        Thêm người dùng mới
+      <h2 className="text-3xl font-semibold mb-4 text-center">
+        {t("Add user")}
       </h2>
 
       <Form {...form}>
@@ -139,7 +141,7 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
                     src={avatarPreview || form.getValues("avatarUrl")}
                     className="object-contain object-center border border-border-primary"
                   />
-                  <AvatarFallback>Avatar</AvatarFallback>
+                  <AvatarFallback>{t("Avatar")}</AvatarFallback>
                 </Avatar>
                 <Button
                   type="button"
@@ -162,10 +164,10 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
                 name="name"
                 render={({ field }) => (
                   <FormItem className={ITEM}>
-                    <FormLabel className={LABEL}>Tên*</FormLabel>
+                    <FormLabel className={LABEL}>{t("Name *")}</FormLabel>
                     <FormControl>
                       <CustomInput
-                        placeholder="Full name"
+                        placeholder={t("Full name")}
                         {...field}
                         className={INPUT}
                       />
@@ -180,11 +182,11 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
                 name="password"
                 render={({ field }) => (
                   <FormItem className={ITEM}>
-                    <FormLabel className={LABEL}>Mật khẩu*</FormLabel>
+                    <FormLabel className={LABEL}>{t("Password *")}</FormLabel>
                     <FormControl>
                       <CustomInput
                         type="password"
-                        placeholder="Password"
+                        placeholder={t("Password")}
                         {...field}
                         className={INPUT}
                       />
@@ -200,7 +202,7 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
                 render={({ field }) => (
                   <FormItem className={ITEM}>
                     <FormLabel className={LABEL}>
-                      Role (mặc định là user)
+                      {t("Role (default is user)*")}
                     </FormLabel>
                     <FormControl>
                       <Select
@@ -208,12 +210,12 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
                         onValueChange={(val) => field.onChange(val)}
                       >
                         <SelectTrigger className="h-10 w-min px-3 rounded-md border border-gray-300 bg-white text-sm flex items-center">
-                          <SelectValue placeholder="Chọn role" />
+                          <SelectValue placeholder={t("Select role")} />
                         </SelectTrigger>
                         <SelectContent className="w-full bg-white text-sm">
-                          <SelectItem value="1">Admin</SelectItem>
-                          <SelectItem value="2">User</SelectItem>
-                          <SelectItem value="3">Staff</SelectItem>
+                          <SelectItem value="1">{t("Admin")}</SelectItem>
+                          <SelectItem value="2">{t("User")}</SelectItem>
+                          <SelectItem value="3">{t("Staff")}</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -228,7 +230,7 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
                 name="email"
                 render={({ field }) => (
                   <FormItem className={ITEM}>
-                    <FormLabel className={LABEL}>Email*</FormLabel>
+                    <FormLabel className={LABEL}>{t("Email*")}</FormLabel>
                     <FormControl>
                       <CustomInput
                         type="email"
@@ -247,10 +249,10 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
                 name="phone"
                 render={({ field }) => (
                   <FormItem className={ITEM}>
-                    <FormLabel className={LABEL}>Số điện thoại*</FormLabel>
+                    <FormLabel className={LABEL}>{t("Phone *")}</FormLabel>
                     <FormControl>
                       <CustomInput
-                        placeholder="Phone number"
+                        placeholder={t("Phone number")}
                         {...field}
                         className={INPUT}
                       />
@@ -269,7 +271,7 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
               className="px-4 bg-blue-500 text-white hover:bg-blue-600"
               disabled={loading}
             >
-              {loading ? "Đang thêm..." : "Thêm người dùng"}
+              {loading ? t("Adding...") : t("Add user")}
             </Button>
           </div>
         </form>

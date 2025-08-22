@@ -9,6 +9,7 @@ import { SquarePen, Trash2 } from "lucide-react";
 import { useState } from "react";
 import EditAttributeValueDialog from "./EditAttributeValueDialog";
 import { attributeValueApi } from "@/services/attributes.service";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   attributevalues: IAttributeValue[];
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const AttributeValuesTable = ({ attributevalues, onSwitchTab }: Props) => {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   const [editAttributeValue, setEditAttributeValue] =
@@ -38,7 +40,7 @@ const AttributeValuesTable = ({ attributevalues, onSwitchTab }: Props) => {
     mutationFn: async ({ id, value }: { id: number | string; value: string }) =>
       await attributeValueApi.updateAttributeValue(id, { value }),
     onSuccess: () => {
-      toastSuccess("Attribute value updated successfully");
+      toastSuccess(t("Attribute value updated successfully"));
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["attributeValues"] });
@@ -72,27 +74,29 @@ const AttributeValuesTable = ({ attributevalues, onSwitchTab }: Props) => {
     },
     {
       accessorKey: "attribute",
-      header: () => <div>Attribute</div>,
+      header: () => <div>{t("Attribute")}</div>,
       cell: ({ row }) => {
         return <div>{row.original.attribute?.name}</div>;
       },
     },
     {
       accessorKey: "value",
-      header: () => <div>Value</div>,
+      header: () => <div>{t("Value")}</div>,
       cell: ({ row }) => {
         return <div>{row.original.value}</div>;
       },
     },
     {
       id: "deleteAction",
-      header: () => <div>Xóa</div>,
+      header: () => <div>{t("Delete")}</div>,
       cell: ({ row }) => {
         const id = row.original.id;
         return (
           <ConfirmDialog
-            title="Xóa giá trị thuộc tính"
-            description="Bạn có chắc muốn xóa thuộc tính này không?"
+            title={t("Delete attribute value")}
+            description={t(
+              "Are you sure you want to delete this attribute value?"
+            )}
             onConfirm={() => deleteAttributeValueMutation.mutate(Number(id))}
             trigger={
               <Button variant="ghost">
@@ -105,7 +109,7 @@ const AttributeValuesTable = ({ attributevalues, onSwitchTab }: Props) => {
     },
     {
       id: "updateAction",
-      header: () => <div>Cập nhật</div>,
+      header: () => <div>{t("Update")}</div>,
       cell: ({ row }) => {
         const attributeValue = row.original;
         return (
