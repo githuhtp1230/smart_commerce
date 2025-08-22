@@ -29,6 +29,9 @@ import {
 } from "@/components/ui/table";
 import { fetchAttributes } from "@/services/attributes.service";
 import { fetchSubCategories } from "@/services/categories.service";
+import { createProduct } from "@/services/products.service";
+import { uploadFile } from "@/services/upload.service";
+import { toastError, toastSuccess } from "@/components/common/sonner";
 import type { IAttribute } from "@/type/attribute";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
@@ -106,13 +109,51 @@ const AddProductPage = () => {
     name: "images",
   });
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    try {
+      setIsLoading(true);
+      
+      // Upload images first
+      const imageUrls: string[] = [];
+      for (const imageData of data.images) {
+        const uploadedUrl = await uploadFile(imageData.image);
+        if (uploadedUrl) {
+          imageUrls.push(uploadedUrl);
+        }
+      }
+      
+      // Prepare product data
+      const productData = {
+        categoryId: data.categoryId,
+        title: data.title,
+        description: data.description,
+        price: data.price || 0,
+        stock: data.stock || 0,
+        images: imageUrls,
+      };
+      
+      // Create product
+      const result = await createProduct(productData);
+      console.log("Product created successfully:", result);
+      
+      // Show success message
+      toastSuccess("Product added successfully!");
+      
+      // Reset form
+      form.reset();
+      
+    } catch (error) {
+      console.error("Error creating product:", error);
+      toastError("Failed to add product. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
   
   const [requiredAttributes, setRequiredAttributes] = useState<IAttribute[]>(
     []
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="flex px-5 pb-7">
@@ -337,7 +378,9 @@ const AddProductPage = () => {
                             hasError={!!form.formState.errors.price}
                             type="number"
                             onChange={(e) => {
-                              field.onChange(Number(e.target.value));
+                              if (Number.isInteger(Number(e.target.value))) {
+                                field.onChange(Number(e.target.value));
+                              }
                             }}
                             value={field.value}
                           />
@@ -360,7 +403,9 @@ const AddProductPage = () => {
                             hasError={!!form.formState.errors.stock}
                             type="number"
                             onChange={(e) => {
-                              field.onChange(Number(e.target.value));
+                              if (Number.isInteger(Number(e.target.value))) {
+                                field.onChange(Number(e.target.value));
+                              }
                             }}
                             value={field.value}
                           />
@@ -380,9 +425,10 @@ const AddProductPage = () => {
           <div className="flex justify-end">
             <Button
               type="submit"
-              className="text-white bg-blue-500 hover:bg-blue-600"
+              disabled={isLoading}
+              className="text-white bg-blue-500 hover:bg-blue-600 disabled:opacity-50"
             >
-              Add product
+              {isLoading ? "Adding product..." : "Add product"}
             </Button>
           </div>
         </form>
