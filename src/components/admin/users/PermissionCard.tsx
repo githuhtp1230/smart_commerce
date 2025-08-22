@@ -1,6 +1,7 @@
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface PermissionItem {
   name: string;
@@ -16,15 +17,16 @@ export default function PermissionCard({
   permissions,
   togglePermission,
 }: Props) {
+  const { t } = useTranslation();
   return (
     <div className="mt-4 space-y-4">
       <Card>
         <CardHeader className="pb-2 border-b">
           <CardTitle className="flex items-center gap-2 text-lg font-semibold text-blue-600">
-            <Shield className="w-5 h-5" /> Permissions Settings
+            <Shield className="w-5 h-5" /> {t("Permissions Settings")}
           </CardTitle>
           <p className="text-sm text-gray-500">
-            Manage access rights for this user
+            {t("Manage access rights for this user")}
           </p>
         </CardHeader>
         <CardContent className="grid grid-cols-2 gap-4 pt-2">

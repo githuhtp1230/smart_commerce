@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   open: boolean;
@@ -25,7 +26,7 @@ const EditAttributeDialog = ({
   onSubmit,
 }: Props) => {
   const [name, setName] = useState(initialName);
-
+  const { t } = useTranslation();
   useEffect(() => {
     if (open) {
       setName(initialName);
@@ -44,23 +45,23 @@ const EditAttributeDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Update Attribute</DialogTitle>
+          <DialogTitle>{t("Update Attribute")}</DialogTitle>
         </DialogHeader>
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Enter new name attribute"
+          placeholder={t("Enter attribute name")}
         />
         <DialogFooter className="flex justify-end gap-2 mt-4">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+            {t("Cancel")}
           </Button>
           <Button
             onClick={handleUpdate}
             disabled={name.trim() === "" || name.trim() === initialName.trim()}
             className="bg-blue-500 text-white"
           >
-            Update
+            {t("Update")}
           </Button>
         </DialogFooter>
       </DialogContent>

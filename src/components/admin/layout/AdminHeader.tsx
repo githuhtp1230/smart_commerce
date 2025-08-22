@@ -16,8 +16,10 @@ import { cn } from "@/lib/utils";
 import ToggleTheme from "@/components/common/ToggleTheme";
 import { data } from "@/components/app-sidebar";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const AdminHeader = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const pathname = location.pathname;
   const { state } = useSidebar();
@@ -30,7 +32,9 @@ const AdminHeader = () => {
         return [main.title];
       }
       if (main.items) {
-        const found = main.items.find((item) => pathname === normalize(item.url));
+        const found = main.items.find(
+          (item) => pathname === normalize(item.url)
+        );
         if (found) {
           return [main.title, found.title];
         }
@@ -41,12 +45,14 @@ const AdminHeader = () => {
 
   const crumbs = findBreadcrumb();
   return (
-    <header className={cn("fixed top-0 right-0 z-50 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12  w-full d-flex justify-between mb-10 bg-[#3266F6]",
-      "w-[calc(100%-var(--sidebar-width))] group-data-[collapsible=icon]/sidebar-wrapper:w-[calc(100%-var(--sidebar-width-icon))]",
-      state === "collapsed"
-        ? "w-[calc(100%-var(--sidebar-width-icon))]"
-        : "w-[calc(100%-var(--sidebar-width))]"
-    )}
+    <header
+      className={cn(
+        "fixed top-0 right-0 z-50 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12  w-full d-flex justify-between mb-10 bg-[#3266F6]",
+        "w-[calc(100%-var(--sidebar-width))] group-data-[collapsible=icon]/sidebar-wrapper:w-[calc(100%-var(--sidebar-width-icon))]",
+        state === "collapsed"
+          ? "w-[calc(100%-var(--sidebar-width-icon))]"
+          : "w-[calc(100%-var(--sidebar-width))]"
+      )}
     >
       <div className="flex items-center justify-between gap-2 px-4">
         <SidebarTrigger className="-ml-1 text-white" />
@@ -61,11 +67,13 @@ const AdminHeader = () => {
               <React.Fragment key={idx}>
                 <BreadcrumbItem className="hidden md:block">
                   {idx === crumbs.length - 1 ? (
-                    <BreadcrumbPage className="text-white">{c}</BreadcrumbPage>
+                    <BreadcrumbPage className="text-white">
+                      {t(c)}
+                    </BreadcrumbPage>
                   ) : (
                     <BreadcrumbLink asChild>
                       <Link to="#" className="text-white">
-                        {c}
+                        {t(c)}
                       </Link>
                     </BreadcrumbLink>
                   )}
