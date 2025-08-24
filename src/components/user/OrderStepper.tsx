@@ -14,7 +14,7 @@ interface OrderStepperProps {
 
 const OrderStepper: React.FC<OrderStepperProps> = ({ steps, currentStep }) => {
   return (
-    <div className="flex items-center justify-center w-full">
+    <div className="flex w-full">
       {steps.map((step, index) => {
         const isCompleted = index <= currentStep;
         const isActive = index === currentStep;
@@ -40,7 +40,7 @@ const OrderStepper: React.FC<OrderStepperProps> = ({ steps, currentStep }) => {
 
             {index < steps.length - 1 && (
               <div
-                className={`h-[5px] w-60 transition-all duration-300
+                className={`h-[5px] w-30 transition-all duration-300
                   ${
                     isCompleted
                       ? "bg-gradient-to-r from-green-500 to-green-300"

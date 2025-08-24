@@ -138,6 +138,13 @@ export const data = {
       title: "Manage order",
       url: "#",
       icon: Truck,
+      items: [
+        {
+          title: "Orders",
+          url: ADMIN_PATH.ORDER,
+          icon: Layers,
+        },
+      ]
     },
     {
       title: "Manage review",

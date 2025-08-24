@@ -22,4 +22,5 @@ export const ADMIN_PATH = {
   USER: "admin/users",
   PROMOTION: "admin/promotion",
   DASHBOARD: "admin/dashboard",
+  ORDER: "admin/order",
 };
