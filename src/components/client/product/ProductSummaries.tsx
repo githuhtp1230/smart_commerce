@@ -133,7 +133,7 @@ const ProductSummaries: React.FC<Props> = ({ keyword }) => {
       )}
 
 
-      {totalPages > 1 && (
+      {totalPages > 0 && (
         <Pagination className="cursor-pointer">
           <PaginationContent>
             <PaginationItem>

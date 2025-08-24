@@ -21,15 +21,29 @@ const ProductSummaryItem = ({ product, className, priceContainerClassName }: Pro
     : undefined;
 
   return (
-    <Link to={`${PATH.PRODUCTS}/${product.id}`} className="group">
-      <Card className={cn("bg-primary shadow-xs p-4 gap-0", className)}>
-        <img
-          src={product.image}
-          className="h-60 rounded-lg object-contain object-center"
-        />
+    <Link to={`${PATH.PRODUCTS}/${product.id}`}>
+      <Card className={cn("bg-primary shadow-xs p-4 gap-0 group", className)}>
+        <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-800 flex items-center justify-center overflow-hidden">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="object-contain w-full h-full transition-all duration-300 group-hover:scale-110"
+          />
+        </div>
         <div className="mt-3 px-2">
-          <h1 className="text-lg font-bold group-hover:text-blue-400">
-            {product.name}
+          <h1 className="text-lg font-medium">
+            <div
+              className="font-semibold text-base text-gray-900 dark:text-white group-hover:text-blue-400 transition-colors"
+              style={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "block"
+              }}
+              title={product.name}
+            >
+              {product.name}
+            </div>
           </h1>
           <div className="flex items-center gap-2 text-muted-foreground mt-2">
             <RatingFilter
