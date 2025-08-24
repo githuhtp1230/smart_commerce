@@ -50,16 +50,17 @@ const UserOrderPage = () => {
   };
 
   return (
-    <Tabs value={tabValue} onValueChange={handleTabChange} className="w-full">
-      <TabsList className="w-full p-0 justify-start border-b rounded-none">
+    <Tabs value={tabValue} onValueChange={handleTabChange} className="w-full px-4 gap-0">
+      <TabsList className="p-0 justify-start">
         {tabs.map((tab) => (
           <CustomTabsTrigger key={tab.value} value={tab.value} className="bg-background h-full">
             <p className="text-[15px]">{t(tab.name)}</p>
           </CustomTabsTrigger>
         ))}
       </TabsList>
+      <div className="border border-b-border-primary mt-[3px] !h-[1px]"></div>
 
-      <TabsContent value={tabValue}>
+      <TabsContent value={tabValue} className="mt-4">
         {orders.length === 0 ? (
           <div className="text-center text-gray-500 py-10 text-lg font-semibold">
             <div className="flex justify-center mb-4 ">
