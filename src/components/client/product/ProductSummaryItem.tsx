@@ -16,14 +16,14 @@ interface Props {
 }
 
 const ProductSummaryItem = ({ product, className, priceContainerClassName }: Props) => {
-  const salePrice = product.promotion
+  const salePrice = product.promotion && product.price
     ? product.price * (1 - product.promotion.discountValuePercent / 100)
     : undefined;
 
   return (
     <Link to={`${PATH.PRODUCTS}/${product.id}`}>
       <Card className={cn("bg-primary shadow-xs p-4 gap-0 group", className)}>
-        <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-800 flex items-center justify-center overflow-hidden">
+        <div className="relative w-full h-48  dark:bg-white flex items-center justify-center overflow-hidden">
           <img
             src={product.image}
             alt={product.name}

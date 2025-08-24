@@ -111,7 +111,7 @@ const CategoriesTable = ({ categories, onSwitchTab }: Props) => {
 
   return (
     <>
-      <div className="bg-primary rounded-xl p-3">
+      <div className="bg-primary">
         <DataTable columns={columns} data={sortedCategories} />
       </div>
       {editCategory && (

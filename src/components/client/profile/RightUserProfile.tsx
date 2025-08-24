@@ -93,7 +93,6 @@ const RightUserProfile: React.FC = () => {
             id="editContactBtn"
             className="text-card-foreground dark:hover:text-blue-400 cursor-pointer"
           >
-            <Pencil className="w-4 h-4" />
           </button>
         </div>
         <Separator className="my-4" />
@@ -129,21 +128,21 @@ const RightUserProfile: React.FC = () => {
           </div>
           <Separator className="my-4" />
           <div>
-            <div className="flex items-center gap-40">
-              <h3 className="font-medium text-secondary-foreground">Email</h3>
-              <p className="text-txt-brand">{contactInfo.email}</p>
+            <div className="flex items-center relative ">
+              <h3 className="font-medium text-secondary-foreground">Email:</h3>
+              <p className="text-txt-brand text-right absolute right-0">{contactInfo.email}</p>
             </div>
           </div>
           <div>
-            <div className="flex items-center gap-38">
-              <h3 className="font-medium text-secondary-foreground">
-                {t("Phone")}
-              </h3>
-              <div className="flex items-center gap-2">
-                <p className="text-txt-brand">{me?.phone}</p>
+            <div className="flex items-center pr-6 relative">
+
+              <h3 className="font-medium text-secondary-foreground">{t("Phone")}:</h3>
+
+              <div className="flex items-center justify-between w-full absolute ">
+                <p className="text-txt-brand absolute right-8">{me?.phone ? me.phone : "No Phone Number"}</p>
                 <button
                   id="editPhoneBtn"
-                  className="text-card-foreground dark:hover:text-blue-400 cursor-pointer"
+                  className="text-card-foreground dark:hover:text-blue-400 cursor-pointer absolute right-0"
                   onClick={() => {
                     setIsPhoneDialogOpen(true);
                   }}
