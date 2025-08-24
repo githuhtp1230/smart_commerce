@@ -31,10 +31,10 @@ export default function CarouselProduct() {
     fetchData();
   }, []);
 
-  // Auto scroll
   React.useEffect(() => {
     if (!api) return;
 
+    console.log(api.scrollSnapList());
     setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
 
@@ -49,10 +49,10 @@ export default function CarouselProduct() {
       } else {
         api.scrollTo(0);
       }
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, [api]);
+  }, [api, products]);
 
   return (
     <div className="relative w-full h-[400px] md:h-[480px] lg:h-[520px] rounded-2xl overflow-hidden shadow-lg">
@@ -70,7 +70,7 @@ export default function CarouselProduct() {
                   />
 
                   {/* Overlay gradient chỉ phủ vùng tiêu đề */}
-                  <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-black/40 via-black/20 to-transparent pointer-events-none rounded-b-xl" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-black/50 via-black/20 to-transparent pointer-events-none" />
 
                   {/* Category badge */}
                   {product.category && (
@@ -98,20 +98,22 @@ export default function CarouselProduct() {
       </Carousel>
 
       {/* Pagination dots */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-        {Array.from({ length: count }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => api?.scrollTo(index)}
-            className={cn(
-              "h-2.5 w-2.5 rounded-full transition-all",
-              current === index + 1
-                ? "bg-blue-500 scale-125 shadow-md"
-                : "bg-gray-300 hover:bg-gray-400"
-            )}
-          />
-        ))}
-      </div>
+      {count > 0 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-50">
+          {Array.from({ length: count }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => api?.scrollTo(index)}
+              className={cn(
+                "h-3 w-3 rounded-full transition-all duration-300",
+                current === index + 1
+                  ? "bg-blue-500 scale-125 shadow-md"
+                  : "bg-white/70 hover:bg-white"
+              )}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
