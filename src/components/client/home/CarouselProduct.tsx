@@ -11,6 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { IProductSummary } from "@/type/products";
 import { fetchRandomProducts } from "@/services/products.service";
+import { Link } from "react-router-dom";
 
 export default function CarouselProduct() {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -22,7 +23,7 @@ export default function CarouselProduct() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchRandomProducts(5);
+        const data = await fetchRandomProducts();
         setProducts(data);
       } catch (error) {
         console.error("Lỗi khi lấy sản phẩm random:", error);
@@ -34,7 +35,6 @@ export default function CarouselProduct() {
   React.useEffect(() => {
     if (!api) return;
 
-    console.log(api.scrollSnapList());
     setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
 
@@ -60,38 +60,40 @@ export default function CarouselProduct() {
         <CarouselContent>
           {products.map((product, index) => (
             <CarouselItem key={product.id || index}>
-              <Card className="p-0 border-0 shadow-none">
-                <CardContent className="relative w-full h-[400px] md:h-[480px] lg:h-[520px] p-0 cursor-pointer">
-                  {/* Image */}
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-contain transition-transform duration-700 hover:scale-105"
-                  />
+              <Link to={`/products/${product.id}`} className="block">
+                <Card className="p-0 border-0 shadow-none">
+                  <CardContent className="relative w-full h-[400px] md:h-[480px] lg:h-[520px] p-0 cursor-pointer">
+                    {/* Image */}
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-contain transition-transform duration-700 hover:scale-105"
+                    />
 
-                  {/* Overlay gradient chỉ phủ vùng tiêu đề */}
-                  <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-black/50 via-black/20 to-transparent pointer-events-none" />
+                    {/* Overlay gradient */}
+                    <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-black/50 via-black/20 to-transparent pointer-events-none" />
 
-                  {/* Category badge */}
-                  {product.category && (
-                    <div className="absolute top-4 right-4 bg-blue-600/80 backdrop-blur-sm text-white text-xs md:text-sm font-medium px-3 py-1 rounded-full shadow">
-                      {product.category.name}
-                    </div>
-                  )}
-
-                  {/* Product info */}
-                  <div className="absolute bottom-6 left-6 text-white">
-                    <h3 className="text-lg md:text-xl font-semibold drop-shadow-md">
-                      {product.name}
-                    </h3>
-                    {product.price && (
-                      <p className="mt-1 text-base md:text-lg font-medium text-white">
-                        {product.price.toLocaleString("vi-VN")}₫
-                      </p>
+                    {/* Category badge */}
+                    {product.category && (
+                      <div className="absolute top-4 right-4 bg-blue-600/80 backdrop-blur-sm text-white text-xs md:text-sm font-medium px-3 py-1 rounded-full shadow">
+                        {product.category.name}
+                      </div>
                     )}
-                  </div>
-                </CardContent>
-              </Card>
+
+                    {/* Product info */}
+                    <div className="absolute bottom-6 left-6 text-white">
+                      <h3 className="text-lg md:text-xl font-semibold drop-shadow-md">
+                        {product.name}
+                      </h3>
+                      {product.price && (
+                        <p className="mt-1 text-base md:text-lg font-medium text-white">
+                          {product.price.toLocaleString("vi-VN")}₫
+                        </p>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             </CarouselItem>
           ))}
         </CarouselContent>
