@@ -16,7 +16,7 @@ const Navbar = () => {
             {t("Products")}
           </NavLink>
           <NavLink className="text-base" to={PATH.CONTACT}>
-            {t("contact")}
+            {t("Contact")}
           </NavLink>
         </ul>
       </div>
