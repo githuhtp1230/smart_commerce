@@ -18,7 +18,6 @@ export const fetchNewProductSummaries = async (
   queryParams: URLSearchParams,
   limit = 7
 ): Promise<PaginationProductSummaries> => {
-
   queryParams.set("limit", limit.toString());
 
   const res = await httpRequest.get(
@@ -84,4 +83,20 @@ export const createProduct = async (productData: {
 }) => {
   const res = await httpRequest.post("/products", productData);
   return res.data.data;
+};
+
+export const fetchRandomProducts = async (
+  limit = 5,
+  filterParams?: URLSearchParams
+): Promise<IProductSummary[]> => {
+  const queryParams = filterParams
+    ? new URLSearchParams(filterParams)
+    : new URLSearchParams();
+  queryParams.set("limit", limit.toString());
+
+  const res = await httpRequest.get(
+    `products/random?${queryParams.toString()}`
+  );
+  const data = res.data.data as IProductSummary[];
+  return data;
 };

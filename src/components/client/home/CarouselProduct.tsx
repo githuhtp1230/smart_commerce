@@ -1,5 +1,6 @@
-import * as React from "react";
+"use client";
 
+import * as React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -8,23 +9,31 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
+import type { IProductSummary } from "@/type/products";
+import { fetchRandomProducts } from "@/services/products.service";
 
-export default function CarouselWithPagination() {
+export default function CarouselProduct() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
-  const images = [
-    "https://www.cnet.com/a/img/resize/15fef67176bef6c5179128b6f877d7d96338b9c3/hub/2024/09/18/f4dfbd54-08f9-42cc-9309-1c3923a06558/iphone-16-plus-pro-pro-max-family-4559.jpg?auto=webp&fit=crop&height=900&width=1200",
-    "https://www.cnet.com/a/img/resize/15fef67176bef6c5179128b6f877d7d96338b9c3/hub/2024/09/18/f4dfbd54-08f9-42cc-9309-1c3923a06558/iphone-16-plus-pro-pro-max-family-4559.jpg?auto=webp&fit=crop&height=900&width=1200",
-    "https://www.cnet.com/a/img/resize/15fef67176bef6c5179128b6f877d7d96338b9c3/hub/2024/09/18/f4dfbd54-08f9-42cc-9309-1c3923a06558/iphone-16-plus-pro-pro-max-family-4559.jpg?auto=webp&fit=crop&height=900&width=1200",
-    "https://www.cnet.com/a/img/resize/15fef67176bef6c5179128b6f877d7d96338b9c3/hub/2024/09/18/f4dfbd54-08f9-42cc-9309-1c3923a06558/iphone-16-plus-pro-pro-max-family-4559.jpg?auto=webp&fit=crop&height=900&width=1200",
-    "https://www.cnet.com/a/img/resize/15fef67176bef6c5179128b6f877d7d96338b9c3/hub/2024/09/18/f4dfbd54-08f9-42cc-9309-1c3923a06558/iphone-16-plus-pro-pro-max-family-4559.jpg?auto=webp&fit=crop&height=900&width=1200"
-  ];
+  const [products, setProducts] = React.useState<IProductSummary[]>([]);
 
+  // Lấy sản phẩm random
   React.useEffect(() => {
-    if (!api) {
-      return;
-    }
+    const fetchData = async () => {
+      try {
+        const data = await fetchRandomProducts(5);
+        setProducts(data);
+      } catch (error) {
+        console.error("Lỗi khi lấy sản phẩm random:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Auto scroll
+  React.useEffect(() => {
+    if (!api) return;
 
     setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
@@ -38,7 +47,7 @@ export default function CarouselWithPagination() {
       if (nextIndex < api.scrollSnapList().length) {
         api.scrollTo(nextIndex);
       } else {
-        api.scrollTo(0); // quay về đầu
+        api.scrollTo(0);
       }
     }, 5000);
 
@@ -46,44 +55,63 @@ export default function CarouselWithPagination() {
   }, [api]);
 
   return (
-    <>
+    <div className="relative w-full h-[400px] md:h-[480px] lg:h-[520px] rounded-2xl overflow-hidden shadow-lg">
+      <Carousel setApi={setApi} className="w-full h-full">
+        <CarouselContent>
+          {products.map((product, index) => (
+            <CarouselItem key={product.id || index}>
+              <Card className="p-0 border-0 shadow-none">
+                <CardContent className="relative w-full h-[400px] md:h-[480px] lg:h-[520px] p-0 cursor-pointer">
+                  {/* Image */}
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-contain transition-transform duration-700 hover:scale-105"
+                  />
 
-      <div className="w-full relative cursor-pointer">
-        <Carousel setApi={setApi} className="w-full">
-          <CarouselContent>
-            {images.map((src, index) => (
-              <CarouselItem key={index}>
-                <Card className="p-0">
-                  <CardContent className="flex aspect-video items-center justify-center p-0">
-                    <img
-                      src={src}
-                      alt={`Slide ${index + 1}`}
-                      className="w-full h-full object-contain rounded-lg"
-                    />
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+                  {/* Overlay gradient chỉ phủ vùng tiêu đề */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-black/40 via-black/20 to-transparent pointer-events-none rounded-b-xl" />
 
-        {/* Pagination dots */}
-        <div className="mt-4 flex items-center justify-center gap-2 absolute bottom-3 left-1/2 -translate-x-[50%]">
-          {Array.from({ length: count }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => api?.scrollTo(index)}
-              className={cn(
-                "h-3.5 w-3.5 rounded-full border-2 transition-colors",
-                current === index + 1
-                  ? "border-blue-500 bg-blue-500"
-                  : "border-gray-400"
-              )}
-            />
+                  {/* Category badge */}
+                  {product.category && (
+                    <div className="absolute top-4 right-4 bg-blue-600/80 backdrop-blur-sm text-white text-xs md:text-sm font-medium px-3 py-1 rounded-full shadow">
+                      {product.category.name}
+                    </div>
+                  )}
+
+                  {/* Product info */}
+                  <div className="absolute bottom-6 left-6 text-white">
+                    <h3 className="text-lg md:text-xl font-semibold drop-shadow-md">
+                      {product.name}
+                    </h3>
+                    {product.price && (
+                      <p className="mt-1 text-base md:text-lg font-medium text-white">
+                        {product.price.toLocaleString("vi-VN")}₫
+                      </p>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </CarouselItem>
           ))}
-        </div>
-      </div>
+        </CarouselContent>
+      </Carousel>
 
-    </>
+      {/* Pagination dots */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+        {Array.from({ length: count }).map((_, index) => (
+          <button
+            key={index}
+            onClick={() => api?.scrollTo(index)}
+            className={cn(
+              "h-2.5 w-2.5 rounded-full transition-all",
+              current === index + 1
+                ? "bg-blue-500 scale-125 shadow-md"
+                : "bg-gray-300 hover:bg-gray-400"
+            )}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
