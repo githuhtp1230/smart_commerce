@@ -167,6 +167,8 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
                           placeholder={t("Full name")}
                           {...field}
                           className={INPUT}
+                          containerClassName="py-0"
+                          hasError={!!form.formState.errors.name}
                         />
                       </FormControl>
                       <div className="min-h-[34px]">
@@ -188,6 +190,8 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
                           placeholder={t("Password")}
                           {...field}
                           className={INPUT}
+                          containerClassName="py-0"
+                          hasError={!!form.formState.errors.password}
                         />
                       </FormControl>
                       <div className="min-h-[34px]">
@@ -239,6 +243,8 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
                           placeholder="Email"
                           {...field}
                           className={INPUT}
+                          containerClassName="py-0"
+                          hasError={!!form.formState.errors.email}
                         />
                       </FormControl>
                       <div className="min-h-[34px]">
@@ -259,6 +265,8 @@ export default function AddUserForm({ onUserAdded }: AddUserFormProps) {
                           placeholder={t("Phone number")}
                           {...field}
                           className={INPUT}
+                          containerClassName="py-0"
+                          hasError={!!form.formState.errors.phone}
                         />
                       </FormControl>
                       <div className="min-h-[34px]">
