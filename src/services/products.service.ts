@@ -86,16 +86,10 @@ export const createProduct = async (productData: {
 };
 
 export const fetchRandomProducts = async (
-  limit = 5,
-  filterParams?: URLSearchParams
 ): Promise<IProductSummary[]> => {
-  const queryParams = filterParams
-    ? new URLSearchParams(filterParams)
-    : new URLSearchParams();
-  queryParams.set("limit", limit.toString());
 
   const res = await httpRequest.get(
-    `products/random?${queryParams.toString()}`
+    "products/random"
   );
   const data = res.data.data as IProductSummary[];
   return data;
