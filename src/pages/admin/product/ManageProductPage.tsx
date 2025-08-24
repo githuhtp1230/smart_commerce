@@ -5,15 +5,16 @@ import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import ProductTable from "@/components/client/product/ProductTable";
 import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
 
-const tabs = [
-  { name: "Sản phẩm đang hoạt động", value: "false" },
-  { name: "Sản phẩm đã xoá", value: "true" },
-];
+
 
 const ManageProductPage = () => {
   const [activeProducts, setActiveProducts] = useState<IProductSummary[]>([]);
   const [deletedProducts, setDeletedProducts] = useState<IProductSummary[]>([]);
   const [tabValue, setTabValue] = useState("false");
+  const tabs = [
+    { name: "Sản phẩm đang hoạt động", value: "false" },
+    { name: "Sản phẩm đã xoá", value: "true" },
+  ];
 
   useEffect(() => {
     const fetchData = async () => {

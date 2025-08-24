@@ -21,6 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Eye } from "@/assets/icons";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   promotions: IPromotion[];
@@ -42,6 +43,7 @@ const PromotionsTable = ({ promotions, onChange }: Props) => {
     null
   );
   const [previewOpen, setPreviewOpen] = useState(false);
+  const { t } = useTranslation();
 
   // 👉 Toggle Status
   const handleToggle = async (id: number) => {
@@ -113,43 +115,41 @@ const PromotionsTable = ({ promotions, onChange }: Props) => {
     },
     {
       accessorKey: "description",
-      header: "Description",
+      header: t("Description"),
       cell: ({ row }) => <div>{row.original.description}</div>,
     },
     {
       accessorKey: "discountValuePercent",
-      header: "Discount (%)",
+      header: t("discount"),
       cell: ({ row }) => <div>{row.original.discountValuePercent}%</div>,
     },
     {
       accessorKey: "startDate",
-      header: "Start Date",
+      header: t("start_date"),
       cell: ({ row }) => <div>{formatTimeDay(row.original.startDate)}</div>,
     },
     {
       accessorKey: "endDate",
-      header: "End Date",
+      header: t("end_date"),
       cell: ({ row }) => <div>{formatTimeDay(row.original.endDate)}</div>,
     },
     {
       accessorKey: "is_active",
-      header: "Status",
+      header: t("Status"),
       cell: ({ row }) => {
         const isActive = row.original.isActive;
 
         return (
           <span
-            className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${
-              isActive
-                ? "bg-green-100 text-green-600"
-                : "bg-red-100 text-red-600"
-            }`}
+            className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${isActive
+              ? "bg-green-100 text-green-600"
+              : "bg-red-100 text-red-600"
+              }`}
           >
             {/* Dot nằm trong bg luôn */}
             <span
-              className={`w-2 h-2 rounded-full ${
-                isActive ? "bg-green-600" : "bg-red-600"
-              }`}
+              className={`w-2 h-2 rounded-full ${isActive ? "bg-green-600" : "bg-red-600"
+                }`}
             />
             {isActive ? "Active" : "Inactive"}
           </span>

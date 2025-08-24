@@ -9,6 +9,7 @@ import ConfirmDialog from "@/components/common/dialog/ConfirmDialog";
 import { categoryApi } from "@/services/categories.service";
 import { toastSuccess } from "@/components/common/sonner";
 import EditCategoryDialog from "./EditCategoryDialog";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   categories: ICategory[];
@@ -17,7 +18,7 @@ interface Props {
 
 const CategoriesTable = ({ categories, onSwitchTab }: Props) => {
   const queryClient = useQueryClient();
-
+  const { t } = useTranslation();
   const [editCategory, setEditCategory] = useState<ICategory | null>(null);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
@@ -67,12 +68,12 @@ const CategoriesTable = ({ categories, onSwitchTab }: Props) => {
     },
     {
       accessorKey: "name",
-      header: () => <div>Tên danh mục</div>,
+      header: () => <div>{t("category_name")}</div>,
       cell: ({ row }) => <div>{row.original.name}</div>,
     },
     {
       id: "deleteAction",
-      header: () => <div>Xoá</div>,
+      header: () => <div>{t("delete")}</div>,
       cell: ({ row }) => {
         const id = row.original.id;
         return (
@@ -91,7 +92,7 @@ const CategoriesTable = ({ categories, onSwitchTab }: Props) => {
     },
     {
       id: "updateAction",
-      header: () => <div>Cập nhật</div>,
+      header: () => <div>{t("Update")}</div>,
       cell: ({ row }) => {
         const category = row.original;
         return (

@@ -8,16 +8,19 @@ import type { IAttributeValue } from "@/type/attribute";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
+import { useTranslation } from "react-i18next";
 
-const tabs = [
-  { name: "AttributeValue đang hoạt động", value: "false" },
-  { name: "AttributeValue đã xoá", value: "true" },
-];
+
 
 export default function ManageAttributePage() {
   const [tabValue, setTabValue] = useState("false");
   const isDeleted = tabValue === "true";
+  const { t } = useTranslation();
 
+  const tabs = [
+    { name: t("active_attributevalue"), value: "false" },
+    { name: t("inactive_attributevalue"), value: "true" },
+  ];
   const {
     data: attributeValues = [],
     isLoading,

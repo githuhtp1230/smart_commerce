@@ -4,16 +4,17 @@ import AuthTabs from "./AuthTabs";
 import SocialLoginButtons from "@/components/common/SocialLoginButtons";
 import { Facebook, Google } from "@/assets/icons";
 import { ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { PATH } from "@/constants/path";
 import { useAuthStore } from "@/store/auth-store";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const AuthLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const isForgotPasswordPage = location.pathname === PATH.FORGOT_PASSWORD;
+  const { t } = useTranslation();
   useEffect(() => {
     const isAuthPage =
       location.pathname === PATH.LOGIN || location.pathname === PATH.REGISTER;
@@ -31,15 +32,14 @@ const AuthLayout = () => {
             className="flex gap-2 items-center text-neutral-50 cursor-pointer"
           >
             <ChevronLeft />
-            <p className="text-lg">Back to Home</p>
+            <p className="text-lg">{t("back_home")}</p>
           </Link>
           <div className="space-y-2">
             <h1 className="text-neutral-50 font-bold text-6xl">
               Smart Commerce
             </h1>
             <p className="text-neutral-100 font-medium text-2xl">
-              An intelligent e-commerce platform that helps you sell faster,
-              manage your business more easily, and achieve sustainable growth.
+              {t("subtitle")}
             </p>
           </div>
           <div></div>
@@ -48,7 +48,7 @@ const AuthLayout = () => {
           {!isForgotPasswordPage && (
             <>
               <h1 className="font-medium text-2xl text-center">
-                Welcome to Smart Commerce
+                {t("welcome")}
               </h1>
               <AuthTabs />
             </>
@@ -62,17 +62,17 @@ const AuthLayout = () => {
               <div className="relative flex items-center py-3">
                 <div className="flex-grow border-t border-border-primary"></div>
                 <span className="flex-shrink mx-4 text-neutral-primary text-sm">
-                  Or Continue With
+                  {t("or_continue")}
                 </span>
                 <div className="flex-grow border-t border-border-primary"></div>
               </div>
               <SocialLoginButtons
                 prefixIcon={Google}
-                text="Continue with Google"
+                text={t("google")}
               />
               <SocialLoginButtons
                 prefixIcon={Facebook}
-                text="Continue with Facebook"
+                text={t("facebook")}
                 className="mt-3"
               />
             </>

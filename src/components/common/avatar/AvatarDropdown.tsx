@@ -12,9 +12,11 @@ import { LogOutIcon, User, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
 import CircleAvatar from "./CircleAvatar";
 import RequireRole from "../../require-role";
+import { useTranslation } from "react-i18next";
 
 export default function AvatarDropdown() {
   const { me, logout } = useAuthStore((state) => state);
+  const { t } = useTranslation();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -42,7 +44,7 @@ export default function AvatarDropdown() {
             className="flex items-center gap-2 cursor-pointer"
           >
             <User className="w-4 h-4" />{" "}
-            <span className="text-sm text-txt-secondary">Profile</span>
+            <span className="text-sm text-txt-secondary">{t("profile")}</span>
           </Link>
         </DropdownMenuItem>
         <RequireRole roles={["ADMIN"]}>
@@ -52,7 +54,7 @@ export default function AvatarDropdown() {
               className="flex items-center gap-2 cursor-pointer"
             >
               <Wrench className="w-4 h-4" />{" "}
-              <span className="text-sm text-txt-secondary">Manager</span>
+              <span className="text-sm text-txt-secondary">{t("manager")}</span>
             </Link>
           </DropdownMenuItem>
         </RequireRole>
@@ -64,7 +66,7 @@ export default function AvatarDropdown() {
               onClick={logout}
             >
               <LogOutIcon className="text-txt-system-danger" />
-              <p className="text-sm">Sign out</p>
+              <p className="text-sm">{t("signout")}</p>
             </Button>
           </DropdownMenuItem>
         </div>
