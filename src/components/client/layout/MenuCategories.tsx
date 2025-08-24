@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
 const MenuCategories = () => {
   const { t } = useTranslation();
   const { data } = useQuery({
@@ -42,7 +43,15 @@ const MenuCategories = () => {
               key={category.id}
               className="text-neutral-primary font-medium"
             >
-              {category.name}
+              <Link
+                to={`${PATH.PRODUCTS}?categoryId=${
+                  category.id
+                }&categoryName=${encodeURIComponent(category.name)}`}
+                className="cursor-pointer"
+              >
+                {category.name}
+              </Link>
+
               <div className="mt-2">
                 {category.children?.map((categoryChild) => (
                   <DropdownMenuItem
@@ -51,7 +60,9 @@ const MenuCategories = () => {
                     className="cursor-pointer"
                   >
                     <Link
-                      to={`${PATH.PRODUCTS}?categoryId=${categoryChild.id}`}
+                      to={`${PATH.PRODUCTS}?categoryId=${
+                        categoryChild.id
+                      }&categoryName=${encodeURIComponent(categoryChild.name)}`}
                     >
                       {categoryChild.name}
                     </Link>
