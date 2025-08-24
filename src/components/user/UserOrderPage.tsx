@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import OrdersTable from "./OrdersTable";
 import { getMyOrders, type IOrderSummary, type PageResponse } from "@/services/order.service";
 import { useTranslation } from "react-i18next";
+import CustomTabsTrigger from "../common/tabs/CustomTabsTrigger";
 
 const tabs = [
   { name: "ALL", value: "ALL" },
@@ -49,21 +50,31 @@ const UserOrderPage = () => {
   };
 
   return (
-    <Tabs value={tabValue} onValueChange={handleTabChange} className="w-full">
-      <TabsList className="w-full p-0 justify-start border-b rounded-none">
+    <Tabs value={tabValue} onValueChange={handleTabChange} className="w-full px-4 gap-0">
+      <TabsList className="p-0 justify-start">
         {tabs.map((tab) => (
-          <TabsTrigger key={tab.value} value={tab.value} className="bg-background h-full">
+          <CustomTabsTrigger key={tab.value} value={tab.value} className="bg-background h-full">
             <p className="text-[15px]">{t(tab.name)}</p>
-          </TabsTrigger>
+          </CustomTabsTrigger>
         ))}
       </TabsList>
+      <div className="border border-b-border-primary mt-[3px] !h-[1px]"></div>
 
-      <TabsContent value={tabValue}>
-        <OrdersTable
-          orders={orders}
-          pagination={pagination}
-          onPageChange={setCurrentPage}
-        />
+      <TabsContent value={tabValue} className="mt-4">
+        {orders.length === 0 ? (
+          <div className="text-center text-gray-500 py-10 text-lg font-semibold">
+            <div className="flex justify-center mb-4 ">
+              <img src="https://cdni.iconscout.com/illustration/premium/thumb/woman-with-empty-shopping-cart-illustration-svg-png-download-10018099.png" alt="" className="w-32" />
+            </div>
+            Không có đơn hàng nào cả
+          </div>
+        ) : (
+          <OrdersTable
+            orders={orders}
+            pagination={pagination}
+            onPageChange={setCurrentPage}
+          />
+        )}
       </TabsContent>
     </Tabs>
   );

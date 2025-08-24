@@ -168,7 +168,7 @@ const UsersTable = ({ users, onUserUpdated }: Props) => {
   ];
 
   return (
-    <div className="bg-primary rounded-xl p-3 space-y-4">
+    <div className="bg-primary">
       <DataTable columns={columns} data={userList} />
 
       {selectedUser && (

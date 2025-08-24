@@ -2,7 +2,7 @@
 
 import CategoriesTable from "@/components/admin/category/CategoriesTable";
 import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import { fetchSubCategories } from "@/services/categories.service";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -31,22 +31,23 @@ export default function SubCategory() {
         defaultValue="false"
         value={tabValue}
         onValueChange={setTabValue}
-        className="w-full"
+        className="w-full px-4 gap-0"
       >
-        <TabsList className="w-full p-0 justify-start border-b rounded-none">
+        <TabsList className="p-0 justify-start">
           {tabs.map((tab) => (
-            <TabsTrigger
+            <CustomTabsTrigger
               key={tab.value}
               value={tab.value}
               className=" bg-background h-full"
             >
               <p className="text-[15px]">{tab.name}</p>
-            </TabsTrigger>
+            </CustomTabsTrigger>
           ))}
         </TabsList>
+        <div className="border border-b-border-primary mt-[3px] !h-[1px]"></div>
 
         {tabs.map((tab) => (
-          <TabsContent key={tab.value} value={tab.value}>
+          <TabsContent key={tab.value} value={tab.value} className="mt-4">
             {isLoading ? (
               <p>Đang tải...</p>
             ) : (
@@ -59,6 +60,6 @@ export default function SubCategory() {
         ))}
       </Tabs>
     </div>
-   
+
   );
 }
