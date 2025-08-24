@@ -19,4 +19,10 @@ export const updateProfile = async (body: Partial<IUser>): Promise<IUser> => {
   }
 };
 
-
+export const sendEmailContact = async (body: { title: string; message: string }): Promise<void> => {
+  try {
+    await httpRequest.post("me/send-email-contact", body);
+  } catch (error) {
+    throw error;
+  }
+};

@@ -34,5 +34,26 @@
     "international_version": "International version",
     "free_support": "Free support consultation"
   },
-  "contact": "Contact"
+  "contact": {
+    "title_required": "Title is required",
+    "message_required": "Message is required",
+    "send_success": "Your message has been sent successfully!",
+    "send_error": "Failed to send email. Please try again later.",
+    "contact_us": "Contact us",
+    "get_in_touch": "Get in Touch with Our Team",
+    "intro": "We're here to answer your questions, discuss your project, and help you find the best solutions for your software needs. Reach out to us, and let's start building something great together.",
+    "support_you": "We’re Here to Support You",
+    "title": "Title",
+    "enter_title": "Enter your title",
+    "message": "Message",
+    "tell_us_help": "Tell us how we can help",
+    "sending": "Sending...",
+    "send_email": "Send Email",
+    "prefer_direct": "Prefer a Direct Approach?",
+    "phone": "(+84) 728 829 110",
+    "email": "smartcommerce@gmail.com",
+    "work_time": "Monday to Friday, 9 AM - 6 PM",
+    "visit_office": "Visit Our Office",
+    "address": "137 Nguyễn Thị Thập, Thanh Khê Tây, Liên Chiểu, Đà Nẵng, Việt Nam"
+  }
 }
