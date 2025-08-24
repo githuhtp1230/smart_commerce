@@ -30,7 +30,7 @@ import { toastError, toastSuccess } from "@/components/common/sonner";
 import type { IUser } from "@/type/auth";
 import { updateUser } from "@/services/users.service";
 import { useTranslation } from "react-i18next";
-
+import { Switch } from "@/components/ui/switch";
 /** Schema validate */
 const userSchema = z.object({
   name: z.string().min(1, "Tên không được để trống").max(50, "Tên quá dài"),
@@ -143,28 +143,10 @@ export default function EditUserDialog({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 p-8 w-full max-w-lg max-h-[90vh] overflow-auto scrollbar-hide">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mb-4">
-            <svg
-              className="w-8 h-8 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
-          </div>
+        <div className="text-center mb-">
           <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
             {t("Edit User")}
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-2">
-            {t("Update account information")}
-          </p>
         </div>
 
         {/* Form */}
@@ -201,64 +183,40 @@ export default function EditUserDialog({
 
             {/* Fields */}
             <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Name */}
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem className="space-y-2">
-                      <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                        {t("Full Name *")}
-                      </FormLabel>
-                      <FormControl>
-                        <CustomInput
-                          placeholder="Nhập tên đầy đủ"
-                          {...field}
-                          value={field.value ?? ""}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-red-500 text-sm" />
-                    </FormItem>
-                  )}
-                />
+              {/* Name */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex-1">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field, fieldState }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                          {t("Full Name *")}
+                        </FormLabel>
+                        <FormControl>
+                          <CustomInput
+                            placeholder="Nhập tên đầy đủ"
+                            {...field}
+                            value={field.value ?? ""}
+                            className="min-h-[40px]"
+                            hasError={fieldState.invalid}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-500 text-sm min-h-[20px]" />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
-                {/* Role */}
-                <FormField
-                  control={form.control}
-                  name="roleId"
-                  render={({ field }) => (
-                    <FormItem className="space-y-2">
-                      <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                        {t("Role *")}
-                      </FormLabel>
-                      <FormControl>
-                        <Select
-                          value={String(field.value ?? 2)}
-                          onValueChange={(val) => field.onChange(Number(val))}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Chọn vai trò" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="1">{t("Admin")}</SelectItem>
-                            <SelectItem value="2">{t("User")}</SelectItem>
-                            <SelectItem value="3">{t("Staff")}</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage className="text-red-500 text-sm" />
-                    </FormItem>
-                  )}
-                />
               </div>
 
               {/* Email */}
               <FormField
                 control={form.control}
                 name="email"
-                render={({ field }) => (
-                  <FormItem className="space-y-2">
+                render={({ field, fieldState }) => (
+                  <FormItem >
                     <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                       Email *
                     </FormLabel>
@@ -268,63 +226,97 @@ export default function EditUserDialog({
                         placeholder="example@email.com"
                         {...field}
                         value={field.value ?? ""}
+                        hasError={fieldState.invalid}
                       />
                     </FormControl>
                     <FormMessage className="text-red-500 text-sm" />
                   </FormItem>
                 )}
               />
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex-1">
+                  {/* Phone */}
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field, fieldState }) => (
+                      <FormItem >
+                        <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                          {t("Phone Number *")}
+                        </FormLabel>
+                        <FormControl>
+                          <CustomInput
+                            placeholder="0xxx xxx xxx"
+                            {...field}
+                            value={field.value ?? ""}
+                            className="min-h-[40px]"
+                            hasError={fieldState.invalid}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-500 text-sm min-h-[20px]" />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex-1">
+                  <FormField
+                    control={form.control}
+                    name="roleId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                          {t("Role *")}
+                        </FormLabel>
+                        <FormControl >
+                          <Select
+                            value={String(field.value ?? 2)}
+                            onValueChange={(val) => field.onChange(Number(val))}
+                          >
+                            <SelectTrigger className="min-h-[45px] w-full" >
+                              <SelectValue placeholder="Chọn vai trò" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="1">{t("Admin")}</SelectItem>
+                              <SelectItem value="2">{t("User")}</SelectItem>
+                              <SelectItem value="3">{t("Staff")}</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage className="text-red-500 text-sm min-h-[20px]" />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
-              {/* Phone */}
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem className="space-y-2">
-                    <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                      {t("Phone Number *")}
-                    </FormLabel>
-                    <FormControl>
-                      <CustomInput
-                        placeholder="0xxx xxx xxx"
-                        {...field}
-                        value={field.value ?? ""}
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-500 text-sm" />
-                  </FormItem>
-                )}
-              />
+                {/* Status */}
 
-              {/* Status */}
+              </div>
+            </div>
+            <div className="flex-1">
+
               <FormField
                 control={form.control}
                 name="isActive"
                 render={({ field }) => (
-                  <FormItem className="space-y-2">
+                  <FormItem className="flex gap-4 justify-between items-center">
                     <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                      {t("Status *")}
+                      {t("Active this user?")}
                     </FormLabel>
                     <FormControl>
-                      <Select
-                        value={field.value ?? "active"}
-                        onValueChange={(val) => field.onChange(val)}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Chọn trạng thái" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="active">Active</SelectItem>
-                          <SelectItem value="locked">Locked</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <div className="flex items-center gap-3 min-h-[40px]">
+                        <Switch
+                          checked={field.value === "active"}
+                          onCheckedChange={(checked) => field.onChange(checked ? "active" : "locked")}
+                          id="isActive"
+                          className="data-[state=checked]:bg-green-500"
+                        />
+                      </div>
                     </FormControl>
-                    <FormMessage className="text-red-500 text-sm" />
+                    <FormMessage className="text-red-500 text-sm min-h-[20px]" />
                   </FormItem>
                 )}
               />
             </div>
-
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
               <Button
