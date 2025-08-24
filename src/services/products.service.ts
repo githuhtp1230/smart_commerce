@@ -29,6 +29,23 @@ export const fetchNewProductSummaries = async (
   return data;
 };
 
+export const fetchProductSummariesByName = async (
+  name: string,
+  page = 1,
+  limit = 15
+): Promise<PaginationProductSummaries> => {
+  const queryParams = new URLSearchParams();
+  queryParams.set("limit", limit.toString());
+  queryParams.set("page", page.toString());
+  queryParams.set("query", name);
+
+  const res = await httpRequest.get(
+    `products/summaries?${queryParams.toString()}`
+  );
+  const data = res.data.data as PaginationProductSummaries;
+  return data;
+};
+
 export const fetchProductDetail = async (
   productId: number
 ): Promise<IProductDetail> => {
