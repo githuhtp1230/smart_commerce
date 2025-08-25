@@ -150,27 +150,32 @@ const OrdersTable = ({
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 md:items-center md:justify-between mt-4">
-        <div className="flex flex-col items-center gap-4 p-4 rounded-lg border bg-background-primary max-w-xl mx-auto">
+        <div className="flex flex-col items-center justify-start gap-4 p-4 rounded-lg bg-background-primary w-full ">
           {/* Chọn ngày */}
-          <div className="flex flex-wrap items-center gap-2 justify-center">
-            <label className="text-sm font-medium">From</label>
-            <input
-              type="date"
-              className="border rounded-lg px-3 py-2 text-sm bg-secondary focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-            />
-            <label className="text-sm font-medium">To</label>
-            <input
-              type="date"
-              className="border rounded-lg px-3 py-2 text-sm bg-secondary focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-            />
+          <div className="flex flex-wrap items-start justify-start gap-6 w-full">
+            <div className="flex items-center gap-3">
+              <label className="text-sm font-medium">From</label>
+              <input
+                type="date"
+                className="border rounded-lg px-7 py-2 text-sm bg-secondary focus:outline-none focus:ring-2 focus:ring-blue-400"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <label className="text-sm font-medium">To</label>
+              <input
+                type="date"
+                className="border rounded-lg px-7 py-2 text-sm bg-secondary focus:outline-none focus:ring-2 focus:ring-blue-400"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+
           </div>
 
           {/* Search */}
-          <div className="relative w-full max-w-md">
+          <div className="relative w-full">
             {/* Icon */}
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
               <Search className="h-4 w-4 text-gray-400" />
@@ -195,7 +200,7 @@ const OrdersTable = ({
               return (
                 <div
                   key={card.key}
-                  className="flex flex-col items-center justify-center w-32 h-32 bg-background-primary rounded-2xl shadow-md"
+                  className="flex flex-col items-center justify-center w-32 h-32 bg-background-primary rounded-2xl "
                 >
                   <div className={`${card.color} mb-2`}>
                     <Icon size={28} />

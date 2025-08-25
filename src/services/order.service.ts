@@ -69,8 +69,20 @@ export interface PageResponse<T> {
 
 /** API trả về thực tế */
 interface ApiOrderDetail {
-  product: { name: string; image?: string };
+  id: number;
+  product: {
+    id?: number;
+    name: string;
+    description?: string;
+    stock?: number;
+    price?: number;
+    category?: { id: number; name: string };
+
+    createdAt?: string;
+  };
+  image?: string; // Image ở cấp cao nhất
   quantity: number;
+  price?: number;
 }
 
 interface ApiOrder {
@@ -148,7 +160,7 @@ export const fetchOrdersByUser = async (
         o.orderDetails?.map((d, idx) => ({
           id: idx,
           product: { name: d.product.name },
-          image: d.product.image ?? "/default-product.png",
+          image: d.image ?? "/default-product.png",
           quantity: d.quantity,
         })) || [];
 
