@@ -10,8 +10,6 @@ import { useQuery } from "@tanstack/react-query";
 import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
 import { useTranslation } from "react-i18next";
 
-
-
 export default function ManageAttributePage() {
   const [tabValue, setTabValue] = useState("false");
   const isDeleted = tabValue === "true";
@@ -56,10 +54,14 @@ export default function ManageAttributePage() {
         <div className="border border-b-border-primary mt-[3px] !h-[1px]"></div>
 
         {tabs.map((tab) => (
-          <TabsContent key={tab.value} value={tab.value} className="mt-4" >
+          <TabsContent key={tab.value} value={tab.value} className="mt-4">
             {isLoading ? (
-              <div className="text-gray-500 px-4 py-6">
-                Loading attributes...
+              <div className="flex justify-center items-center h-96">
+                <img
+                  src="/images/loader.gif"
+                  alt="Loading..."
+                  className="w-30 h-30"
+                />
               </div>
             ) : (
               <AttributeValuesTable
