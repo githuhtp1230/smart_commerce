@@ -48,7 +48,6 @@ const formSchema = z.object({
 export default function AddPromotions({ onSuccess }: Props) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
-  const { t } = useTranslation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
