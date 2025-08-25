@@ -2,9 +2,9 @@
 
 import * as React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Users } from "lucide-react";
+import { Package } from "lucide-react"; // icon sản phẩm
 import {
-  fetchTotalUserParticipation,
+  fetchTotalOrder,
   type TotalStatisticResponse,
 } from "@/services/statistics.service";
 import { KpiCard } from "./kpi-card";
@@ -17,16 +17,16 @@ const uiLabel: Record<"YEAR" | "MONTH" | "WEEK" | "DAY", string> = {
   DAY: "day",
 };
 
-export function UserParticipationKpi() {
+export function OrderTotalKpi() {
   const [category, setCategory] = React.useState<
     "YEAR" | "MONTH" | "WEEK" | "DAY"
   >("WEEK");
 
   const { data } = useQuery<TotalStatisticResponse, Error>({
-    queryKey: ["totalUserParticipation", category],
-    queryFn: () => fetchTotalUserParticipation({ category }),
+    queryKey: ["TotalOrder", category],
+    queryFn: () => fetchTotalOrder({ category }),
     placeholderData: {
-      total: 0,
+      totalUsers: 0,
       trendPercentage: "0%",
       trendDirection: "up",
     },
@@ -34,7 +34,6 @@ export function UserParticipationKpi() {
   });
 
   const handleTimeframeChange = (value: string) => {
-    // value nhận từ UI: "year" | "month" | "week" | "day"
     const entry = Object.entries(uiLabel).find(([, v]) => v === value);
     if (entry) {
       setCategory(entry[0] as "YEAR" | "MONTH" | "WEEK" | "DAY");
@@ -43,15 +42,15 @@ export function UserParticipationKpi() {
 
   return (
     <KpiCard
-      title="Total users participating"
-      value={data?.total?.toString() ?? "0"}
+      title="Total Order"
+      value={data?.totalUsers?.toString() ?? "0"} // ⚠️ ở đây cũng có thể đổi thành data?.totalProducts
       trend={{
         direction: data?.trendDirection ?? "up",
         percentage: data?.trendPercentage === "0%"? "NEW" : data?.trendPercentage ?? "0%",
       }}
       icon={
-        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-          <Users className="w-4 h-4 text-white" />
+        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+          <Package className="w-4 h-4 text-white" />
         </div>
       }
       timeframe={uiLabel[category]}
