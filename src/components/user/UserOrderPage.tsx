@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import OrdersTable from "./OrdersTable";
-import { getMyOrders, type IOrderSummary, type PageResponse } from "@/services/order.service";
+import {
+  getMyOrders,
+  type IOrderSummary,
+  type PageResponse,
+} from "@/services/order.service";
 import { useTranslation } from "react-i18next";
 import CustomTabsTrigger from "../common/tabs/CustomTabsTrigger";
 
@@ -17,7 +21,8 @@ const UserOrderPage = () => {
   const { t } = useTranslation();
   const [tabValue, setTabValue] = useState("ALL");
   const [orders, setOrders] = useState<IOrderSummary[]>([]);
-  const [pagination, setPagination] = useState<Omit<PageResponse<IOrderSummary>, "data">>();
+  const [pagination, setPagination] =
+    useState<Omit<PageResponse<IOrderSummary>, "data">>();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
 

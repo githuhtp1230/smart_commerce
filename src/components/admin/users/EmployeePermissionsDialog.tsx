@@ -122,7 +122,7 @@ export default function EmployeePermissionsDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={cn(
-          "!w-[65vw] !h-[75vh] !max-w-none !max-h-none",
+          "!w-[70vw] !h-[75vh] !max-w-none !max-h-none",
           "overflow-auto scrollbar-hide p-6 bg-background-primary rounded-xl shadow-xl"
         )}
       >
