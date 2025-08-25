@@ -4,6 +4,7 @@ import { KpiCard } from "./kpi-card";
 import { UserParticipationKpi } from "./UserParticipationKpi";
 import { SaleReportChart } from "./sale-report-chart";
 import { CategoriesChart } from "./categories-chart";
+import TableReviews from "../Review/TableReviews";
 
 export default function Dashboard() {
   return (
@@ -21,7 +22,7 @@ export default function Dashboard() {
             }
             timeframe="year"
             bordered
-            onTimeframeChange={() => {}}
+            onTimeframeChange={() => { }}
           />
 
           {/* ✅ dùng API */}
@@ -37,7 +38,7 @@ export default function Dashboard() {
               </div>
             }
             timeframe="month"
-            onTimeframeChange={() => {}}
+            onTimeframeChange={() => { }}
           />
 
           <KpiCard
@@ -50,7 +51,7 @@ export default function Dashboard() {
               </div>
             }
             timeframe="week"
-            onTimeframeChange={() => {}}
+            onTimeframeChange={() => { }}
           />
         </div>
 
@@ -58,6 +59,9 @@ export default function Dashboard() {
           <SaleReportChart />
           <CategoriesChart />
         </div>
+      </div>
+      <div>
+        <TableReviews />
       </div>
     </div>
   );
