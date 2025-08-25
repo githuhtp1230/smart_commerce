@@ -26,7 +26,7 @@ export function ProductsSoldKpi() {
     queryKey: ["totalProductsSold", category],
     queryFn: () => fetchTotalProductsSold({ category }),
     placeholderData: {
-      totalUsers: 0, // ⚠️ có thể rename thành totalProducts để semantic hơn
+      total: 0, // ⚠️ có thể rename thành totalProducts để semantic hơn
       trendPercentage: "0%",
       trendDirection: "up",
     },
@@ -43,7 +43,7 @@ export function ProductsSoldKpi() {
   return (
     <KpiCard
       title="Total products sold"
-      value={data?.totalUsers?.toString() ?? "0"} // ⚠️ ở đây cũng có thể đổi thành data?.totalProducts
+      value={data?.total?.toString() ?? "0"} // ⚠️ ở đây cũng có thể đổi thành data?.totalProducts
       trend={{
         direction: data?.trendDirection ?? "up",
         percentage: data?.trendPercentage === "0%"? "NEW" : data?.trendPercentage ?? "0%",

@@ -26,7 +26,7 @@ export function OrderTotalKpi() {
     queryKey: ["TotalOrder", category],
     queryFn: () => fetchTotalOrder({ category }),
     placeholderData: {
-      totalUsers: 0,
+      total: 0,
       trendPercentage: "0%",
       trendDirection: "up",
     },
@@ -43,7 +43,7 @@ export function OrderTotalKpi() {
   return (
     <KpiCard
       title="Total Order"
-      value={data?.totalUsers?.toString() ?? "0"} // ⚠️ ở đây cũng có thể đổi thành data?.totalProducts
+      value={data?.total?.toString() ?? "0"} // ⚠️ ở đây cũng có thể đổi thành data?.totalProducts
       trend={{
         direction: data?.trendDirection ?? "up",
         percentage: data?.trendPercentage === "0%"? "NEW" : data?.trendPercentage ?? "0%",
