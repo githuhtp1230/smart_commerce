@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { DataTable } from "@/components/common/table/DataTable";
 import { Button } from "@/components/ui/button";
 import type { IProductSummary } from "@/type/products";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Ellipsis, PencilLineIcon, Trash2 } from "lucide-react";
-
-import { toast } from "sonner"; // hoặc react-hot-toast nếu bạn dùng cái khác
+import { toast } from "sonner";
 import { deleteProduct } from "@/services/products.service";
 import {
   DropdownMenu,
@@ -19,27 +17,31 @@ interface Props {
   products: IProductSummary[];
   onDeleted?: () => void;
   readOnly?: boolean;
+  isLoading?: boolean;
 }
 
-const ProductTable = ({ products, onDeleted, readOnly }: Props) => {
-  const [deletingId, setDeletingId] = useState<number | null>(null);
-
+const ProductTable = ({ products, onDeleted, readOnly, isLoading }: Props) => {
   const handleDelete = async (productId: number) => {
     if (!window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?"))
       return;
 
     try {
-      setDeletingId(productId);
       await deleteProduct(productId);
       toast.success("Xóa sản phẩm thành công");
       onDeleted?.();
     } catch (error) {
       toast.error("Xóa sản phẩm thất bại");
       console.error(error);
-    } finally {
-      setDeletingId(null);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-96">
+        <img src="/images/loader.gif" alt="Loading..." className="w-30 h-30" />
+      </div>
+    );
+  }
 
   const columns: ColumnDef<IProductSummary>[] = [
     {
@@ -56,19 +58,17 @@ const ProductTable = ({ products, onDeleted, readOnly }: Props) => {
     {
       accessorKey: "name",
       header: "Name",
-      cell: ({ row }) => <div>{row.original.name}</div>,
+      cell: ({ row }) => row.original.name,
     },
     {
       accessorKey: "price",
       header: "Price",
-      cell: ({ row }) => <div>${row.original.price}</div>,
+      cell: ({ row }) => `$${row.original.price}`,
     },
     {
       accessorKey: "category",
       header: "Category",
-      cell: ({ row }) => (
-        <div>{row.original.category?.name || "Uncategorized"}</div>
-      ),
+      cell: ({ row }) => row.original.category?.name || "Uncategorized",
     },
     {
       accessorKey: "averageRating",
@@ -78,51 +78,44 @@ const ProductTable = ({ products, onDeleted, readOnly }: Props) => {
       ),
     },
     {
-      accessorKey: "date",
+      accessorKey: "createdAt",
       header: "Date",
-      cell: ({ row }) => (
-        <div>{new Date(row.original.createdAt).toLocaleString()}</div>
-      ),
+      cell: ({ row }) => new Date(row.original.createdAt).toLocaleString(),
     },
   ];
 
-  // Thêm cột hành động nếu không phải chế độ chỉ đọc
   if (!readOnly) {
     columns.push({
       id: "actions",
       header: "",
-      cell: () => {
-        return (
-          <div className="w-full">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Ellipsis />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="font-bold">
-                <DropdownMenuItem className="cursor-pointer">
-                  <Eye className="size-3.5" />
-                  Preview
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <PencilLineIcon className="size-3.5" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
-                  <Trash2 className="size-3.5 text-red-600 focus:text-red-600 " />
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        );
-      },
+      cell: ({ row }) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Ellipsis />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="font-bold">
+            <DropdownMenuItem className="flex items-center gap-2">
+              <Eye className="size-3.5" /> Preview
+            </DropdownMenuItem>
+            <DropdownMenuItem className="flex items-center gap-2">
+              <PencilLineIcon className="size-3.5" /> Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="flex items-center gap-2 text-red-600"
+              onClick={() => handleDelete(row.original.id)}
+            >
+              <Trash2 className="size-3.5 text-red-600" /> Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
     });
   }
 
   return (
-    <div className="bg-primary rounded-xl ">
+    <div className="bg-primary rounded-xl p-2">
       <DataTable columns={columns} data={products} />
     </div>
   );

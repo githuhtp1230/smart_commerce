@@ -1,68 +1,116 @@
-import React, { useEffect, useState } from "react";
-import type { IProductSummary } from "@/type/products";
-import { fetchProductSummariesByStatus } from "@/services/products.service";
-import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
+import React, { useMemo, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { fetchProductSummaries } from "@/services/products.service";
 import ProductTable from "@/components/client/product/ProductTable";
-import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
-
-const tabs = [
-  { name: "Sản phẩm đang hoạt động", value: "false" },
-  { name: "Sản phẩm đã xoá", value: "true" },
-];
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
 
 const ManageProductPage = () => {
-  const [activeProducts, setActiveProducts] = useState<IProductSummary[]>([]);
-  const [deletedProducts, setDeletedProducts] = useState<IProductSummary[]>([]);
-  const [tabValue, setTabValue] = useState("false");
+  const queryClient = useQueryClient();
+  const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const isDeleted = tabValue === "true";
-        const data = await fetchProductSummariesByStatus(isDeleted, 1, 1000);
-        if (isDeleted) {
-          setDeletedProducts(data.data);
-        } else {
-          setActiveProducts(data.data);
-        }
-      } catch (error) {
-        console.error("Lỗi khi lấy sản phẩm:", error);
-      }
-    };
+  const queryParams = useMemo(
+    () => new URLSearchParams({ page: currentPage.toString() }),
+    [currentPage]
+  );
 
-    fetchData();
-  }, [tabValue]);
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["allProducts", currentPage],
+    queryFn: () => fetchProductSummaries(queryParams),
+    staleTime: 5000,
+  });
+
+  const products = data?.data ?? [];
+  const totalPages = data?.totalPages ?? 1;
+
+  const handlePageChange = (page: number) => setCurrentPage(page);
+
+  const visiblePages = 5;
+  let startPage = Math.max(currentPage - Math.floor(visiblePages / 2), 1);
+  let endPage = startPage + visiblePages - 1;
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(endPage - visiblePages + 1, 1);
+  }
+  const pages: number[] = [];
+  for (let i = startPage; i <= endPage; i++) pages.push(i);
 
   return (
-    <Tabs
-      defaultValue="false"
-      value={tabValue}
-      onValueChange={setTabValue}
-      className="w-full gap-0 px-4"
-    >
-      <TabsList className="p-0 justify-start">
-        {tabs.map((tab) => (
-          <CustomTabsTrigger key={tab.value} value={tab.value}>
-            <p className="text-[15px]">{tab.name}</p>
-          </CustomTabsTrigger>
-        ))}
-      </TabsList>
-      <div className="border border-b-border-primary mt-[3px] !h-[1px]"></div>
+    <div className="w-full px-4 mt-4 space-y-4">
+      <h2 className="text-lg font-bold mb-2">Danh sách sản phẩm</h2>
+      <ProductTable
+        products={products}
+        isLoading={isLoading || isFetching}
+        onDeleted={async () =>
+          queryClient.invalidateQueries({
+            queryKey: ["allProducts", currentPage],
+          })
+        }
+      />
 
-      <TabsContent value="false" className="mt-4">
-        <ProductTable
-          products={activeProducts}
-          onDeleted={async () => {
-            const res = await fetchProductSummariesByStatus(false, 1, 1000);
-            setActiveProducts(res.data);
-          }}
-        />
-      </TabsContent>
+      {!isLoading && totalPages > 1 && (
+        <Pagination className="flex justify-center mt-4 cursor-pointer">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                className={cn(
+                  currentPage === 1 && "pointer-events-none opacity-50"
+                )}
+              />
+            </PaginationItem>
 
-      <TabsContent value="true" className="mt-4">
-        <ProductTable products={deletedProducts} readOnly />
-      </TabsContent>
-    </Tabs>
+            {startPage > 1 && (
+              <PaginationItem>
+                <PaginationLink onClick={() => handlePageChange(startPage - 1)}>
+                  ...
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            {pages.map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  onClick={() => handlePageChange(page)}
+                  isActive={page === currentPage}
+                  className={cn(
+                    page === currentPage && "bg-blue-500 text-white"
+                  )}
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            {endPage < totalPages && (
+              <PaginationItem>
+                <PaginationLink onClick={() => handlePageChange(endPage + 1)}>
+                  ...
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            <PaginationItem>
+              <PaginationNext
+                onClick={() =>
+                  handlePageChange(Math.min(totalPages, currentPage + 1))
+                }
+                className={cn(
+                  currentPage === totalPages && "pointer-events-none opacity-50"
+                )}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
+    </div>
   );
 };
 
