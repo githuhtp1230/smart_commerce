@@ -141,17 +141,15 @@ const PromotionsTable = ({ promotions, onChange }: Props) => {
 
         return (
           <span
-            className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${
-              isActive
-                ? "bg-green-100 text-green-600"
-                : "bg-red-100 text-red-600"
-            }`}
+            className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${isActive
+              ? "bg-green-100 text-green-600"
+              : "bg-red-100 text-red-600"
+              }`}
           >
             {/* Dot nằm trong bg luôn */}
             <span
-              className={`w-2 h-2 rounded-full ${
-                isActive ? "bg-green-600" : "bg-red-600"
-              }`}
+              className={`w-2 h-2 rounded-full ${isActive ? "bg-green-600" : "bg-red-600"
+                }`}
             />
             {isActive ? t("Active") : t("Inactive")}
           </span>

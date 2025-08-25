@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { fetchPayments } from "@/services/payment.service";
 import { useQuery } from "@tanstack/react-query";
 import type { ControllerRenderProps } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   field: ControllerRenderProps<
@@ -22,6 +23,7 @@ interface Props {
 }
 
 const PaymentsSelect = ({ field, hasError }: Props) => {
+  const { t } = useTranslation();
   const { data } = useQuery({
     queryKey: ["payments"],
     queryFn: fetchPayments,
@@ -39,7 +41,7 @@ const PaymentsSelect = ({ field, hasError }: Props) => {
           hasError && "border-system-danger-hard"
         )}
       >
-        <SelectValue placeholder="Select a payment" />
+        <SelectValue placeholder={t("select_payment_method")} />
       </SelectTrigger>
       <SelectContent className="bg-primary">
         {data?.map((payment) => (

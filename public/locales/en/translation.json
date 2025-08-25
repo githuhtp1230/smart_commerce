@@ -34,6 +34,7 @@
     "international_version": "International version",
     "free_support": "Free support consultation"
   },
+  "Contact": "Contact",
   "contact": {
     "title_required": "Title is required",
     "message_required": "Message is required",
@@ -55,5 +56,120 @@
     "work_time": "Monday to Friday, 9 AM - 6 PM",
     "visit_office": "Visit Our Office",
     "address": "137 Nguyễn Thị Thập, Thanh Khê Tây, Liên Chiểu, Đà Nẵng, Việt Nam"
-  }
+  },
+  "search_placeholder": "Search products...",
+  "signout": "Sign out",
+  "register": "Register",
+  "back_home": "Back to Home",
+  "subtitle": "An intelligent e-commerce platform that helps you sell faster, manage your business more easily, and achieve sustainable growth.",
+  "welcome": "Welcome to Smart Commerce",
+  "or_continue": "Or Continue With",
+  "google": "Continue with Google",
+  "facebook": "Continue with Facebook",
+  "enter_email": "Enter email here",
+  "password": "Password",
+  "enter_password": "Enter password here",
+  "remember": "Remember me",
+  "forgot": "Forgot password?",
+  "error": "Email or password is invalid",
+  "success": "Login successful",
+  "username": "Username",
+  "enter_username": "Enter your username",
+  "confirm_password": "Confirm password",
+  "enter_confirm_password": "Re-enter your password",
+  "otp_sent": "OTP code has been sent to your email",
+  "otp_verify": "Verify OTP",
+  "otp_label": "OTP code has been sent to your email:",
+  "failed": "Registration failed. Email may already exist.",
+  "otp_error": "OTP code is incorrect or expired",
+  "send_otp": "Send OTP",
+  "confirm_otp": "Confirm OTP",
+  "submit": "Register",
+  "back": "Back",
+  "validation": {
+    "username_required": "Please enter a username",
+    "email_required": "Please enter an email",
+    "password_required": "Please enter a password",
+    "confirm_required": "Please confirm your password",
+    "confirm_mismatch": "Passwords do not match"
+  },
+  "image": "Image",
+  "classify": "Classify",
+  "quantity": "Quantity",
+  "total_price": "Total Price",
+  "delete": "Delete",
+  "info": "Summary",
+  "payment_methods": "Payment Methods",
+  "select_payment_method": "Select payment method...",
+  "footer": {
+    "about": {
+      "title": "About Smart Commerce",
+      "items": [
+        "About Us",
+        "Careers",
+        "Corporate Responsibility",
+        "Press Center",
+        "Investor Relations"
+      ]
+    },
+    "social": {
+      "title": "Stay Connected",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "youtube": "YouTube"
+    },
+    "customer": {
+      "title": "Customer Service",
+      "items": [
+        "Help Center",
+        "Track Your Order",
+        "Returns & Exchanges",
+        "Shipping Information",
+        "Contact Us"
+      ]
+    },
+    "payment": "Payment Methods",
+    "newsletter": {
+      "title": "Subscribe to our Newsletter",
+      "placeholder": "Your email address",
+      "button": "Subscribe"
+    },
+    "bottom": {
+      "rights": "All rights reserved.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    }
+  },
+  "product_title": "Product Title",
+  "Stock": "Stock",
+  "Price...": "Price...",
+  "Stock...": "Stock...",
+  "category_active": "Category Active",
+  "category_inactive": "Category Inactive",
+  "category_name": "Category Name",
+  "add_category": "Add Category",
+  "enter_category_name": "Enter category name",
+  "add_subcategory": "Add Subcategory",
+  "enter_subcategory_name": "Enter subcategory name",
+  "subcategory_name": "Subcategory Name",
+  "all": "All",
+  "Member": "Member",
+  "active_attribute": "Active Attribute",
+  "inactive_attribute": "Inactive Attribute",
+  "active_attributevalue": "Attribute Value active",
+  "inactive_attributevalue": "Attribute Value inactive",
+  "description_promotion": "Promotion Description",
+  "start_date": "Start Date",
+  "end_date": "End Date",
+  "discount_value": "Discount Value",
+  "add": "Add",
+  "description_promotion_placeholder": "Enter promotion description",
+  "discount_value_placeholder": "Enter discount value",
+  "start_date_placeholder": "Select start date",
+  "end_date_placeholder": "Select end date",
+  "discount": "Discount (%)",
+  "product_id": "Product ID",
+  "comment": "Comment",
+  "ratings": "Rating",
+  "Anonymous": "Anonymous"
 }

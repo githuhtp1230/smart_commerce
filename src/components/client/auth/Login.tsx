@@ -24,6 +24,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import CardError from "../../common/notification/CardError";
+import { useTranslation } from "react-i18next";
 
 const formSchema = z.object({
   email: z.string().min(1, "Vui lòng nhập email"),
@@ -31,6 +32,7 @@ const formSchema = z.object({
 });
 
 const Login = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [isCheckedRememberMe, setIsCheckedRememberMe] =
     useState<boolean>(false);
@@ -46,7 +48,7 @@ const Login = () => {
       setIsShowError(true);
     },
     onSuccess: (data) => {
-      toastSuccess("Login successful");
+      toastSuccess(t("success"));
       navigate(PATH.HOME_PAGE);
       setMe(data.user);
       if (data.accessToken) {
@@ -94,7 +96,7 @@ const Login = () => {
                   <FormControl>
                     <CustomInput
                       prefixIcon={Mail}
-                      placeholder="Enter email here"
+                      placeholder={t("enter_email")}
                       field={field}
                       onChange={(e) => {
                         field.onChange(e);
@@ -113,12 +115,12 @@ const Login = () => {
               render={({ field }) => (
                 <FormItem className="gap-1">
                   <FormLabel className="text-txt-tertiary font-medium text-base">
-                    Password
+                    {t("password")}
                   </FormLabel>
                   <FormControl>
                     <CustomInput
                       prefixIcon={Lock}
-                      placeholder="Enter password here"
+                      placeholder={t("enter_password")}
                       field={field}
                       onChange={(e) => {
                         field.onChange(e);
@@ -145,22 +147,22 @@ const Login = () => {
                     : "!bg-transparent"
                 )}
               />
-              <p className="text-txt-tertiary text-base">Remember me</p>
+              <p className="text-txt-tertiary text-base">{t("remember")}</p>
             </div>
             <Button
               variant="link"
               className="text-blue-500 text-base"
               type="button"
             >
-              <Link to={PATH.FORGOT_PASSWORD}>Forgot password?</Link>
+              <Link to={PATH.FORGOT_PASSWORD}>{t("forgot")}</Link>
             </Button>
           </div>
-          {isShowError && <CardError message="Email or password is invalid" />}
+          {isShowError && <CardError message={t("error")} />}
           <Button
             className="w-full bg-blue-400 hover:bg-blue-400 h-12 mt-3 text-white"
             disabled={isPending}
           >
-            Login
+            {t("login")}
           </Button>
         </form>
       </Form>

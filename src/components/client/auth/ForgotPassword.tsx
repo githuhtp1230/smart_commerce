@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import { PATH } from "@/constants/path";
 
 import {
@@ -25,12 +24,14 @@ import { useNavigate } from "react-router-dom";
 import { toastError, toastSuccess } from "@/components/common/sonner";
 import CustomInput from "@/components/common/input/CustomInput";
 import { Mail } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const formSchema = z.object({
   email: z.string().nonempty("Vui lòng nhập email").email("Email không hợp lệ"),
 });
 
 const ForgotPassword = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [emailState, setEmailState] = useState("");
   const [isShowOtp, setIsShowOtp] = useState(false);
@@ -69,7 +70,7 @@ const ForgotPassword = () => {
   });
   return (
     <div>
-      <h1 className="font-medium text-xl text-center">Forgot your password?</h1>
+      <h1 className="font-medium text-xl text-center">{t("forgot")}</h1>
       <Form {...form}>
         <form className="w-full my-5" onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-3">
@@ -85,7 +86,7 @@ const ForgotPassword = () => {
                     <CustomInput
                       prefixIcon={Mail}
                       className="focus:!ring-0 h-10 selection:bg-blue-400 "
-                      placeholder="Enter your email"
+                      placeholder={t("enter_email")}
                       {...field}
                       disabled={isShowOtp}
                     />
@@ -100,7 +101,7 @@ const ForgotPassword = () => {
               type="submit"
               className="w-full bg-blue-400 hover:bg-blue-400 h-12 mt-3 text-white"
             >
-              Send OTP
+              {t("send_otp")}
             </Button>
           )}
           {isShowOtp && (
@@ -116,7 +117,7 @@ const ForgotPassword = () => {
                 className="w-full bg-green-500 hover:bg-green-600 text-white h-12"
                 onClick={handleVerifyOtp}
               >
-                Xác nhận OTP
+                {t("confirm_otp")}
               </Button>
             </div>
           )}
@@ -125,7 +126,7 @@ const ForgotPassword = () => {
             asChild
             className="w-full text-blue h-12 mt-3 border-2 border-border-primary"
           >
-            <Link to={PATH.LOGIN}>Back</Link>
+            <Link to={PATH.LOGIN}>{t("back")}</Link>
           </Button>
         </form>
       </Form>

@@ -18,12 +18,13 @@ import {
 } from "@/services/categories.service";
 import type { ICategory } from "@/type/category";
 import { toastError, toastSuccess } from "@/components/common/sonner";
+import { useTranslation } from "react-i18next";
 
 export default function AddSubCategory() {
   const [subName, setSubName] = useState("");
   const [parentId, setParentId] = useState<number | null>(null);
   const queryClient = useQueryClient();
-
+  const { t } = useTranslation();
   const { data: parents = [], isLoading: isLoadingParents } = useQuery<
     ICategory[]
   >({
@@ -75,11 +76,11 @@ export default function AddSubCategory() {
 
   return (
     <div className="max-w-5xl mx-auto p-6">
-      <h2 className="text-lg font-semibold mb-4 ml-50">Thêm danh mục con</h2>
+      <h2 className="text-lg font-semibold mb-4 ml-50">{t("add_subcategory")}</h2>
 
       <form onSubmit={handleSubmit} className="flex items-end gap-4 flex-wrap">
         <div className="flex flex-col gap-1 w-60">
-          <label className="text-sm font-medium">Danh mục cha</label>
+          <label className="text-sm font-medium">{t("category_name")}</label>
           <Select
             onValueChange={(value) => setParentId(Number(value))}
             value={parentId ? String(parentId) : undefined}
@@ -103,9 +104,9 @@ export default function AddSubCategory() {
         </div>
 
         <div className="flex flex-col gap-1 w-60">
-          <label className="text-sm font-medium">Tên danh mục con</label>
+          <label className="text-sm font-medium">{t("subcategory_name")}</label>
           <Input
-            placeholder="Nhập tên danh mục con"
+            placeholder={t("enter_subcategory_name")}
             value={subName}
             onChange={(e) => setSubName(e.target.value)}
           />

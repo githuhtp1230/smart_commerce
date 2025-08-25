@@ -1,10 +1,12 @@
 import { PATH } from "@/constants/path";
 import { cn } from "@/lib/utils";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { NavLink, useLocation } from "react-router-dom";
 
 const AuthTabs = () => {
   const { pathname } = useLocation();
+  const { t } = useTranslation();
 
   if (pathname === PATH.FORGOT_PASSWORD) return null;
   return (
@@ -18,7 +20,7 @@ const AuthTabs = () => {
           )
         }
       >
-        Login
+        {t("login")}
       </NavLink>
       <NavLink
         to={PATH.REGISTER}
@@ -29,7 +31,7 @@ const AuthTabs = () => {
           )
         }
       >
-        Register
+        {t("register")}
       </NavLink>
     </div>
   );

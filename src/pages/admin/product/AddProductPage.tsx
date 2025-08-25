@@ -40,6 +40,8 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import AddImageCarousel from "./AddImageCarousel";
 import RequirementAttribute from "./RequirementAttribute";
+import { useTranslation } from "react-i18next";
+
 
 const ItemAttributeSchema = z
   .object({
@@ -112,7 +114,7 @@ const AddProductPage = () => {
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     try {
       setIsLoading(true);
-      
+
       // Upload images first
       const imageUrls: string[] = [];
       for (const imageData of data.images) {
@@ -121,7 +123,7 @@ const AddProductPage = () => {
           imageUrls.push(uploadedUrl);
         }
       }
-      
+
       // Prepare product data
       const productData = {
         categoryId: data.categoryId,
@@ -131,17 +133,17 @@ const AddProductPage = () => {
         stock: data.stock || 0,
         images: imageUrls,
       };
-      
+
       // Create product
       const result = await createProduct(productData);
       console.log("Product created successfully:", result);
-      
+
       // Show success message
       toastSuccess("Product added successfully!");
-      
+
       // Reset form
       form.reset();
-      
+
     } catch (error) {
       console.error("Error creating product:", error);
       toastError("Failed to add product. Please try again.");
@@ -149,12 +151,12 @@ const AddProductPage = () => {
       setIsLoading(false);
     }
   };
-  
+
   const [requiredAttributes, setRequiredAttributes] = useState<IAttribute[]>(
     []
   );
   const [isLoading, setIsLoading] = useState(false);
-
+  const { t } = useTranslation();
   return (
     <div className="flex px-5 pb-7">
       <Form {...form}>
@@ -167,7 +169,7 @@ const AddProductPage = () => {
             name="categoryId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Category</FormLabel>
+                <FormLabel className="text-lg">{t("Category")}</FormLabel>
                 <FormControl>
                   <Select
                     onValueChange={(value) => {
@@ -195,7 +197,7 @@ const AddProductPage = () => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Product title</FormLabel>
+                <FormLabel className="text-lg">{t("product_title")}</FormLabel>
                 <FormControl>
                   <CustomInput
                     placeholder="Write title here ..."
@@ -213,7 +215,7 @@ const AddProductPage = () => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Product description</FormLabel>
+                <FormLabel className="text-lg">{t("Description")}</FormLabel>
                 <FormControl>
                   <Tiptap content={field.value} onChange={field.onChange} />
                 </FormControl>
@@ -225,8 +227,8 @@ const AddProductPage = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-center">Attribute</TableHead>
-                  <TableHead className="text-center">Attribute value</TableHead>
+                  <TableHead className="text-center">{t("Attribute")}</TableHead>
+                  <TableHead className="text-center">{t("Attribute value")}</TableHead>
                   <TableHead className="w-0"></TableHead>
                 </TableRow>
               </TableHeader>
@@ -322,7 +324,7 @@ const AddProductPage = () => {
             name="images"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Images</FormLabel>
+                <FormLabel className="text-lg">{t("Image")}</FormLabel>
                 <FormControl>
                   <AddImageCarousel
                     onChangeValue={(files) => {
@@ -369,10 +371,10 @@ const AddProductPage = () => {
                     name="price"
                     render={({ field }) => (
                       <FormItem className="w-full">
-                        <FormLabel className="text-base">Price</FormLabel>
+                        <FormLabel className="text-base">{t("Price")}</FormLabel>
                         <FormControl>
                           <CustomInput
-                            placeholder="Price ..."
+                            placeholder={t("Price...")}
                             field={field}
                             containerClassName="bg-primary"
                             hasError={!!form.formState.errors.price}
@@ -394,10 +396,10 @@ const AddProductPage = () => {
                     name="stock"
                     render={({ field }) => (
                       <FormItem className="w-full">
-                        <FormLabel className="text-base">Stock</FormLabel>
+                        <FormLabel className="text-base">{t("Stock")}</FormLabel>
                         <FormControl>
                           <CustomInput
-                            placeholder="Stock ..."
+                            placeholder={t("Stock...")}
                             field={field}
                             containerClassName="bg-primary"
                             hasError={!!form.formState.errors.stock}

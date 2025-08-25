@@ -1,3 +1,4 @@
+
 import { Package, ShoppingCart } from "lucide-react";
 import { KpiCard } from "./kpi-card";
 import { UserParticipationKpi } from "./UserParticipationKpi";

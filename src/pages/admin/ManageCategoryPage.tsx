@@ -10,21 +10,22 @@ import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import { fetchCategories } from "@/services/categories.service";
 import type { ICategory } from "@/type/category";
 import CustomTabsTrigger from "@/components/common/tabs/CustomTabsTrigger";
+import { useTranslation } from "react-i18next";
 
-const tabs = [
-  { name: "Danh mục đang hoạt động", value: "false" },
-  { name: "Danh mục đã xoá", value: "true" },
-];
+
 
 export default function ManageCategoryPage() {
   const [tabValue, setTabValue] = useState("false");
-
+  const { t } = useTranslation();
   const isDeleted = tabValue === "true";
   const { data: categories = [], isLoading } = useQuery<ICategory[]>({
     queryKey: ["categories", tabValue],
     queryFn: () => fetchCategories({ isDeleted }),
   });
-
+  const tabs = [
+    { name: t("category_active"), value: "false" },
+    { name: t("category_inactive"), value: "true" },
+  ];
   return (
     <div>
       <div className="mb-4">
