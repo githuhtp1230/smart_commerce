@@ -85,12 +85,14 @@ export const createProduct = async (productData: {
   return res.data.data;
 };
 
-export const fetchRandomProducts = async (
-): Promise<IProductSummary[]> => {
+export const fetchRandomProducts = async (): Promise<IProductSummary[]> => {
+  const res = await httpRequest.get("products/random");
+  const data = res.data.data as IProductSummary[];
+  return data;
+};
 
-  const res = await httpRequest.get(
-    "products/random"
-  );
+export const fetchRandomHotProducts = async (): Promise<IProductSummary[]> => {
+  const res = await httpRequest.get("products/random-hot");
   const data = res.data.data as IProductSummary[];
   return data;
 };

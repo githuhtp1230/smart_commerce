@@ -2,14 +2,14 @@
 
 import * as React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Users } from "lucide-react";
-import {
-  fetchTotalUserParticipation,
-  type TotalStatisticResponse,
-} from "@/services/statistics.service";
 import { KpiCard } from "./kpi-card";
+import {
+  fetchProductRevenueStatistic,
+  type TotalStatisticResponse,
+  type TotalStatisticRequest,
+} from "@/services/statistics.service";
+import { formatPercentage } from "@/helper/format-percentage";
 
-// UI label trực tiếp (không còn -ly)
 const uiLabel: Record<"YEAR" | "MONTH" | "WEEK" | "DAY", string> = {
   YEAR: "year",
   MONTH: "month",
@@ -17,14 +17,13 @@ const uiLabel: Record<"YEAR" | "MONTH" | "WEEK" | "DAY", string> = {
   DAY: "day",
 };
 
-export function UserParticipationKpi() {
-  const [category, setCategory] = React.useState<
-    "YEAR" | "MONTH" | "WEEK" | "DAY"
-  >("WEEK");
+export function ProductParticipationKpi() {
+  const [category, setCategory] =
+    React.useState<TotalStatisticRequest["category"]>("YEAR");
 
   const { data } = useQuery<TotalStatisticResponse, Error>({
-    queryKey: ["totalUserParticipation", category],
-    queryFn: () => fetchTotalUserParticipation({ category }),
+    queryKey: ["productRevenue", category],
+    queryFn: () => fetchProductRevenueStatistic({ category }),
     placeholderData: {
       total: 0,
       trendPercentage: "0%",
@@ -34,24 +33,21 @@ export function UserParticipationKpi() {
   });
 
   const handleTimeframeChange = (value: string) => {
-    // value nhận từ UI: "year" | "month" | "week" | "day"
     const entry = Object.entries(uiLabel).find(([, v]) => v === value);
-    if (entry) {
-      setCategory(entry[0] as "YEAR" | "MONTH" | "WEEK" | "DAY");
-    }
+    if (entry) setCategory(entry[0] as TotalStatisticRequest["category"]);
   };
 
   return (
     <KpiCard
-      title="Total users participating"
-      value={data?.total?.toString() ?? "0"}
+      title="Product revenue"
+      value={`${data?.total.toLocaleString() ?? 0} đ`}
       trend={{
         direction: data?.trendDirection ?? "up",
-        percentage: data?.trendPercentage === "0%"? "NEW" : data?.trendPercentage ?? "0%",
+        percentage: formatPercentage(data?.trendPercentage, 0), // <-- dùng helper
       }}
       icon={
-        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-          <Users className="w-4 h-4 text-white" />
+        <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
+          <div className="w-4 h-4 bg-red-500 rounded-full"></div>
         </div>
       }
       timeframe={uiLabel[category]}

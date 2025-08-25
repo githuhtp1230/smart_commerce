@@ -179,7 +179,6 @@ export default function EmployeePermissionsDialog({
                             <TableRow>
                               <TableHead>{t("ID")}</TableHead>
                               <TableHead>{t("Product")}</TableHead>
-                              <TableHead>{t("Image")}</TableHead>
                               <TableHead>{t("Total")}</TableHead>
                               <TableHead>{t("Date")}</TableHead>
                               <TableHead>{t("Delivery Method")}</TableHead>
@@ -193,18 +192,12 @@ export default function EmployeePermissionsDialog({
                                 <TableCell>{order.id}</TableCell>
                                 <TableCell>
                                   {order.orderDetails
-                                    .map((d) => d.product.name)
+                                    .map((d) =>
+                                      d.product.name.length > 10
+                                        ? d.product.name.slice(0, 10) + '...'
+                                        : d.product.name
+                                    )
                                     .join(", ")}
-                                </TableCell>
-                                <TableCell className="flex gap-2">
-                                  {order.orderDetails.map((d, idx) => (
-                                    <img
-                                      key={idx}
-                                      src={d.image ?? "/default-product.png"}
-                                      alt={d.product.name}
-                                      className="h-10 w-10 object-cover rounded border"
-                                    />
-                                  ))}
                                 </TableCell>
                                 <TableCell>
                                   {order.total.toLocaleString("vi-VN")} đ
@@ -320,7 +313,9 @@ export default function EmployeePermissionsDialog({
                                     {selectedOrder.orderDetails.map(
                                       (d, idx) => (
                                         <li key={idx}>
-                                          {d.product.name} x{d.quantity}
+                                          {(d.product.name.length > 30
+                                            ? d.product.name.slice(0, 30) + '...'
+                                            : d.product.name)} x{d.quantity}
                                         </li>
                                       )
                                     )}
