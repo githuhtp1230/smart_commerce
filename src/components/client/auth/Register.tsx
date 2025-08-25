@@ -18,21 +18,24 @@ import { useNavigate } from "react-router-dom";
 import { PATH } from "@/constants/path";
 import { toastError, toastSuccess } from "@/components/common/sonner";
 import CustomInput from "@/components/common/input/CustomInput";
+import { useTranslation } from "react-i18next";
 
-const formSchema = z
-  .object({
-    username: z.string().min(3, "Vui lòng nhập username"),
-    email: z.string().min(3, "Vui lòng nhập email"),
-    password: z.string().min(3, "Vui lòng nhập mật khẩu"),
-    confirmPassword: z.string().min(3, "Vui lòng nhập xác nhận mật khẩu"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Mật khẩu xác nhận không khớp",
-  });
+
 
 const Register = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
+  const formSchema = z
+    .object({
+      username: z.string().min(3, t("validation.username_required")),
+      email: z.string().min(3, t("validation.email_required")),
+      password: z.string().min(3, t("validation.password_required")),
+      confirmPassword: z.string().min(3, t("validation.confirm_password_required")),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      path: ["confirmPassword"],
+      message: t("validation.confirm_mismatch"),
+    });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -86,10 +89,10 @@ const Register = () => {
           name="username"
           render={({ field }) => (
             <FormItem className="gap-1">
-              <FormLabel>Username</FormLabel>
+              <FormLabel>{t("username")}</FormLabel>
               <FormControl>
                 <CustomInput
-                  placeholder="Nhập username"
+                  placeholder={t("enter_username")}
                   {...field}
                   className="h-10"
                 />
@@ -103,11 +106,11 @@ const Register = () => {
           name="email"
           render={({ field }) => (
             <FormItem className="gap-1">
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t("email")}</FormLabel>
               <FormControl>
                 <CustomInput
                   prefixIcon={Mail}
-                  placeholder="Enter email here"
+                  placeholder={t("enter_email")}
                   field={field}
                   onChange={(e) => {
                     field.onChange(e);
@@ -125,11 +128,11 @@ const Register = () => {
           name="password"
           render={({ field }) => (
             <FormItem className="gap-1">
-              <FormLabel>Mật khẩu</FormLabel>
+              <FormLabel>{t("password")}</FormLabel>
               <FormControl>
                 <CustomInput
                   prefixIcon={Lock}
-                  placeholder="Enter password here"
+                  placeholder={t("enter_password")}
                   field={field}
                   onChange={(e) => {
                     field.onChange(e);
@@ -148,11 +151,11 @@ const Register = () => {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem className="gap-1">
-              <FormLabel>Xác nhận mật khẩu</FormLabel>
+              <FormLabel>{t("confirm_password")}</FormLabel>
               <FormControl>
                 <CustomInput
                   prefixIcon={Lock}
-                  placeholder="Enter confirm password here"
+                  placeholder={t("enter_confirm_password")}
                   field={field}
                   onChange={(e) => {
                     field.onChange(e);
@@ -172,7 +175,7 @@ const Register = () => {
             className="w-full bg-blue-500 hover:bg-blue-600 text-white h-12 mt-3"
             type="submit"
           >
-            Đăng ký
+            {t("register")}
           </Button>
         )}
       </form>

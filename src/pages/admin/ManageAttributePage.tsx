@@ -8,16 +8,18 @@ import { fetchAttributes } from "@/services/attributes.service";
 import type { IAttribute } from "@/type/attribute";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
-const tabs = [
-  { name: "Thuộc tính đang hoạt động", value: "false" },
-  { name: "Thuộc tính đã xoá", value: "true" },
-];
+
 
 export default function ManageAttributePage() {
   const [tabValue, setTabValue] = useState("false");
-
+  const { t } = useTranslation();
   const isDeleted = tabValue === "true";
+  const tabs = [
+    { name: t("active_attribute"), value: "false" },
+    { name: t("inactive_attribute"), value: "true" },
+  ];
   const {
     data: attribute = [],
     isLoading,

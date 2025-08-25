@@ -11,17 +11,20 @@ import {
   fetchUsers,
 } from "@/services/users.service";
 import type { IUser } from "@/type/auth";
+import { useTranslation } from "react-i18next";
 
-const tabs = [
-  { label: "All", key: "all" },
-  { label: "Customer", key: "customer" },
-  { label: "Member", key: "membership" },
-];
+
 
 export default function ManageUsersPage() {
   const [tabValue, setTabValue] = useState("all");
   const [users, setUsers] = useState<IUser[]>([]);
+  const { t } = useTranslation();
 
+  const tabs = [
+    { label: t("all"), key: "all" },
+    { label: t("Customer"), key: "customer" },
+    { label: t("Member"), key: "membership" },
+  ];
   // Lấy dữ liệu theo tab
   const fetchData = async (tab: string) => {
     try {

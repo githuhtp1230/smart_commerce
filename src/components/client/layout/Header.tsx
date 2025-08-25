@@ -36,7 +36,7 @@ const Header = () => {
           <SearchIcon className="h-5 w-5 text-muted-foreground bg-primary" />
           <Input
             type="text"
-            placeholder={t("Search")}
+            placeholder={t("search_placeholder")}
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             onKeyDown={handleKeyDown}

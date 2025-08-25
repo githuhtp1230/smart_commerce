@@ -22,6 +22,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { useAddress } from "../profile/profile-helper/use-address";
+import { useTranslation } from "react-i18next";
 
 const addressSchema = z.object({
   addressId: z.number().min(1, "Address is required"),
@@ -38,6 +39,7 @@ const PaymentSummary: React.FC = () => {
       addressId: 0,
     },
   });
+  const { t } = useTranslation();
   const { me } = useAuthStore((s) => s);
   const { selectedAddressId, defaultAddr } = useAddress();
 
@@ -58,7 +60,7 @@ const PaymentSummary: React.FC = () => {
     onSuccess: (data) => {
       window.location.href = data.data.payment.vnp_url;
     },
-    onError: () => {},
+    onError: () => { },
   });
 
   const handleCheckout = () => {
@@ -83,7 +85,7 @@ const PaymentSummary: React.FC = () => {
     <>
       <Card className="bg-primary shadow-none gap-3 rounded-sm">
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-2xl font-bold ">Summary</CardTitle>
+          <CardTitle className="text-2xl font-bold ">{t("info")}</CardTitle>
         </CardHeader>
         <CardContent className="gap-0 space-y-0">
           <div className="flex flex-col">
@@ -117,7 +119,7 @@ const PaymentSummary: React.FC = () => {
                     <div className="flex items-center justify-between gap-2">
                       <div>
                         <FormLabel className="text-base  font-normal">
-                          Địa chỉ
+                          {t("Address")}
                         </FormLabel>
                         {defaultAddr ? (
                           <p className="text-base font-medium mt-1">
@@ -126,7 +128,7 @@ const PaymentSummary: React.FC = () => {
                           </p>
                         ) : (
                           <p className="text-base text-muted-foreground mt-1">
-                            Chọn địa chỉ ...
+                            {t("Select address")}
                           </p>
                         )}
                       </div>
@@ -135,7 +137,7 @@ const PaymentSummary: React.FC = () => {
                         onClick={() => setIsOpenAddressDialog(true)}
                         type="button"
                       >
-                        Thay đổi
+                        {t("Change")}
                       </Button>
                     </div>
                     <FormMessage />
@@ -149,7 +151,7 @@ const PaymentSummary: React.FC = () => {
                 render={({ field, formState }) => (
                   <FormItem>
                     <FormLabel className="text-base font-normal">
-                      Payment methods
+                      {t("payment_methods")}
                     </FormLabel>
                     <FormControl>
                       <PaymentsSelect
@@ -164,7 +166,7 @@ const PaymentSummary: React.FC = () => {
 
               <div className="pt-4 border-t">
                 <div className="flex justify-between">
-                  <span className="text-xl font-bold">Total:</span>
+                  <span className="text-xl font-bold">{t("Total amount:")}</span>
                   <span className="text-xl font-bold">
                     {formatPrice(getSelectedItemTotalPrice())} đ
                   </span>
@@ -173,7 +175,7 @@ const PaymentSummary: React.FC = () => {
 
               <PurchaseButton
                 variant="default"
-                message="Checkout"
+                message={t("checkout")}
                 className="w-full text-base"
                 disabled={getSelectedItemTotalPrice() === 0}
                 type="submit"

@@ -48,7 +48,7 @@ const formSchema = z.object({
 export default function AddPromotions({ onSuccess }: Props) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
-
+  const { t } = useTranslation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -141,6 +141,7 @@ export default function AddPromotions({ onSuccess }: Props) {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+
                     {t("Start Date")}
                   </FormLabel>
                   <Popover>

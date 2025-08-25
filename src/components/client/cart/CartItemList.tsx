@@ -16,8 +16,10 @@ import type { ICartItem } from "@/type/cart";
 import { useMutation } from "@tanstack/react-query";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const CartItemList = () => {
+  const { t } = useTranslation();
   const {
     cartItems,
     getItemTotalPrice,
@@ -86,7 +88,7 @@ const CartItemList = () => {
     },
     {
       accessorKey: "image",
-      header: () => <div>Image</div>,
+      header: () => <div>{t("image")}</div>,
       cell: ({ row }) => {
         const image = row.getValue("image") as string;
         return (
@@ -109,7 +111,7 @@ const CartItemList = () => {
     {
       id: "productName",
       accessorFn: (row) => row.product.name,
-      header: () => <div>Name</div>,
+      header: () => <div>{t("Name")}</div>,
       cell: ({ getValue }) => {
         const value = getValue() as string;
         return <div>{value}</div>;
@@ -118,7 +120,7 @@ const CartItemList = () => {
     {
       id: "price",
       accessorFn: (row) => row,
-      header: () => <div>Name</div>,
+      header: () => <div>{t("price")}</div>,
       cell: ({ getValue }) => {
         const cartItem = getValue() as ICartItem;
 
@@ -150,7 +152,7 @@ const CartItemList = () => {
     {
       id: "attributeValues",
       accessorFn: (row) => row.productVariation?.attributeValues,
-      header: () => <div>Classify</div>,
+      header: () => <div>{t("classify")}</div>,
       cell: ({ getValue }) => {
         const attrVals = getValue() as IAttributeValue[];
         return (
@@ -166,7 +168,7 @@ const CartItemList = () => {
     },
     {
       accessorKey: "quantity",
-      header: () => <div>Quantity</div>,
+      header: () => <div>{t("quantity")}</div>,
       cell: ({ row }) => (
         <div className="flex gap-3 items-center">
           <QuantityButton
@@ -198,14 +200,14 @@ const CartItemList = () => {
     {
       id: "itemTotalPrice",
       accessorFn: (row) => row.id,
-      header: () => <div>Total Price</div>,
+      header: () => <div>{t("total_price")}</div>,
       cell: ({ getValue }) => (
         <div>{formatPrice(getItemTotalPrice(getValue() as number))}đ</div>
       ),
     },
     {
       id: "actions",
-      header: () => <div>Delete</div>,
+      header: () => <div>{t("delete")}</div>,
       cell: ({ row }) => {
         const cartItem = row.original;
         return (

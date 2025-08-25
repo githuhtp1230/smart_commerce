@@ -8,11 +8,12 @@ import { Plus } from "lucide-react";
 import { createParentCategory } from "@/services/categories.service";
 import type { ICategory } from "@/type/category";
 import { toastError, toastSuccess } from "@/components/common/sonner";
+import { useTranslation } from "react-i18next";
 
 export default function AddCategoriesParent() {
   const [categoryName, setCategoryName] = useState("");
   const queryClient = useQueryClient();
-
+  const { t } = useTranslation();
   const mutation = useMutation<ICategory, unknown, string>({
     mutationFn: createParentCategory,
     onSuccess: () => {
@@ -40,10 +41,10 @@ export default function AddCategoriesParent() {
 
   return (
     <div className="max-w-md mx-auto p-6">
-      <h2 className="text-lg font-semibold mb-4 ml-30">Thêm danh mục</h2>
+      <h2 className="text-lg font-semibold mb-4 ml-30">{t("add_category")}</h2>
       <form onSubmit={handleSubmit} className="flex gap-2">
         <Input
-          placeholder="Enter category name"
+          placeholder={t("enter_category_name")}
           value={categoryName}
           onChange={(e) => setCategoryName(e.target.value)}
           className="flex-1"
