@@ -167,5 +167,9 @@
   "discount_value_placeholder": "Enter discount value",
   "start_date_placeholder": "Select start date",
   "end_date_placeholder": "Select end date",
-  "discount": "Discount (%)"
+  "discount": "Discount (%)",
+  "product_id": "Product ID",
+  "comment": "Comment",
+  "ratings": "Rating",
+  "Anonymous": "Anonymous"
 }

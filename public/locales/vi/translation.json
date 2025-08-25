@@ -22,7 +22,7 @@
   "Description": "Mô tả",
   "Specifications": "Thông số kỹ thuật",
   "Ratings & reviews": "Đánh giá & Nhận xét",
-  "ratings": "đánh giá",
+  "ratings": "Đánh giá",
   "reviews": "nhận xét",
   "Reply": "Phản hồi",
   "Joined 3 months ago": "Đã tham gia 3 tháng trước",
@@ -65,7 +65,7 @@
   "Next": "Tiếp theo",
   "Previous": "Trước",
   "Price": "Giá",
-  "Created at": "Được tạo lúc",
+  "Created At": "Được tạo lúc",
   "Close": "Đóng",
   "Address": "Địa chỉ",
   "Customer": "Khách hàng",
@@ -329,5 +329,8 @@
   "End Date": "Ngày kết thúc",
   "Select end date": "Chọn ngày kết thúc",
   "Adding...": "Đang thêm...",
-  "Add": "Thêm"
+  "Add": "Thêm",
+  "product_id": "Mã sản phẩm",
+  "comment": "Bình luận",
+  "Anonymous": "Ẩn danh"
 }
