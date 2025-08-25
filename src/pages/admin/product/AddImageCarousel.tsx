@@ -7,7 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import React, { useState } from "react";
+import { useState } from "react";
 import DropZone from "@/components/common/dropzone/DropZone";
 import { toastError } from "@/components/common/sonner";
 import { Button } from "@/components/ui/button";

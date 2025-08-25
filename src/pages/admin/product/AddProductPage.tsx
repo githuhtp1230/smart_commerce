@@ -42,7 +42,6 @@ import AddImageCarousel from "./AddImageCarousel";
 import RequirementAttribute from "./RequirementAttribute";
 import { useTranslation } from "react-i18next";
 
-
 const ItemAttributeSchema = z
   .object({
     attributeId: z.number().min(1, { message: "Attribute is required" }),
@@ -143,7 +142,6 @@ const AddProductPage = () => {
 
       // Reset form
       form.reset();
-
     } catch (error) {
       console.error("Error creating product:", error);
       toastError("Failed to add product. Please try again.");
@@ -227,8 +225,12 @@ const AddProductPage = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-center">{t("Attribute")}</TableHead>
-                  <TableHead className="text-center">{t("Attribute value")}</TableHead>
+                  <TableHead className="text-center">
+                    {t("Attribute")}
+                  </TableHead>
+                  <TableHead className="text-center">
+                    {t("Attribute value")}
+                  </TableHead>
                   <TableHead className="w-0"></TableHead>
                 </TableRow>
               </TableHeader>
@@ -371,7 +373,9 @@ const AddProductPage = () => {
                     name="price"
                     render={({ field }) => (
                       <FormItem className="w-full">
-                        <FormLabel className="text-base">{t("Price")}</FormLabel>
+                        <FormLabel className="text-base">
+                          {t("Price")}
+                        </FormLabel>
                         <FormControl>
                           <CustomInput
                             placeholder={t("Price...")}
@@ -396,7 +400,9 @@ const AddProductPage = () => {
                     name="stock"
                     render={({ field }) => (
                       <FormItem className="w-full">
-                        <FormLabel className="text-base">{t("Stock")}</FormLabel>
+                        <FormLabel className="text-base">
+                          {t("Stock")}
+                        </FormLabel>
                         <FormControl>
                           <CustomInput
                             placeholder={t("Stock...")}

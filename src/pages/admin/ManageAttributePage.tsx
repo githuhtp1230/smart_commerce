@@ -10,8 +10,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-
-
 export default function ManageAttributePage() {
   const [tabValue, setTabValue] = useState("false");
   const { t } = useTranslation();
@@ -39,7 +37,6 @@ export default function ManageAttributePage() {
         value={tabValue}
         onValueChange={setTabValue}
         className="w-full px-4 gap-0"
-
       >
         <TabsList className="p-0 justify-start">
           {tabs.map((tab) => (
@@ -57,8 +54,12 @@ export default function ManageAttributePage() {
         {tabs.map((tab) => (
           <TabsContent key={tab.value} value={tab.value} className="mt-4">
             {isLoading ? (
-              <div className="text-gray-500 px-4 py-6">
-                Đang tải thuộc tính...
+              <div className="flex justify-center items-center h-96">
+                <img
+                  src="/images/loader.gif"
+                  alt="Loading..."
+                  className="w-30 h-30"
+                />
               </div>
             ) : (
               <AttributesTable
