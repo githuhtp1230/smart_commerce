@@ -21,4 +21,6 @@ export const ADMIN_PATH = {
   ATTRIBUTEVALUE: "admin/attribute-values",
   USER: "admin/users",
   PROMOTION: "admin/promotion",
+  DASHBOARD: "admin/dashboard",
+  ORDER: "admin/order",
 };

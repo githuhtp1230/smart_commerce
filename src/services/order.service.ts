@@ -1,4 +1,3 @@
-
 import httpRequest from "@/utils/http-request";
 
 /** User */
@@ -91,7 +90,6 @@ interface ApiResponseData {
   isLast: boolean;
   data: ApiOrder[];
 }
-
 /** Lấy đơn hàng của chính user */
 
 export const getMyOrders = async (
@@ -105,6 +103,17 @@ export const getMyOrders = async (
   return res.data.data;
 };
 
+// lấy tất cả đơn hàng
+export const getAllOrders = async (
+  status?: string,
+  page = 1,
+  limit = 5
+): Promise<PageResponse<IOrderSummary>> => {
+  const res = await httpRequest.get("/orders", {
+    params: { status, page: page > 0 ? page - 1 : 0, limit },
+  });
+  return res.data.data;
+};
 /** Lấy đơn hàng theo userId */
 export const fetchOrdersByUser = async (
   userId: number,
@@ -171,6 +180,33 @@ export const fetchOrdersByUser = async (
       isLast: true,
       data: [],
     };
-
   }
+};
+
+type OrderStatsResponse = {
+  code: number;
+  message: string;
+  data: Record<string, number>;
+};
+
+export async function getOrderStats(): Promise<Record<string, number>> {
+  const res = await httpRequest.get<OrderStatsResponse>("/orders/stats");
+  return res.data.data;
+}
+
+export interface ApiResponse<T> {
+  code: number;
+  message?: string;
+  data: T;
+  logError?: string;
+}
+
+export const updateOrderStatus = async (
+  orderId: number,
+  status: string
+): Promise<IOrderSummary> => {
+  const res = await httpRequest.put<ApiResponse<IOrderSummary>>(
+    `/orders/${orderId}/status?status=${encodeURIComponent(status)}`
+  );
+  return res.data.data;
 };

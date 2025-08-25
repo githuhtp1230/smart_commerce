@@ -29,6 +29,7 @@ interface Props {
 }
 
 const PromotionsTable = ({ promotions, onChange }: Props) => {
+  const { t } = useTranslation();
   const [promotionList, setPromotionList] = useState<IPromotion[]>(
     [...promotions].sort((a, b) => b.id - a.id)
   );
@@ -120,17 +121,17 @@ const PromotionsTable = ({ promotions, onChange }: Props) => {
     },
     {
       accessorKey: "discountValuePercent",
-      header: t("discount"),
+      header: t("Discount (%)"),
       cell: ({ row }) => <div>{row.original.discountValuePercent}%</div>,
     },
     {
       accessorKey: "startDate",
-      header: t("start_date"),
+      header: t("Start Date"),
       cell: ({ row }) => <div>{formatTimeDay(row.original.startDate)}</div>,
     },
     {
       accessorKey: "endDate",
-      header: t("end_date"),
+      header: t("End Date"),
       cell: ({ row }) => <div>{formatTimeDay(row.original.endDate)}</div>,
     },
     {
@@ -151,7 +152,7 @@ const PromotionsTable = ({ promotions, onChange }: Props) => {
               className={`w-2 h-2 rounded-full ${isActive ? "bg-green-600" : "bg-red-600"
                 }`}
             />
-            {isActive ? "Active" : "Inactive"}
+            {isActive ? t("Active") : t("Inactive")}
           </span>
         );
       },
@@ -186,14 +187,14 @@ const PromotionsTable = ({ promotions, onChange }: Props) => {
                   className="flex items-center gap-2 px-3 py-2 cursor-pointer rounded-md "
                 >
                   <Eye className="w-4 h-4 text-black" />
-                  <span className="text-sm">Preview</span>
+                  <span className="text-sm">{t("Preview")}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => openEditDialog(promotion)}
                   className="flex items-center gap-2 px-3 py-2 cursor-pointer rounded-md "
                 >
                   <PencilLineIcon className="w-4 h-4 text-black" />
-                  <span className="text-sm">Edit</span>
+                  <span className="text-sm">{t("Edit")}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => handleToggle(promotion.id)}
@@ -201,7 +202,7 @@ const PromotionsTable = ({ promotions, onChange }: Props) => {
                   className="flex items-center gap-2 px-3 py-2 cursor-pointer rounded-md "
                 >
                   <RefreshCcw className="text-black" />
-                  {promotion.isActive ? "Deactivate" : "Activate"}
+                  {promotion.isActive ? t("Deactivate") : t("Activate")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -28,6 +28,8 @@ import ManageAttributeValuePage from "./pages/admin/ManageAttributeValuePage";
 import ManagePromotionPage from "./pages/admin/ManagePromotionPage";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import Dashboard from "./components/admin/dashboard/Dashboard";
+import ManageOrderPage from "./pages/admin/ManageOrderPage";
 
 function App() {
   const setMe = useAuthStore((state) => state.setMe);
@@ -114,7 +116,10 @@ function App() {
                 path={ADMIN_PATH.ADD_PRODUCT}
                 element={<AddProductPage />}
               />
+              <Route path= {ADMIN_PATH.ORDER} element= {<ManageOrderPage/>}
+                />
               <Route path={ADMIN_PATH.USER} element={<ManageUsersPage />} />
+              <Route path={ADMIN_PATH.DASHBOARD} element={<Dashboard />} />
             </Route>
           </Route>
         </Routes>

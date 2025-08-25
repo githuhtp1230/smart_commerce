@@ -7,7 +7,6 @@ import {
   GalleryVerticalEnd,
   MonitorSmartphone,
   Puzzle,
-  Settings2,
   TicketPercent,
   Truck,
   UserLock,
@@ -21,7 +20,6 @@ import {
   LayoutDashboard,
 } from "lucide-react";
 import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
 import {
   Sidebar,
   SidebarContent,
@@ -58,10 +56,9 @@ export const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: ADMIN_PATH.DASHBOARD,
       icon: LayoutDashboard,
       isActive: true,
-      items: [],
     },
     {
       title: "Manage Products",
@@ -141,6 +138,13 @@ export const data = {
       title: "Manage order",
       url: "#",
       icon: Truck,
+      items: [
+        {
+          title: "Orders",
+          url: ADMIN_PATH.ORDER,
+          icon: Layers,
+        },
+      ]
     },
     {
       title: "Manage review",
@@ -152,31 +156,7 @@ export const data = {
       url: "#",
       icon: UserLock,
     },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
   ],
-  projects: [],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -198,8 +178,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-
-        <NavProjects projects={data.projects} />
       </SidebarContent>
 
       <SidebarRail />
