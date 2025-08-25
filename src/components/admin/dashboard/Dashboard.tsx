@@ -1,7 +1,16 @@
 import React from "react";
+import TableReviews from "../Review/TableReviews";
 
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  return (
+    <div>
+
+
+      <div>Dashboard</div>
+
+      <TableReviews />
+    </div>
+  );
 };
 
 export default Dashboard;

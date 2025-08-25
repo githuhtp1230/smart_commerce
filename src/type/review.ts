@@ -1,3 +1,4 @@
+
 export interface ReviewResponse {
   id: number;
   productId: number;
@@ -8,7 +9,7 @@ export interface ReviewResponse {
   createdAt: string;
   isRepliesExisting: boolean;
   replies?: ReviewResponse[] | null;
-  name: string;  
+  name: string;
   parentReviewName?: string;
   avatar: string;
 }
@@ -17,3 +18,23 @@ export interface ReviewRequest {
   rating: number;
   parentReviewId?: number | null;
 }
+
+export interface IUser {
+  id: number;
+  email: string;
+  name: string;
+  avatar: string;
+  phone: string;
+  role: string;
+  isActive: boolean;
+}
+
+export interface IReview {
+  id: number;
+  user: IUser;
+  productId: number;
+  comment: string;
+  rating: number;
+  createdAt: Date;
+}
+

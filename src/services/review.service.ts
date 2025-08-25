@@ -1,6 +1,9 @@
-import type { ReviewRequest, ReviewResponse } from "@/type/review";
+import type { PaginationResponse } from "@/type/common";
+import type { IReview, ReviewRequest, ReviewResponse } from "@/type/review";
 import httpRequest from "@/utils/http-request";
 
+
+type PaginationReviews = PaginationResponse<IReview>
 /**
  * Lấy danh sách review theo productId
  */
@@ -8,10 +11,10 @@ export const fetchReviewsByProduct = async (
   productId: number
 ): Promise<ReviewResponse[]> => {
 
-    const res = await httpRequest.get<{ data: ReviewResponse[] }>(
-      `/products/${productId}/reviews`
-    );
-    return res.data.data;
+  const res = await httpRequest.get<{ data: ReviewResponse[] }>(
+    `/products/${productId}/reviews`
+  );
+  return res.data.data;
 
 };
 
@@ -23,11 +26,11 @@ export const createReview = async (
   body: ReviewRequest
 ): Promise<ReviewResponse> => {
 
-    const res = await httpRequest.post<{ data: ReviewResponse }>(
-      `/products/${productId}/reviews`,
-      body
-    );
-    return res.data.data;
+  const res = await httpRequest.post<{ data: ReviewResponse }>(
+    `/products/${productId}/reviews`,
+    body
+  );
+  return res.data.data;
 
 };
 
@@ -39,11 +42,11 @@ export const updateReview = async (
   reviewRequest: ReviewRequest
 ): Promise<ReviewResponse> => {
 
-    const res = await httpRequest.put<{ data: ReviewResponse }>(
-      `/reviews/${reviewId}`,
-      reviewRequest
-    );
-    return res.data.data;
+  const res = await httpRequest.put<{ data: ReviewResponse }>(
+    `/reviews/${reviewId}`,
+    reviewRequest
+  );
+  return res.data.data;
 
 };
 
@@ -51,9 +54,9 @@ export const updateReview = async (
  * Xoá review
  */
 export const deleteReview = async (reviewId: number): Promise<void> => {
-  
-    await httpRequest.delete(`/reviews/${reviewId}`);
- 
+
+  await httpRequest.delete(`/reviews/${reviewId}`);
+
 };
 
 /**
@@ -63,10 +66,10 @@ export const fetchRootReviews = async (
   productId: number
 ): Promise<ReviewResponse[]> => {
 
-    const res = await httpRequest.get<{ data: ReviewResponse[] }>(
-      `/products/${productId}/reviews`
-    );
-    return res.data.data;
+  const res = await httpRequest.get<{ data: ReviewResponse[] }>(
+    `/products/${productId}/reviews`
+  );
+  return res.data.data;
 
 };
 
@@ -77,10 +80,21 @@ export const fetchReviewReplies = async (
   reviewId: number
 ): Promise<ReviewResponse[]> => {
 
-    const res = await httpRequest.get<{ data: ReviewResponse[] }>(
-      `/reviews/${reviewId}/replies`
-    );
-    return res.data.data;
+  const res = await httpRequest.get<{ data: ReviewResponse[] }>(
+    `/reviews/${reviewId}/replies`
+  );
+  return res.data.data;
 
 };
-  
+
+/**
+ * Lấy tất cả review, hỗ trợ phân trang (?page=1)
+ */
+export const fetchAllReviews = async (
+  queryParams: URLSearchParams
+): Promise<PaginationReviews> => {
+  const res = await httpRequest.get(
+    `/reviews?${queryParams.toString()}`
+  );
+  return res.data.data;
+};
