@@ -105,7 +105,7 @@
   "Manage Attribute": "Quản lý thuộc tính",
   "Manage Attribute Value": "Quản lý giá trị thuộc tính",
   "Attribute value": "Giá trị thuộc tính",
-  "Manage promotion": "Quản lý chương trình khuyến mãi",
+  "Manage promotion": "Quản lý khuyến mãi",
   "promotion": "chương trình khuyến mãi",
   "Manage order": "Quản lý đơn hàng",
   "Manage review": "Quản lý đánh giá",
@@ -201,8 +201,24 @@
     "work_time": "Thứ 2 - Thứ 6, 9h - 18h",
     "visit_office": "Đến văn phòng chúng tôi",
     "address": "137 Nguyễn Thị Thập, Thanh Khê Tây, Liên Chiểu, Đà Nẵng, Việt Nam"
-  }
-}
+  },
   "All Status": "Tất cả trạng thái",
-  "Search by order products, customer or status...": "Tìm kiếm theo sản phẩm đơn hàng, khách hàng hoặc trạng thái..."
+  "Search by order products, customer or status...": "Tìm kiếm theo sản phẩm đơn hàng, khách hàng hoặc trạng thái...",
+  "Platform": "Nền tảng",
+  "Discount (%)": "Giảm giá (%)",
+  "Start Date": "Ngày bắt đầu",
+  "End Date": "Ngày kết thúc",
+  "Inactive": "Không hoạt động",
+  "Deactivate": "Vô hiệu hóa",
+  "Activate": "Kích hoạt",
+  "Promotion Description": "Mô tả khuyến mãi",
+  "Enter promotion description": "Nhập mô tả khuyến mãi",
+  "Discount Value(%)": "Giá trị giảm (%)",
+  "Enter discount value (%)": "Nhập giá trị giảm (%)",
+  "Start Date": "Ngày bắt đầu",
+  "Select start date": "Chọn ngày bắt đầu",
+  "End Date": "Ngày kết thúc",
+  "Select end date": "Chọn ngày kết thúc",
+  "Adding...": "Đang thêm...",
+  "Add": "Thêm"
 }

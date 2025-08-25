@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 const promotionSchema = z
   .object({
@@ -65,6 +66,7 @@ const EditPromotionDialog = ({
   promotion,
   onSubmit,
 }: Props) => {
+  const { t } = useTranslation();
   const form = useForm<PromotionFormValues>({
     resolver: zodResolver(promotionSchema),
     defaultValues: {
@@ -104,7 +106,7 @@ const EditPromotionDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Cập nhật khuyến mãi</DialogTitle>
+          <DialogTitle>{t("Update Promotion")}</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -117,11 +119,11 @@ const EditPromotionDialog = ({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Mô tả</FormLabel>
+                  <FormLabel>{t("Promotion Description")}</FormLabel>
                   <FormControl>
                     <input
                       className="w-full border rounded px-3 py-2"
-                      placeholder="Nhập mô tả"
+                      placeholder={t("Enter promotion description")}
                       {...field}
                     />
                   </FormControl>
@@ -135,12 +137,13 @@ const EditPromotionDialog = ({
               name="discountValuePercent"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Giảm giá (%)</FormLabel>
+                  <FormLabel>{t("Discount Value(%)")}</FormLabel>
                   <FormControl>
                     <input
                       type="number"
                       min={0}
                       max={100}
+                      placeholder={t("Enter discount value (%)")}
                       className="w-full border rounded px-3 py-2"
                       {...field}
                       onChange={(e) => field.onChange(Number(e.target.value))}
@@ -157,7 +160,7 @@ const EditPromotionDialog = ({
                 name="startDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Ngày bắt đầu</FormLabel>
+                    <FormLabel>{t("Start Date")}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
@@ -168,7 +171,7 @@ const EditPromotionDialog = ({
                           {field.value ? (
                             format(field.value, "dd/MM/yyyy")
                           ) : (
-                            <span>Chọn ngày</span>
+                            <span>{t("Select date")}</span>
                           )}
                         </Button>
                       </PopoverTrigger>
@@ -190,7 +193,7 @@ const EditPromotionDialog = ({
                 name="endDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Ngày kết thúc</FormLabel>
+                    <FormLabel>{t("End Date")}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
@@ -201,7 +204,7 @@ const EditPromotionDialog = ({
                           {field.value ? (
                             format(field.value, "dd/MM/yyyy")
                           ) : (
-                            <span>Chọn ngày</span>
+                            <span>{t("Select date")}</span>
                           )}
                         </Button>
                       </PopoverTrigger>
@@ -225,10 +228,10 @@ const EditPromotionDialog = ({
                 variant="outline"
                 onClick={() => onOpenChange(false)}
               >
-                Hủy
+                {t("Cancel")}
               </Button>
               <Button type="submit" className="bg-blue-500 text-white">
-                Cập nhật
+                {t("Update")}
               </Button>
             </DialogFooter>
           </form>

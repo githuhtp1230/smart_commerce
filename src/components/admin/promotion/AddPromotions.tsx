@@ -25,12 +25,11 @@ import {
 } from "@/components/ui/form";
 import CustomInput from "@/components/common/input/CustomInput";
 import { formatTimeDay } from "@/helper/format-time-day";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   onSuccess?: () => void;
 }
-
-// Schema validate bằng zod
 const formSchema = z.object({
   description: z.string().min(1, "Vui lòng nhập mô tả khuyến mãi"),
   discountValuePercent: z
@@ -47,6 +46,7 @@ const formSchema = z.object({
 });
 
 export default function AddPromotions({ onSuccess }: Props) {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -100,12 +100,12 @@ export default function AddPromotions({ onSuccess }: Props) {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                    Mô tả khuyến mãi
+                    {t("Promotion Description")}
                   </FormLabel>
                   <FormControl>
                     <CustomInput
                       className="h-9 px-3 text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 rounded-md focus:ring-2 focus:ring-blue-500"
-                      placeholder="Nhập mô tả khuyến mãi"
+                      placeholder={t("Enter promotion description")}
                       {...field}
                     />
                   </FormControl>
@@ -120,13 +120,13 @@ export default function AddPromotions({ onSuccess }: Props) {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                    Giá trị giảm (%)
+                    {t("Discount Value(%)")}
                   </FormLabel>
                   <FormControl>
                     <CustomInput
                       className="h-9 px-3 text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 rounded-md focus:ring-2 focus:ring-blue-500"
                       type="number"
-                      placeholder="Nhập giá trị giảm (%)"
+                      placeholder={t("Enter discount value (%)")}
                       {...field}
                     />
                   </FormControl>
@@ -141,7 +141,7 @@ export default function AddPromotions({ onSuccess }: Props) {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                    Ngày bắt đầu
+                    {t("Start Date")}
                   </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -153,7 +153,7 @@ export default function AddPromotions({ onSuccess }: Props) {
                           <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
                           {field.value
                             ? formatTimeDay(field.value)
-                            : "Chọn ngày bắt đầu"}
+                            : t("Select start date")}
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
@@ -178,7 +178,7 @@ export default function AddPromotions({ onSuccess }: Props) {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                    Ngày kết thúc
+                    {t("End Date")}
                   </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -190,7 +190,7 @@ export default function AddPromotions({ onSuccess }: Props) {
                           <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
                           {field.value
                             ? formatTimeDay(field.value)
-                            : "Chọn ngày kết thúc"}
+                            : t("Select end date")}
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
@@ -216,7 +216,7 @@ export default function AddPromotions({ onSuccess }: Props) {
                 className="h-10 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md flex items-center justify-center gap-2"
               >
                 <Plus className="w-4 h-4" />
-                {mutation.isPending ? "Đang thêm..." : "Thêm"}
+                {mutation.isPending ? t("Adding...") : t("Add")}
               </Button>
             </div>
           </div>
