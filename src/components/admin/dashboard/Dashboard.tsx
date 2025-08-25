@@ -4,6 +4,8 @@ import { KpiCard } from "./kpi-card";
 import { UserParticipationKpi } from "./UserParticipationKpi";
 import { SaleReportChart } from "./sale-report-chart";
 import { CategoriesChart } from "./categories-chart";
+import { ProductsSoldKpi } from "./ProductsSoldKpi";
+import { OrderTotalKpi } from "./OrderTotalKpi";
 
 export default function Dashboard() {
   return (
@@ -26,32 +28,11 @@ export default function Dashboard() {
 
           {/* ✅ dùng API */}
           <UserParticipationKpi />
+          
+          <ProductsSoldKpi />
 
-          <KpiCard
-            title="Total products sold"
-            value="250"
-            trend={{ direction: "up", percentage: "12.24%" }}
-            icon={
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                <Package className="w-4 h-4 text-white" />
-              </div>
-            }
-            timeframe="month"
-            onTimeframeChange={() => {}}
-          />
+          <OrderTotalKpi/>
 
-          <KpiCard
-            title="Total orders"
-            value="182"
-            trend={{ direction: "up", percentage: "25%" }}
-            icon={
-              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                <ShoppingCart className="w-4 h-4 text-white" />
-              </div>
-            }
-            timeframe="week"
-            onTimeframeChange={() => {}}
-          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
