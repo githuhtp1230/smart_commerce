@@ -38,6 +38,7 @@ import {
   Ellipsis,
   EllipsisVertical,
   PackageCheck,
+  Search,
   Truck,
   XCircle,
 } from "lucide-react";
@@ -148,51 +149,70 @@ const OrdersTable = ({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-4 p-4   rounded-lg border">
-        {/* Search */}
-        <input
-          type="text"
-          placeholder={`${t(
-            "Search by order products, customer or status..."
-          )}`}
-          className="flex-1 border rounded-lg px-3 py-2 text-sm"
-          value={searchTerm}
-          onChange={(e) => onSearchChange(e.target.value)}
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 md:items-center md:justify-between mt-4">
+        <div className="flex flex-col items-center justify-start gap-4 p-4 rounded-lg bg-background-primary w-full ">
+          {/* Chọn ngày */}
+          <div className="flex flex-wrap items-start justify-start gap-6 w-full">
+            <div className="flex items-center gap-3">
+              <label className="text-sm font-medium">From</label>
+              <input
+                type="date"
+                className="border rounded-lg px-7 py-2 text-sm bg-secondary focus:outline-none focus:ring-2 focus:ring-blue-400"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <label className="text-sm font-medium">To</label>
+              <input
+                type="date"
+                className="border rounded-lg px-7 py-2 text-sm bg-secondary focus:outline-none focus:ring-2 focus:ring-blue-400"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </div>
 
-        <input
-          type="date"
-          className="border rounded-lg px-3 py-2 text-sm bg-secondary"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-        <input
-          type="date"
-          className="border rounded-lg px-3 py-2 text-sm bg-secondary"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-      </div>
-      <div>
-        {/* Icon Order Trạng thái */}
-        <div className="flex flex-wrap gap-6 justify-center">
-          {statusCards.map((card) => {
-            const Icon = card.icon;
-            return (
-              <div
-                key={card.key}
-                className="flex flex-col items-center justify-center w-32 h-32 rounded-full bg-gray-800 text-white shadow-lg"
-              >
-                <div className={`${card.color} mb-2`}>
-                  <Icon size={28} />
+          </div>
+
+          {/* Search */}
+          <div className="relative w-full">
+            {/* Icon */}
+            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+              <Search className="h-4 w-4 text-gray-400" />
+            </div>
+
+            {/* Input */}
+            <input
+              type="text"
+              placeholder="Search by order products, customer or status..."
+              className="border rounded-lg px-10 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={searchTerm}
+              onChange={(e) => onSearchChange(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div>
+          {/* Icon Order Trạng thái */}
+          <div className="flex flex-wrap gap-6 justify-center">
+            {statusCards.map((card) => {
+              const Icon = card.icon;
+              return (
+                <div
+                  key={card.key}
+                  className="flex flex-col items-center justify-center w-32 h-32 bg-background-primary rounded-2xl "
+                >
+                  <div className={`${card.color} mb-2`}>
+                    <Icon size={28} />
+                  </div>
+                  <div className="text-sm font-medium mb-2">{t(card.label)}</div>
+                  <div className="text-base">
+                    {card.countByDate} / {card.count}
+                  </div>
                 </div>
-                <div className="text-sm font-medium mb-2">{t(card.label)}</div>
-                <div className="text-base">
-                  {card.countByDate} / {card.count}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
       <Table>
@@ -359,7 +379,7 @@ const OrdersTable = ({
                     <img
                       src={detail.image}
                       alt={detail.product.name}
-                      className="w-16 h-16 object-cover rounded"
+                      className="w-16 h-16 object-contain rounded"
                     />
                     <div>
                       <p className="font-medium">{detail.product.name}</p>
