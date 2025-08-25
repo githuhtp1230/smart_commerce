@@ -312,15 +312,11 @@
   "discount_value_placeholder": "Nhập giá trị giảm",
   "start_date_placeholder": "Chọn ngày bắt đầu",
   "end_date_placeholder": "Chọn ngày kết thúc",
-  "discount": "Giảm giá (%)"
-}
-
+  "discount": "Giảm giá (%)",
   "All Status": "Tất cả trạng thái",
   "Search by order products, customer or status...": "Tìm kiếm theo sản phẩm đơn hàng, khách hàng hoặc trạng thái...",
   "Platform": "Nền tảng",
   "Discount (%)": "Giảm giá (%)",
-  "Start Date": "Ngày bắt đầu",
-  "End Date": "Ngày kết thúc",
   "Inactive": "Không hoạt động",
   "Deactivate": "Vô hiệu hóa",
   "Activate": "Kích hoạt",
@@ -335,4 +331,3 @@
   "Adding...": "Đang thêm...",
   "Add": "Thêm"
 }
-

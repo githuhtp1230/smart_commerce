@@ -44,7 +44,6 @@ const PromotionsTable = ({ promotions, onChange }: Props) => {
     null
   );
   const [previewOpen, setPreviewOpen] = useState(false);
-  const { t } = useTranslation();
 
   // 👉 Toggle Status
   const handleToggle = async (id: number) => {
