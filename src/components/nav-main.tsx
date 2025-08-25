@@ -18,6 +18,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 export function NavMain({
   items,
@@ -36,10 +37,11 @@ export function NavMain({
   }[];
 }) {
   const location = useLocation();
+  const { t } = useTranslation();
 
   return (
     <SidebarGroup className="overflow-auto scrollbar-hide">
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>{t("Platform")}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
           if (!item.items || item.items.length === 0) {
@@ -56,7 +58,7 @@ export function NavMain({
                     }
                   >
                     {item.icon && <item.icon />}
-                    <span className="text-base">{item.title}</span>
+                    <span className="text-base">{t(item.title)}</span>
                   </NavLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -83,7 +85,7 @@ export function NavMain({
                       }
                     >
                       {item.icon && <item.icon />}
-                      <span className="text-base">{item.title}</span>
+                      <span className="text-base">{t(item.title)}</span>
                       <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                     </NavLink>
                   </SidebarMenuButton>
@@ -104,7 +106,7 @@ export function NavMain({
                           {subItem.icon && (
                             <subItem.icon className="text-current w-4" />
                           )}
-                          <span className="text-base">{subItem.title}</span>
+                          <span className="text-base">{t(subItem.title)}</span>
                         </NavLink>
                       </SidebarMenuSubItem>
                     ))}
