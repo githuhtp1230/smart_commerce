@@ -4,7 +4,6 @@ import AuthTabs from "./AuthTabs";
 import SocialLoginButtons from "@/components/common/SocialLoginButtons";
 import { Facebook, Google } from "@/assets/icons";
 import { ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { PATH } from "@/constants/path";
 import { useAuthStore } from "@/store/auth-store";
 import { useLocation } from "react-router-dom";
