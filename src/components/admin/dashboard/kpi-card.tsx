@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Select,
@@ -22,7 +21,7 @@ interface KpiCardProps {
   icon: React.ReactNode;
   timeframe: string;
   bordered?: boolean;
-  onTimeframeChange?: (value: string) => void; // ✅ callback khi đổi
+  onTimeframeChange?: (value: string) => void;
 }
 
 export function KpiCard({
@@ -41,17 +40,16 @@ export function KpiCard({
           {icon}
           <Select
             value={timeframe}
-            onValueChange={onTimeframeChange} // ✅ gọi callback khi đổi
+            onValueChange={(val) => onTimeframeChange?.(val)} // safe callback
           >
             <SelectTrigger className="w-24 h-8 text-xs">
-              <SelectValue />
+              <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="year">Year</SelectItem>
               <SelectItem value="month">Month</SelectItem>
               <SelectItem value="week">Week</SelectItem>
-              <SelectItem value="day">Day</SelectItem>{" "}
-              {/* ✅ thêm lựa chọn ngày */}
+              <SelectItem value="day">Day</SelectItem>
             </SelectContent>
           </Select>
         </div>
